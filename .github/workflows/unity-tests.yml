@@ -1,0 +1,48 @@
+name: Unity Tests
+
+# Requires a Unity license. For Personal licenses, run once with
+# game-ci/unity-activate to produce UNITY_LICENSE (and UNITY_EMAIL /
+# UNITY_PASSWORD) repository secrets. See https://game.ci/docs.
+
+on:
+  push:
+    branches: [main, stabilization/*]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: EditMode + PlayMode tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: game-ci/unity-test-runner@v4
+        with:
+          testMode: all
+          checkName: Unity Test Results
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+  verify-generation:
+    name: Deterministic generation check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: StandaloneOSX
+          # BuildAll.Run regenerates all scenes/prefabs before any build;
+          # run it twice via a dedicated check method in CI.
+          buildMethod: Escape.EditorTools.CiChecks.VerifyDeterministicGeneration
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
