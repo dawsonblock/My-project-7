@@ -235,7 +235,7 @@ namespace Escape.EditorTools
             EditorUtility.SetDirty(go);
         }
 
-        private static void BakeNav(Transform envRoot, Scene scene)
+        private static void BakeNav(Transform envRoot, Scene scene, string sceneAssetName)
         {
             var surface = envRoot.gameObject.AddComponent<NavMeshSurface>();
             surface.collectObjects = CollectObjects.Children;
@@ -243,6 +243,16 @@ namespace Escape.EditorTools
             surface.layerMask = geo >= 0 ? (LayerMask)(1 << geo) : (LayerMask)(-1);
             surface.useGeometry = NavMeshCollectGeometry.PhysicsColliders;
             surface.BuildNavMesh();
+
+            // Persist the baked data as an asset. Left scene-embedded, the
+            // NavMeshData object forces the whole .unity file into binary
+            // serialization — breaking text serialization and diffability.
+            var data = surface.navMeshData;
+            if (data != null && !EditorUtility.IsPersistent(data))
+            {
+                Blockout.EnsureFolder($"{SceneDir}/NavMesh");
+                AssetDatabase.CreateAsset(data, $"{SceneDir}/NavMesh/{sceneAssetName}.asset");
+            }
         }
 
         // ==================== SCENES ====================
@@ -426,7 +436,7 @@ namespace Escape.EditorTools
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.ServiceEntrance,
                 completesObjective: "infiltrate_service");
-            BakeNav(env, scene);
+            BakeNav(env, scene, "ServiceEntrance");
             Save(scene, "ServiceEntrance");
         }
 
@@ -511,7 +521,7 @@ namespace Escape.EditorTools
             AddSpawn(env, "default", new Vector3(0, 0.1f, -8.5f), 0f);
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.MansionOffice);
-            BakeNav(env, scene);
+            BakeNav(env, scene, "MansionOffice");
             Save(scene, "MansionOffice");
         }
 
@@ -610,7 +620,7 @@ namespace Escape.EditorTools
             AddSpawn(env, "default", new Vector3(-6.5f, 0.1f, -3f), 30f);
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.SecurityWing);
-            BakeNav(env, scene);
+            BakeNav(env, scene, "SecurityWing");
             Save(scene, "SecurityWing");
         }
 
@@ -691,7 +701,7 @@ namespace Escape.EditorTools
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.BunkerServerRoom,
                 completesObjective: "reach_bunker");
-            BakeNav(env, scene);
+            BakeNav(env, scene, "BunkerServerRoom");
             Save(scene, "BunkerServerRoom");
         }
 
@@ -784,7 +794,7 @@ namespace Escape.EditorTools
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.BroadcastTower,
                 completesObjective: "reach_tower");
-            BakeNav(env, scene);
+            BakeNav(env, scene, "BroadcastTower");
             Save(scene, "BroadcastTower");
         }
 
