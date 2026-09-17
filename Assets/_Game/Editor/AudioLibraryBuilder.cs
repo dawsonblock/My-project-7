@@ -90,7 +90,11 @@ namespace Escape.EditorTools
             WriteWav($"{GenDir}/amb_dock.wav", AmbDock(), AmbRate);
             WriteWav($"{GenDir}/amb_service.wav", AmbService(), AmbRate);
             WriteWav($"{GenDir}/amb_office.wav", AmbOffice(), AmbRate);
+            WriteWav($"{GenDir}/amb_security.wav", AmbSecurity(), AmbRate);
+            WriteWav($"{GenDir}/amb_bunker.wav", AmbBunker(), AmbRate);
+            WriteWav($"{GenDir}/amb_tower.wav", AmbTower(), AmbRate);
             WriteWav($"{GenDir}/drip_loop.wav", DripLoop(), AmbRate);
+            WriteWav($"{GenDir}/fan_loop.wav", FanLoop(), AmbRate);
             AssetDatabase.Refresh();
         }
 
@@ -253,6 +257,119 @@ namespace Escape.EditorTools
                                 * Mathf.Exp(-tt * 90f) * 0.35f;
                 }
                 raw[i] = lp * gust * 0.8f + tick;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Monitor whine + equipment hum + walkie squelch blips, 6s — security hub.</summary>
+        private static float[] AmbSecurity()
+        {
+            const float dur = 6f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(59);
+            float lp = 0f;
+            float squelchPhase = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.09f * (noise - lp);
+                float hum = 0.14f * Mathf.Sin(2f * Mathf.PI * 60f * t)
+                          + 0.06f * Mathf.Sin(2f * Mathf.PI * 180f * t);
+                // faint CRT whine — amplitude-wobbled so it breathes
+                float whine = 0.02f * Mathf.Sin(2f * Mathf.PI * 3900f * t)
+                            * (0.5f + 0.5f * Mathf.Sin(2f * Mathf.PI * (2f / dur) * t));
+                // two walkie squelch blips at integer-safe positions
+                float blip = 0f;
+                foreach (var tb in new[] { 1.8f, 4.6f })
+                {
+                    float td = t - tb;
+                    if (td >= 0f && td < 0.12f)
+                    {
+                        squelchPhase += 2f * Mathf.PI * 1400f / AmbRate;
+                        blip += lp * Mathf.Exp(-td * 30f) * 4f;
+                    }
+                }
+                raw[i] = hum + whine + lp * 0.35f + blip;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Server fan drone + drive clicks + deep electrical hum, 6s — server vault.</summary>
+        private static float[] AmbBunker()
+        {
+            const float dur = 6f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(67);
+            float lp = 0f, lp2 = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.15f * (noise - lp);   // fan rush — brighter than wind
+                lp2 += 0.008f * (noise - lp2); // deep rumble
+                float drone = 0.2f * Mathf.Sin(2f * Mathf.PI * 120f * t)
+                            + 0.08f * Mathf.Sin(2f * Mathf.PI * 240f * t)
+                            + 0.03f * Mathf.Sin(2f * Mathf.PI * 480f * t);
+                // sparse disk clicks
+                float click = 0f;
+                foreach (var tb in new[] { 0.9f, 2.3f, 3.1f, 4.9f })
+                {
+                    float td = t - tb;
+                    if (td >= 0f && td < 0.015f)
+                        click += noise * Mathf.Exp(-td * 400f) * 0.3f;
+                }
+                raw[i] = drone + lp * 0.5f + lp2 * 1.2f + click;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Hard rooftop wind + antenna wire-song + distant metal groan, 8s — tower.</summary>
+        private static float[] AmbTower()
+        {
+            const float dur = 8f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(83);
+            float lp = 0f, lp2 = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.05f * (noise - lp);
+                lp2 += 0.004f * (noise - lp2);
+                float gust = 0.55f + 0.45f * Mathf.Sin(2f * Mathf.PI * (3f / dur) * t + 0.4f);
+                // wire-song: two detuned high sines, swelling with the gusts
+                float song = (Mathf.Sin(2f * Mathf.PI * 860f * t) + Mathf.Sin(2f * Mathf.PI * 867f * t))
+                             * 0.03f * gust;
+                // low metal groan once per loop, decaying before wrap
+                float td = t - 3.2f;
+                float groan = td >= 0f && td < 1.6f
+                    ? Mathf.Sin(2f * Mathf.PI * 55f * td + Mathf.Sin(td * 7f)) * Mathf.Exp(-td * 3f) * 0.25f
+                    : 0f;
+                raw[i] = lp * gust * 1.1f + lp2 * gust * 1.4f + song + groan;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Steady machine fan — rush + blade chug, 2s — localized 3D loop.</summary>
+        private static float[] FanLoop()
+        {
+            const float dur = 2f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(97);
+            float lp = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.18f * (noise - lp);
+                // blade pass at 8Hz — integer cycles per loop → seamless
+                float chug = 0.75f + 0.25f * Mathf.Sin(2f * Mathf.PI * 8f * t);
+                raw[i] = lp * chug * 1.1f + 0.08f * Mathf.Sin(2f * Mathf.PI * 120f * t);
             }
             return LoopFold(raw, n, fade);
         }

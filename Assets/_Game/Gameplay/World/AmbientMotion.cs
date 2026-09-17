@@ -15,6 +15,10 @@ namespace Escape.Gameplay
         public float Speed = 1f;
         public float Phase;
 
+        /// <summary>Continuous rotation (deg/s) — fans, dishes. Overrides sway.</summary>
+        public Vector3 SpinAxis = Vector3.zero;
+        public float SpinSpeed;
+
         private Vector3 _restPos;
         private Quaternion _restRot;
 
@@ -26,10 +30,21 @@ namespace Escape.Gameplay
 
         private void Update()
         {
-            float s = Mathf.Sin(Time.time * Speed + Phase);
-            transform.localRotation = _restRot * Quaternion.Euler(RotationAmplitude * s);
+            if (SpinSpeed != 0f)
+            {
+                transform.localRotation = _restRot *
+                    Quaternion.AngleAxis(Time.time * SpinSpeed + Phase, SpinAxis.normalized);
+            }
+            else
+            {
+                float s = Mathf.Sin(Time.time * Speed + Phase);
+                transform.localRotation = _restRot * Quaternion.Euler(RotationAmplitude * s);
+            }
             if (BobAmplitude > 0f)
-                transform.localPosition = _restPos + Vector3.up * (BobAmplitude * s);
+            {
+                float b = Mathf.Sin(Time.time * Speed + Phase);
+                transform.localPosition = _restPos + Vector3.up * (BobAmplitude * b);
+            }
         }
     }
 }

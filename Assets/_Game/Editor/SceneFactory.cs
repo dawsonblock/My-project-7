@@ -860,6 +860,31 @@ namespace Escape.EditorTools
             Blockout.Box(env, "HubDesk", new Vector3(-2.5f, 0.45f, 13.4f), new Vector3(3f, 0.9f, 0.9f), Metal, geo);
             AddTerminal(env, "security_hub_terminal", new Vector3(-2.5f, 1.05f, 13.4f), 180f);
 
+            // Console dressing: keyboards on every desk, a knocked-over
+            // monitor in the aisle, papers on the hub desk, an operator chair.
+            foreach (var z in new[] { 5f, 10f })
+                foreach (var x in new[] { -5f, -2.5f, 0f, 2.5f, 5f })
+                    Blockout.Box(env, "Keyboard", new Vector3(x, 0.93f, z + 0.15f), new Vector3(0.55f, 0.04f, 0.2f), ConcreteDark, geo, false);
+            var fallen = Blockout.Box(env, "FallenMonitor", new Vector3(1.6f, 0.45f, 7.4f), new Vector3(0.7f, 0.55f, 0.12f), monitor, geo);
+            fallen.transform.eulerAngles = new Vector3(70f, 20f, 0);
+            Blockout.Box(env, "PaperPile", new Vector3(-3.4f, 0.93f, 13.4f), new Vector3(0.35f, 0.02f, 0.45f), Paper, geo, false);
+            Blockout.Box(env, "PaperPile2", new Vector3(-1.8f, 0.93f, 13.5f), new Vector3(0.28f, 0.02f, 0.38f), Paper, geo, false);
+            Blockout.Box(env, "OpChair", new Vector3(-2.5f, 0.5f, 12.4f), new Vector3(0.6f, 1f, 0.6f), ConcreteDark, geo);
+
+            // Overhead cable tray with a drooping run that sways gently.
+            Blockout.Box(env, "CableTray", new Vector3(0, 3.1f, 7.5f), new Vector3(18.5f, 0.08f, 0.4f), Metal, geo, false);
+            var dangle = Blockout.Cyl(env, "DangleCable", new Vector3(3.2f, 2.6f, 7.5f), 0.03f, 1f, ConcreteDark, geo, false);
+            var dangleSway = dangle.AddComponent<AmbientMotion>();
+            dangleSway.RotationAmplitude = new Vector3(6f, 0, 0);
+            dangleSway.Speed = 0.9f;
+
+            // The shortcut between console rows is a metal cable ramp —
+            // crossing the open floor mid-room is loud. Plan the detour.
+            Blockout.Box(env, "CableRamp", new Vector3(0, 0.06f, 7.5f), new Vector3(16f, 0.12f, 0.5f), GrateMat, geo);
+            // Carpet runner along the west patrol lane — hugging the dark
+            // strip stays quiet even when the guard shares it.
+            Blockout.Box(env, "Runner", new Vector3(-7f, 0.02f, 5f), new Vector3(2.2f, 0.04f, 16f), RugMat, geo);
+
             // Bunker door + stairwell alcove behind the north wall
             AddDoor(env, "wing_bunker_door", new Vector3(0, 0, 14.5f), 0,
                 DoorRequirementKind.RemoteOnly, "", "Sealed — release from the hub console");
@@ -874,11 +899,17 @@ namespace Escape.EditorTools
             AddTransition(env, Escape.Data.SceneId.BunkerServerRoom, "default",
                 new Vector3(0, 1.2f, 17.8f), 0, "[E] Descend to the server bunker");
 
-            // Cold monitor glow + a red threat lamp over the bunker door
+            // Cold monitor glow + a red threat lamp over the bunker door —
+            // pulsing, same warning language as the service door beacon.
             AddLamp(env, new Vector3(0, 2.8f, 5), new Color(0.4f, 0.8f, 0.9f), 11f, 1.7f);
             AddLamp(env, new Vector3(0, 2.8f, 10), new Color(0.4f, 0.8f, 0.9f), 11f, 1.7f);
-            AddLamp(env, new Vector3(0, 2.8f, 13.5f), new Color(1f, 0.3f, 0.2f), 7f, 2f, shadows: true);
+            var wingBeacon = AddLamp(env, new Vector3(0, 2.8f, 13.5f), new Color(1f, 0.3f, 0.2f), 7f, 2f, shadows: true);
+            var wingPulse = wingBeacon.gameObject.AddComponent<LightFlicker>();
+            wingPulse.FlickerMode = LightFlicker.Mode.Pulse;
+            wingPulse.Depth = 0.8f;
+            wingPulse.Speed = 2.1f;
             AddLamp(env, new Vector3(-6.5f, 2.9f, -3f), new Color(0.5f, 0.65f, 0.7f), 6f, 1.1f);
+            AddAmbience(env, "amb_security", 0.4f);
             AddLightingZone(env, new Vector3(0, 1.5f, 7), new Vector3(19, 3, 17), PlayerVisibility.Exposure.Dim);
             AddLightingZone(env, new Vector3(-6.5f, 1.5f, -3f), new Vector3(6, 3, 3), PlayerVisibility.Exposure.Dark);
             AddLightingZone(env, new Vector3(-8.2f, 1.5f, 7f), new Vector3(2.6f, 3, 15), PlayerVisibility.Exposure.Dark);
@@ -952,6 +983,51 @@ namespace Escape.EditorTools
             // Stub rack shields the spawn from the vault interior
             Blockout.Box(env, "RackStub", new Vector3(0, 1.15f, -1.5f), new Vector3(1.2f, 2.3f, 1f), Metal, geo);
 
+            // Cable bundles hugging the rack bases + overhead trays.
+            foreach (var x in new[] { -4.9f, -3.1f, 3.1f, 4.9f })
+                Blockout.Cyl(env, "CableBundle", new Vector3(x, 0.12f, 6.25f), 0.07f, 15f, ConcreteDark, geo, false,
+                    new Vector3(90, 0, 0));
+            foreach (var z in new[] { 2f, 8f, 13f })
+                Blockout.Box(env, "CableTray", new Vector3(0, 2.7f, z), new Vector3(16.6f, 0.07f, 0.4f), Metal, geo, false);
+
+            // The west-wall server fan — the distraction you can jostle.
+            // Housing + a pivot of three blades sweeping around the wall axis.
+            Blockout.Cyl(env, "FanHousing", new Vector3(-8.3f, 1.2f, 8f), 0.55f, 0.18f, Metal, geo, false,
+                new Vector3(0, 0, 90));
+            var fanPivot = new GameObject("FanBlades");
+            fanPivot.transform.SetParent(env, false);
+            fanPivot.transform.position = new Vector3(-8.2f, 1.2f, 8f);
+            for (int i = 0; i < 3; i++)
+            {
+                var blade = Blockout.Box(fanPivot.transform, "Blade" + i, new Vector3(-8.2f, 1.2f, 8f),
+                    new Vector3(0.04f, 0.95f, 0.14f), Metal, geo, false);
+                blade.transform.rotation = Quaternion.Euler(i * 60f, 0, 0);
+            }
+            var fanSpin = fanPivot.AddComponent<AmbientMotion>();
+            fanSpin.SpinAxis = Vector3.right;
+            fanSpin.SpinSpeed = 320f;
+            AddLoopSource(env, "FanLoop", "fan_loop", new Vector3(-8.2f, 1.2f, 8f), 0.6f, 10f);
+
+            // One rack is dying — its LED stutters, marking the spot.
+            var dyingLed = AddLamp(env, new Vector3(-4f, 2f, 10.25f), new Color(0.2f, 0.9f, 0.4f), 3.5f, 0.8f);
+            var ledFlick = dyingLed.gameObject.AddComponent<LightFlicker>();
+            ledFlick.FlickerMode = LightFlicker.Mode.Buzz;
+            ledFlick.Depth = 0.7f;
+            ledFlick.Speed = 17f;
+            ledFlick.Seed = 5f;
+
+            // Coolant pipes overhead with a condensation drip mid-vault.
+            Blockout.Cyl(env, "CoolantPipe", new Vector3(6.5f, 2.7f, 5f), 0.12f, 20f, Pipe, geo, false,
+                new Vector3(90, 0, 0));
+            Blockout.Box(env, "Puddle", new Vector3(6.5f, 0.02f, 7f), new Vector3(1.4f, 0.03f, 1.1f), Puddle, geo, false);
+            AddLoopSource(env, "DripLoop", "drip_loop", new Vector3(6.5f, 2.4f, 7f), 0.5f, 8f);
+
+            // Cable trench across the cross-aisle shortcut — the direct
+            // route between rack banks clangs underfoot.
+            Blockout.Box(env, "Trench", new Vector3(0, 0.05f, 6.25f), new Vector3(16.5f, 0.1f, 0.45f), GrateMat, geo);
+
+            AddAmbience(env, "amb_bunker", 0.45f);
+
             // Exit alcove — stairwell up to the tower
             Blockout.Box(env, "UpAlcoveFloor", new Vector3(0, -0.5f, 17.25f), new Vector3(4.4f, 1, 3.9f), Metal, geo);
             Blockout.Box(env, "UpAlcoveW", new Vector3(-2f, 1.5f, 17.25f), new Vector3(0.4f, 4, 3.9f), Concrete, geo);
@@ -1013,8 +1089,9 @@ namespace Escape.EditorTools
             var dl = moon.AddComponent<Light>();
             dl.type = LightType.Directional;
             dl.color = new Color(0.5f, 0.65f, 0.85f);
-            dl.intensity = 0.3f;
+            dl.intensity = 0.45f;
             moon.transform.rotation = Quaternion.Euler(35f, -140f, 0);
+            NightSky(dl);
 
             // Rooftop gantry x -6..6, z -5.5..9.5, open to the night sky
             Blockout.Box(env, "Deck", new Vector3(0, -0.5f, 2), new Vector3(12, 1, 15), ConcreteDark, geo);
@@ -1024,10 +1101,53 @@ namespace Escape.EditorTools
             Blockout.Box(env, "ParapetW", new Vector3(-6f, 0.55f, 2), new Vector3(0.3f, 1.1f, 15), Concrete, geo);
             Blockout.Box(env, "ParapetE", new Vector3(6f, 0.55f, 2), new Vector3(0.3f, 1.1f, 15), Concrete, geo);
 
-            // Mast core — the tower itself, also the big sight blocker
+            // Mast core — the tower itself, also the big sight blocker.
+            // Aviation beacon on top pulses; guy wires run to the parapets.
             Blockout.Box(env, "MastCore", new Vector3(4.5f, 4f, 7.5f), new Vector3(1.4f, 8, 1.4f), Metal, geo);
             Blockout.Box(env, "Crossarm", new Vector3(4.5f, 7.2f, 7.5f), new Vector3(5f, 0.15f, 0.15f), Metal, geo, false);
-            AddLamp(env, new Vector3(4.5f, 8.2f, 7.5f), new Color(1f, 0.2f, 0.15f), 12f, 2.5f, shadows: true);
+            var mastBeacon = AddLamp(env, new Vector3(4.5f, 8.2f, 7.5f), new Color(1f, 0.2f, 0.15f), 12f, 2.5f, shadows: true);
+            var beaconPulse = mastBeacon.gameObject.AddComponent<LightFlicker>();
+            beaconPulse.FlickerMode = LightFlicker.Mode.Pulse;
+            beaconPulse.Depth = 0.9f;
+            beaconPulse.Speed = 1.6f;
+
+            // Guy wires from the crossarm down to the deck edges, plus a
+            // slow-tracking antenna dish and a loose cable that swings.
+            foreach (var (ex, ez) in new[] { (-5.5f, 0f), (-5.5f, 9f), (5.8f, 0f) })
+            {
+                var top = new Vector3(4.5f, 7.2f, 7.5f);
+                var bot = new Vector3(ex, 1.1f, ez);
+                var mid = (top + bot) * 0.5f;
+                var wire = Blockout.Cyl(env, "GuyWire", mid, 0.02f, (top - bot).magnitude,
+                    ConcreteDark, geo, false);
+                wire.transform.rotation = Quaternion.FromToRotation(Vector3.up, top - bot);
+            }
+            Blockout.Cyl(env, "DishArm", new Vector3(4.5f, 5.4f, 6.7f), 0.05f, 0.7f, Metal, geo, false,
+                new Vector3(90, 0, 0));
+            var dish = Blockout.Cyl(env, "Dish", new Vector3(4.5f, 5.4f, 6.35f), 0.55f, 0.14f, Metal, geo, false,
+                new Vector3(70, 0, 0));
+            var dishSpin = dish.AddComponent<AmbientMotion>();
+            dishSpin.SpinAxis = Vector3.up;
+            dishSpin.SpinSpeed = 12f;
+            var hangCable = Blockout.Cyl(env, "HangCable", new Vector3(2.2f, 6.6f, 7.5f), 0.025f, 1.2f,
+                ConcreteDark, geo, false);
+            var cableSway = hangCable.AddComponent<AmbientMotion>();
+            cableSway.RotationAmplitude = new Vector3(9f, 0, 4f);
+            cableSway.Speed = 1.1f;
+
+            // Torn warning flag whipping on the relay-deck rail.
+            var flag = Blockout.Box(env, "Flag", new Vector3(6.2f, 6.4f, 6.8f), new Vector3(0.5f, 0.35f, 0.03f),
+                Curtain, geo, false);
+            var flagSway = flag.AddComponent<AmbientMotion>();
+            flagSway.RotationAmplitude = new Vector3(0, 0, 14f);
+            flagSway.Speed = 5.5f;
+            flagSway.Phase = 1.3f;
+
+            // Rain pooling on the deck — same storm as the dock below.
+            foreach (var (x, z) in new[] { (-3f, -3f), (1f, 4f), (-4.5f, 7f) })
+                Blockout.Box(env, "Puddle", new Vector3(x, 0.015f, z), new Vector3(1.8f, 0.03f, 1.3f), Puddle, geo, false);
+            AddDrizzle(env, new Vector3(0, 9, 2), new Vector2(16, 19));
+            AddAmbience(env, "amb_tower", 0.55f);
 
             // Stair run A: up the west wall to landing A (top y 2.4)
             for (int i = 0; i < 8; i++)
