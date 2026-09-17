@@ -31,6 +31,39 @@ namespace Escape.EditorTools
         private static Material OfficeFloor => Blockout.Mat("MAT_Carpet", new Color(0.2f, 0.12f, 0.1f));
         private static Material Water => Blockout.Mat("MAT_Water", new Color(0.02f, 0.05f, 0.09f), 0.2f, 0.9f);
         private static Material Fence => Blockout.Mat("MAT_Fence", new Color(0.08f, 0.1f, 0.09f), 0.4f);
+        private static Material Puddle => Blockout.Mat("MAT_Puddle", new Color(0.04f, 0.07f, 0.1f), 0.1f, 0.95f);
+        private static Material Tarp => Blockout.Mat("MAT_Tarp", new Color(0.12f, 0.14f, 0.11f));
+        private static Material RopeMat => Blockout.Mat("MAT_Rope", new Color(0.28f, 0.22f, 0.14f));
+        private static Material Rust => Blockout.Mat("MAT_Rust", new Color(0.3f, 0.16f, 0.08f), 0.3f, 0.3f);
+        private static Material Pipe => Blockout.Mat("MAT_Metal_Pipe", new Color(0.2f, 0.22f, 0.25f), 0.7f, 0.55f);
+        private static Material Paper => Blockout.Mat("MAT_Paper", new Color(0.8f, 0.78f, 0.7f), 0f, 0.15f);
+        private static Material RugMat => Blockout.Mat("MAT_Carpet_Rug", new Color(0.32f, 0.1f, 0.1f));
+        private static Material PlankMat => Blockout.Mat("MAT_Wood_Planks", new Color(0.3f, 0.2f, 0.11f));
+        private static Material GrateMat => Blockout.Mat("MAT_Metal_Grate", new Color(0.14f, 0.15f, 0.18f), 0.7f, 0.4f);
+        private static Material Curtain => Blockout.Mat("MAT_Curtain", new Color(0.25f, 0.08f, 0.1f));
+        private static Material GoldFrame => Blockout.Mat("MAT_Gold_Frame", new Color(0.5f, 0.38f, 0.15f), 0.8f, 0.6f);
+        private static Material Portrait => Blockout.Mat("MAT_Portrait", new Color(0.08f, 0.07f, 0.09f), 0f, 0.2f);
+        private static Material Bulb => Blockout.Mat("MAT_Bulb", new Color(0.8f, 0.9f, 1f), 0f, 0.5f, true);
+        private static Material WarmBulb => Blockout.Mat("MAT_Bulb_Warm", new Color(1f, 0.7f, 0.4f), 0f, 0.5f, true);
+        private static Material Stain => Blockout.Mat("MAT_Stain", new Color(0.06f, 0.07f, 0.06f), 0f, 0.1f);
+
+        private static Material RainMat()
+        {
+            var path = $"{Blockout.MatDir}/MAT_Rain.mat";
+            var m = Blockout.LoadAsset<Material>(path);
+            if (m != null) return m;
+            m = new Material(Shader.Find("Universal Render Pipeline/Particles/Unlit"));
+            m.SetFloat("_Surface", 1f);
+            m.SetFloat("_Blend", 0f);
+            m.SetFloat("_SrcBlend", (float)BlendMode.SrcAlpha);
+            m.SetFloat("_DstBlend", (float)BlendMode.OneMinusSrcAlpha);
+            m.SetFloat("_ZWrite", 0f);
+            m.SetOverrideTag("RenderType", "Transparent");
+            m.renderQueue = (int)RenderQueue.Transparent;
+            m.SetColor("_BaseColor", new Color(0.7f, 0.8f, 0.9f, 0.28f));
+            AssetDatabase.CreateAsset(m, path);
+            return m;
+        }
 
         [MenuItem("Tools/Escape the Elites/Build Scenes")]
         public static void BuildAll()
@@ -201,7 +234,7 @@ namespace Escape.EditorTools
             if (l >= 0) go.layer = l;
         }
 
-        private static void AddLamp(Transform parent, Vector3 pos, Color color, float range,
+        private static Light AddLamp(Transform parent, Vector3 pos, Color color, float range,
             float intensity = 2.5f, LightType type = LightType.Point, bool shadows = false)
         {
             var go = new GameObject("Lamp");
@@ -216,6 +249,88 @@ namespace Escape.EditorTools
             // Most lamps are shadowless fill — only key lights cast shadows,
             // otherwise the punctual-light atlas overflows and logs warnings.
             l.shadows = shadows ? LightShadows.Soft : LightShadows.None;
+            return l;
+        }
+
+        /// <summary>Very dark procedural skybox for the night exterior.</summary>
+        private static void NightSky(Light sun)
+        {
+            var path = $"{Blockout.MatDir}/MAT_Skybox_Night.mat";
+            var m = Blockout.LoadAsset<Material>(path);
+            if (m == null)
+            {
+                m = new Material(Shader.Find("Skybox/Procedural"));
+                m.SetFloat("_SunSize", 0.02f);
+                m.SetFloat("_SunSizeConvergence", 5f);
+                m.SetFloat("_AtmosphereThickness", 0.35f);
+                m.SetColor("_SkyTint", new Color(0.03f, 0.05f, 0.1f));
+                m.SetFloat("_Exposure", 0.22f);
+                m.SetColor("_GroundColor", new Color(0.005f, 0.01f, 0.02f));
+                AssetDatabase.CreateAsset(m, path);
+            }
+            RenderSettings.skybox = m;
+            if (sun != null) RenderSettings.sun = sun;
+        }
+
+        /// <summary>Whole-scene looping ambience (2D).</summary>
+        private static void AddAmbience(Transform parent, string clipName, float volume = 0.45f)
+        {
+            var go = new GameObject("Ambience_" + clipName);
+            go.transform.SetParent(parent, false);
+            var src = go.AddComponent<AudioSource>();
+            src.clip = Blockout.LoadAsset<AudioClip>($"Assets/_Game/Audio/Generated/{clipName}.wav");
+            src.loop = true;
+            src.playOnAwake = true;
+            src.spatialBlend = 0f;
+            src.volume = volume;
+            src.priority = 200;
+        }
+
+        /// <summary>Localized looping source — drips, hums (3D).</summary>
+        private static void AddLoopSource(Transform parent, string name, string clipName,
+            Vector3 pos, float volume, float maxDist)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = pos;
+            var src = go.AddComponent<AudioSource>();
+            src.clip = Blockout.LoadAsset<AudioClip>($"Assets/_Game/Audio/Generated/{clipName}.wav");
+            src.loop = true;
+            src.playOnAwake = true;
+            src.spatialBlend = 1f;
+            src.volume = volume;
+            src.minDistance = 1f;
+            src.maxDistance = maxDist;
+            src.rolloffMode = AudioRolloffMode.Linear;
+        }
+
+        /// <summary>Light rain falling through a flat box volume — dock drizzle.
+        /// `footprint` is the world-space (x,z) coverage; emission happens in a
+        /// 1m-thick slab since the transform is pitched 90° downward.</summary>
+        private static void AddDrizzle(Transform parent, Vector3 center, Vector2 footprint)
+        {
+            var go = new GameObject("Drizzle");
+            go.transform.SetParent(parent, false);
+            go.transform.SetPositionAndRotation(center, Quaternion.Euler(90f, 0, 0));
+            var ps = go.AddComponent<ParticleSystem>();
+            var main = ps.main;
+            main.loop = true;
+            main.startLifetime = 1.4f;
+            main.startSpeed = 9f;
+            main.startSize = 0.045f;
+            main.maxParticles = 600;
+            ps.useAutoRandomSeed = false;
+            ps.randomSeed = 7;
+            var em = ps.emission;
+            em.rateOverTime = 220f;
+            var sh = ps.shape;
+            sh.shapeType = ParticleSystemShapeType.Box;
+            sh.scale = new Vector3(footprint.x, footprint.y, 1f);
+            var rend = go.GetComponent<ParticleSystemRenderer>();
+            rend.renderMode = ParticleSystemRenderMode.Stretch;
+            rend.lengthScale = 3f;
+            rend.velocityScale = 0.02f;
+            rend.sharedMaterial = RainMat();
         }
 
         private static void AddGuard(Transform parent, Vector3 pos, params (Vector3 p, float wait)[] waypoints)
@@ -300,12 +415,16 @@ namespace Escape.EditorTools
             var dl = moon.AddComponent<Light>();
             dl.type = LightType.Directional;
             dl.color = new Color(0.5f, 0.65f, 0.85f);
-            dl.intensity = 0.35f;
+            dl.intensity = 0.5f;
             moon.transform.rotation = Quaternion.Euler(40f, -30f, 0);
+            NightSky(dl);
 
             // Pier + water
             Blockout.Box(env, "Pier", new Vector3(0, -0.5f, 0), new Vector3(36, 1, 18), Concrete, geo);
-            Blockout.Box(env, "Water", new Vector3(0, -1.3f, 0), new Vector3(200, 0.4f, 200), Water, geo, false);
+            var water = Blockout.Box(env, "Water", new Vector3(0, -1.3f, 0), new Vector3(200, 0.4f, 200), Water, geo, false);
+            var waterBob = water.AddComponent<AmbientMotion>();
+            waterBob.BobAmplitude = 0.05f;
+            waterBob.Speed = 0.6f;
 
             // Perimeter fence (gap at gate z=+8)
             Blockout.Box(env, "FenceW", new Vector3(-17.5f, 1.5f, 0), new Vector3(0.3f, 3f, 18), Fence, geo);
@@ -322,13 +441,56 @@ namespace Escape.EditorTools
             Blockout.Box(env, "CrateD", new Vector3(6.4f, 0.5f, 2.2f), new Vector3(1.3f, 1f, 1.3f), Crate, geo);
             Blockout.Box(env, "CrateE", new Vector3(2, 0.6f, 5.5f), new Vector3(1.2f, 1.2f, 1.2f), Crate, geo);
 
-            // Lamp posts with bright pools; the gaps stay dark
+            // Mooring bollards + rope swags along the south pier edge
+            foreach (var x in new[] { -14f, -7f, 7f, 14f })
+                Blockout.Cyl(env, "Bollard", new Vector3(x, 0.3f, -7.4f), 0.26f, 0.7f, Metal, geo);
+            Blockout.Cyl(env, "RopeW", new Vector3(-10.5f, 0.55f, -7.4f), 0.045f, 6.6f, RopeMat, geo, false,
+                new Vector3(0, 0, 90));
+            Blockout.Cyl(env, "RopeE", new Vector3(10.5f, 0.55f, -7.4f), 0.045f, 6.6f, RopeMat, geo, false,
+                new Vector3(0, 0, 90));
+
+            // Working-dock dressing: pallets, oil drums, a tarp over the
+            // crate stack — its edge flutters in the wind.
+            for (int i = 0; i < 3; i++)
+                Blockout.Box(env, "Pallet", new Vector3(-11f + i * 0.1f, 0.08f + i * 0.14f, -3f),
+                    new Vector3(1.6f, 0.12f, 1.4f), Crate, geo);
+            Blockout.Cyl(env, "DrumA", new Vector3(-12f, 0.6f, 3f), 0.38f, 1.2f, Rust, geo);
+            Blockout.Cyl(env, "DrumB", new Vector3(-11.2f, 0.6f, 3.6f), 0.38f, 1.2f, Rust, geo);
+            Blockout.Cyl(env, "DrumTipped", new Vector3(-12.4f, 0.38f, 4.6f), 0.38f, 1.2f, Rust, geo,
+                true, new Vector3(0, 0, 90));
+            var tarp = Blockout.Box(env, "Tarp", new Vector3(5.7f, 1.45f, 2.6f),
+                new Vector3(3.4f, 0.1f, 2.4f), Tarp, geo, false);
+            tarp.transform.eulerAngles = new Vector3(0, 8f, 3f);
+            var tarpSway = tarp.AddComponent<AmbientMotion>();
+            tarpSway.RotationAmplitude = new Vector3(0, 0, 2.5f);
+            tarpSway.Speed = 1.3f;
+
+            // Rain pools between the lamp cones — wet sheen on the concrete.
+            foreach (var (x, z) in new[] { (-9f, 1f), (-1f, -5.5f), (3f, 6.5f), (12f, -3f) })
+                Blockout.Box(env, "Puddle", new Vector3(x, 0.015f, z),
+                    new Vector3(2.4f, 0.03f, 1.6f), Puddle, geo, false);
+
+            // Lamp posts with bright pools; the gaps stay dark. The middle
+            // post's tube is dying — its pool stutters, so the light timing
+            // is readable rather than uniform.
+            int lampIdx = 0;
             foreach (var (x, z) in new[] { (-8f, -4f), (0f, 4f), (8f, -1f) })
             {
                 Blockout.Box(env, "LampPost", new Vector3(x, 2, z), new Vector3(0.18f, 4, 0.18f), Metal, geo);
-                AddLamp(env, new Vector3(x, 3.8f, z), new Color(0.6f, 0.75f, 1f), 11f, 3f, shadows: true);
+                Blockout.Box(env, "LampHead", new Vector3(x, 3.72f, z), new Vector3(0.4f, 0.14f, 0.4f), Bulb, geo, false);
+                var lamp = AddLamp(env, new Vector3(x, 3.8f, z), new Color(0.6f, 0.75f, 1f), 11f, 4f, shadows: true);
+                if (lampIdx++ == 1)
+                {
+                    var flick = lamp.gameObject.AddComponent<LightFlicker>();
+                    flick.FlickerMode = LightFlicker.Mode.Buzz;
+                    flick.Depth = 0.45f;
+                    flick.Speed = 11f;
+                    flick.Seed = 3f;
+                }
                 AddLightingZone(env, new Vector3(x, 1.5f, z), new Vector3(7, 3, 7), PlayerVisibility.Exposure.Bright);
             }
+            AddDrizzle(env, new Vector3(0, 8, 0), new Vector2(40, 22));
+            AddAmbience(env, "amb_dock", 0.5f);
             AddLightingZone(env, new Vector3(-13, 1.5f, 0), new Vector3(9, 3, 18), PlayerVisibility.Exposure.Dark);
             AddLightingZone(env, new Vector3(13, 1.5f, 0), new Vector3(9, 3, 18), PlayerVisibility.Exposure.Dark);
             AddLightingZone(env, new Vector3(0, 1.5f, -6.5f), new Vector3(36, 3, 4), PlayerVisibility.Exposure.Dark);
@@ -396,6 +558,48 @@ namespace Escape.EditorTools
             Blockout.Box(env, "CrateD", new Vector3(-2.8f, 0.6f, 18f), new Vector3(1.2f, 1.2f, 1.2f), Crate, geo);
             Blockout.Box(env, "Shelf", new Vector3(-4f, 1f, 20), new Vector3(0.8f, 2f, 3f), Wood, geo);
 
+            // Service-corridor dressing: ceiling pipe run with brackets, a
+            // valve wheel, junction boxes, and stains bleeding down the walls.
+            Blockout.Cyl(env, "PipeMain", new Vector3(-1.4f, 3.15f, 15), 0.14f, 34f, Pipe, geo, false,
+                new Vector3(90, 0, 0));
+            Blockout.Cyl(env, "PipeRust", new Vector3(-1.95f, 3.05f, 15), 0.1f, 34f, Rust, geo, false,
+                new Vector3(90, 0, 0));
+            foreach (var z in new[] { 2f, 8f, 14f, 20f, 26f })
+                Blockout.Box(env, "PipeBracket", new Vector3(-1.65f, 3.3f, z), new Vector3(0.7f, 0.08f, 0.12f), Metal, geo, false);
+            Blockout.Cyl(env, "ValveWheel", new Vector3(-1.4f, 2.85f, 9f), 0.24f, 0.07f, Rust, geo, false,
+                new Vector3(0, 0, 90));
+            Blockout.Cyl(env, "ValveStem", new Vector3(-1.4f, 3f, 9f), 0.04f, 0.3f, Metal, geo, false);
+            foreach (var z in new[] { 6f, 16f, 22f })
+                Blockout.Box(env, "JunctionBox", new Vector3(-4.28f, 2.2f, z), new Vector3(0.24f, 0.5f, 0.4f), Metal, geo, false);
+            foreach (var (x, z) in new[] { (-4.25f, 11f), (4.25f, 19f), (-4.25f, 27f) })
+                Blockout.Box(env, "WallStain", new Vector3(x, 0.9f, z), new Vector3(0.05f, 1.8f, 1.4f), Stain, geo, false);
+
+            // Condensation drip under a pipe joint — puddle + a localized
+            // drip loop you hear before you see the wet patch.
+            Blockout.Box(env, "Puddle", new Vector3(-1.5f, 0.02f, 11f), new Vector3(1.6f, 0.03f, 1.3f), Puddle, geo, false);
+            Blockout.Box(env, "Puddle", new Vector3(2.2f, 0.02f, 17.5f), new Vector3(1.1f, 0.03f, 0.9f), Puddle, geo, false);
+            AddLoopSource(env, "DripLoop", "drip_loop", new Vector3(-1.5f, 2.6f, 11f), 0.55f, 9f);
+
+            // Steel grating strip mid-corridor — loud footsteps, and it's
+            // directly under the camera's sweep. Risk vs. the dark detour.
+            Blockout.Box(env, "FloorGrate", new Vector3(0.8f, 0.03f, 11.5f), new Vector3(4.5f, 0.06f, 3f), GrateMat, geo);
+            foreach (var x in new[] { -0.9f, 0.15f, 1.2f, 2.25f })
+                Blockout.Box(env, "GrateBar", new Vector3(x, 0.075f, 11.5f), new Vector3(0.08f, 0.03f, 3f), Metal, geo, false);
+
+            // Mop + bucket by the lockers, tool cart mid-corridor.
+            Blockout.Cyl(env, "Bucket", new Vector3(-3.5f, 0.28f, 7.6f), 0.28f, 0.5f, Metal, geo);
+            Blockout.Cyl(env, "Mop", new Vector3(-3.85f, 1f, 8f), 0.03f, 2.1f, Wood, geo, false,
+                new Vector3(10, 0, 10));
+            Blockout.Box(env, "ToolCart", new Vector3(3.4f, 0.55f, 16.5f), new Vector3(1f, 0.7f, 0.6f), Metal, geo);
+            foreach (var (dx, dz) in new[] { (-0.4f, -0.2f), (0.4f, -0.2f), (-0.4f, 0.2f), (0.4f, 0.2f) })
+                Blockout.Cyl(env, "CartWheel", new Vector3(3.4f + dx, 0.09f, 16.5f + dz), 0.09f, 0.06f, ConcreteDark, geo, false,
+                    new Vector3(90, 0, 0));
+
+            // Stacked pipe stock in the back room.
+            for (int i = 0; i < 3; i++)
+                Blockout.Cyl(env, "PipeStock", new Vector3(2.6f, 0.18f + i * 0.24f, 32.5f), 0.11f, 3.4f, Pipe, geo, false,
+                    new Vector3(90, 0, 0));
+
             // Lockers (hiding)
             foreach (var z in new[] { 9f, 17f })
                 AddLocker(env, new Vector3(-3.8f, 0, z), 90f);
@@ -404,10 +608,27 @@ namespace Escape.EditorTools
             AddLure(env, new Vector3(-1f, 1.6f, 6.8f));
             AddLure(env, new Vector3(2.5f, 1.05f, 31f));
 
-            // Ceiling lights: dim corridor, red near door
+            // Ceiling lights: dim corridor, red near door. The mid tube
+            // buzzes and drops out — the grate crossing reads as a lit
+            // window that keeps opening and closing.
+            foreach (var z in new[] { 4f, 14f })
+                Blockout.Box(env, "FluoroTube", new Vector3(0, 3.3f, z), new Vector3(1.6f, 0.08f, 0.3f), Bulb, geo, false);
             AddLamp(env, new Vector3(0, 3f, 4), new Color(0.5f, 0.7f, 0.6f), 10f, 1.6f);
-            AddLamp(env, new Vector3(0, 3f, 14), new Color(0.5f, 0.7f, 0.6f), 10f, 1.6f);
+            var fluoro = AddLamp(env, new Vector3(0, 3f, 14), new Color(0.5f, 0.7f, 0.6f), 10f, 1.6f);
+            var fluoroFlick = fluoro.gameObject.AddComponent<LightFlicker>();
+            fluoroFlick.FlickerMode = LightFlicker.Mode.Buzz;
+            fluoroFlick.Depth = 0.5f;
+            fluoroFlick.Speed = 13f;
+            fluoroFlick.Seed = 8f;
             AddLamp(env, new Vector3(0, 3f, 24), new Color(1f, 0.25f, 0.15f), 9f, 2.2f, shadows: true);
+            // Pulsing beacon above the sealed door — draws the eye to the
+            // terminal objective before the player reads the lock.
+            var beacon = AddLamp(env, new Vector3(0, 3.15f, 24.9f), new Color(1f, 0.2f, 0.1f), 5f, 1.4f);
+            var beaconPulse = beacon.gameObject.AddComponent<LightFlicker>();
+            beaconPulse.FlickerMode = LightFlicker.Mode.Pulse;
+            beaconPulse.Depth = 0.85f;
+            beaconPulse.Speed = 2.4f;
+            AddAmbience(env, "amb_service", 0.45f);
             AddLightingZone(env, new Vector3(0, 1.5f, 14), new Vector3(9, 3, 22), PlayerVisibility.Exposure.Dim);
             AddLightingZone(env, new Vector3(-3.5f, 1.5f, 13), new Vector3(2.5f, 3, 18), PlayerVisibility.Exposure.Dark);
             AddLightingZone(env, new Vector3(0, 1.5f, 30), new Vector3(9, 3, 9), PlayerVisibility.Exposure.Dim);
@@ -482,6 +703,71 @@ namespace Escape.EditorTools
             Blockout.Box(env, "TableS", new Vector3(8f, 0.45f, -3), new Vector3(1.4f, 0.9f, 1f), Wood, geo);
             Blockout.Box(env, "Safe", new Vector3(8.5f, 0.6f, 5), new Vector3(1.1f, 1.2f, 1f), Metal, geo);
             Blockout.Box(env, "Chair", new Vector3(0, 0.5f, 1.6f), new Vector3(0.7f, 1f, 0.7f), Crate, geo);
+
+            // Rug under the desk cluster — carpeted steps are quiet, so
+            // shadowing the patrol through the middle of the room is safe.
+            Blockout.Box(env, "Rug", new Vector3(0, 0.02f, 1.5f), new Vector3(7, 0.04f, 6), RugMat, geo);
+            // Worn planks by the security-wing door — they creak. The last
+            // stretch to the exit is deliberately loud under pressure.
+            Blockout.Box(env, "Planks", new Vector3(7.4f, 0.025f, 4.5f), new Vector3(3.6f, 0.05f, 4.2f), PlankMat, geo);
+
+            // Wainscoting + portraits of the elites along the north wall.
+            Blockout.Box(env, "WainsW", new Vector3(-9.25f, 0.9f, 0), new Vector3(0.08f, 0.9f, 16.6f), Wood, geo, false);
+            Blockout.Box(env, "WainsN", new Vector3(0, 0.9f, 8.25f), new Vector3(18.6f, 0.9f, 0.08f), Wood, geo, false);
+            for (int i = 0; i < 3; i++)
+            {
+                float px = -4.5f + i * 4.5f;
+                Blockout.Box(env, "PortraitFrame" + i, new Vector3(px, 2.2f, 8.28f), new Vector3(1.5f, 1.8f, 0.1f), GoldFrame, geo, false);
+                Blockout.Box(env, "Portrait" + i, new Vector3(px, 2.2f, 8.22f), new Vector3(1.2f, 1.5f, 0.06f), Portrait, geo, false);
+            }
+
+            // Book row on the shelf — deterministic colors/heights.
+            var bookCols = new[]
+            {
+                new Color(0.35f, 0.1f, 0.1f), new Color(0.1f, 0.2f, 0.35f), new Color(0.15f, 0.3f, 0.15f),
+                new Color(0.4f, 0.3f, 0.1f), new Color(0.25f, 0.1f, 0.3f), new Color(0.3f, 0.25f, 0.2f),
+            };
+            for (int i = 0; i < 9; i++)
+            {
+                var bm = Blockout.Mat("MAT_Book_" + i, bookCols[i % bookCols.Length]);
+                Blockout.Box(env, "Book", new Vector3(-9f, 0.55f, 0.6f + i * 0.32f),
+                    new Vector3(0.5f, 0.5f + 0.08f * (i % 3), 0.24f), bm, geo, false);
+            }
+
+            // Loose papers on the desk — the office feels searched/worked.
+            foreach (var (px, pz, rot) in new[] { (-0.7f, 3.3f, 15f), (-0.2f, 2.8f, -25f), (0.4f, 3.2f, 40f) })
+            {
+                var p = Blockout.Box(env, "Paper", new Vector3(px, 0.97f, pz), new Vector3(0.28f, 0.01f, 0.38f), Paper, geo, false);
+                p.transform.eulerAngles = new Vector3(0, rot, 0);
+            }
+
+            // Banker's desk lamp — small warm pool over the paperwork.
+            Blockout.Box(env, "DeskLampShade", new Vector3(-1f, 1.35f, 3f), new Vector3(0.5f, 0.18f, 0.3f), WarmBulb, geo, false);
+            Blockout.Cyl(env, "DeskLampStem", new Vector3(-1f, 1.15f, 3f), 0.03f, 0.4f, GoldFrame, geo, false);
+            AddLamp(env, new Vector3(-1f, 1.3f, 3f), new Color(1f, 0.7f, 0.4f), 4f, 1.8f);
+
+            // Grandfather clock against the west wall — its pendulum swings,
+            // and the tick rides the ambience loop.
+            Blockout.Box(env, "ClockBody", new Vector3(-9f, 1.2f, 6.5f), new Vector3(0.7f, 2.4f, 0.5f), Wood, geo);
+            Blockout.Box(env, "ClockFace", new Vector3(-8.62f, 2f, 6.5f), new Vector3(0.05f, 0.6f, 0.4f), Paper, geo, false);
+            var pendulum = Blockout.Box(env, "ClockPendulum", new Vector3(-8.64f, 0.9f, 6.5f), new Vector3(0.04f, 0.8f, 0.12f), GoldFrame, geo, false);
+            var pendSwing = pendulum.AddComponent<AmbientMotion>();
+            pendSwing.RotationAmplitude = new Vector3(0, 0, 7f);
+            pendSwing.Speed = 3.6f;
+
+            // Curtained window on the north wall — rain streaks it outside.
+            Blockout.Box(env, "WindowGlass", new Vector3(3f, 2.1f, 8.32f), new Vector3(1.6f, 1.7f, 0.06f),
+                Blockout.Mat("MAT_WindowGlass", new Color(0.05f, 0.08f, 0.12f), 0.3f, 0.9f), geo, false);
+            Blockout.Box(env, "CurtainL", new Vector3(2f, 2.1f, 8.2f), new Vector3(0.5f, 1.9f, 0.15f), Curtain, geo, false);
+            Blockout.Box(env, "CurtainR", new Vector3(4f, 2.1f, 8.2f), new Vector3(0.5f, 1.9f, 0.15f), Curtain, geo, false);
+
+            // Filing drawer left ajar on the cabinet — someone's been here.
+            Blockout.Box(env, "DrawerOpen", new Vector3(-8.5f, 1.5f, -3.9f), new Vector3(1.2f, 0.35f, 0.4f), Metal, geo, false);
+
+            // A wardrobe in the corner — the office needed a hiding spot.
+            AddLocker(env, new Vector3(-8.6f, 0, -1.5f), 90f);
+
+            AddAmbience(env, "amb_office", 0.4f);
 
             // Warm interior lights
             AddLamp(env, new Vector3(0, 2.9f, 3), new Color(1f, 0.75f, 0.45f), 9f, 2.4f, shadows: true);

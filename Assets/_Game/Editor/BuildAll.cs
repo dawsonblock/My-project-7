@@ -14,9 +14,9 @@ namespace Escape.EditorTools
         {
             ProjectSetup.EnsureLayers();
             WebDataImporter.ImportAll();
+            AudioLibraryBuilder.Build();
             PrefabFactory.BuildAll();
             SceneFactory.BuildAll();
-            AudioLibraryBuilder.Build();
             MaterialLibrary.ApplyAll();
             Debug.Log("[BuildAll] Done. Open Bootstrap and press Play.");
         }
