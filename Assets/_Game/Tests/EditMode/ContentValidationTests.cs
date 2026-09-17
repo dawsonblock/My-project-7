@@ -176,5 +176,44 @@ namespace Escape.Tests.EditMode
                     fallback = true;
             Assert.IsTrue(fallback, "No fallback ending (zero-requirement) exists.");
         }
+
+        [Test]
+        public void RealContent_MainObjectiveChain_IsCompletable()
+        {
+            // Simulates a full run through the shipped content graph:
+            // traversal objectives fired the way SceneBootstrap fires them,
+            // the terminal unlock, then every evidence pickup. If any
+            // main-chain objective is completable by nothing, this fails.
+            var content = ContentDatabase.Load();
+            var events = new GameEventBus();
+            var state = new GameStateService();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(echoToConsole: false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+            dispatcher.Register<ActivateObjectiveCommand>(objectives);
+            dispatcher.Register<CompleteObjectiveCommand>(objectives);
+            dispatcher.Register<GainInsightCommand>(insights);
+
+            foreach (var id in new[] { "reach_compound", "infiltrate_service",
+                     "unlock_service_door", "reach_bunker", "reach_tower" })
+                dispatcher.Dispatch(new CompleteObjectiveCommand(id, "test"));
+
+            foreach (var ev in content.Evidence)
+                dispatcher.Dispatch(new CollectEvidenceCommand(ev.Id, "test"));
+
+            var s = state.State;
+            foreach (var id in new[] { "reach_compound", "infiltrate_service",
+                     "find_keycard", "unlock_service_door", "search_office",
+                     "corroborate_story", "download_archive", "broadcast_truth",
+                     "reach_bunker", "reach_tower" })
+                Assert.IsTrue(s.CompletedObjectives.Contains(id),
+                    $"Main-chain objective '{id}' did not complete");
+
+            foreach (var ins in content.Insights)
+                Assert.IsTrue(s.GainedInsights.Contains(ins.Id),
+                    $"Insight '{ins.Id}' did not form from full evidence collection");
+        }
     }
 }

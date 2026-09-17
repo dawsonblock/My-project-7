@@ -870,6 +870,9 @@ namespace Escape.EditorTools
             Blockout.Box(env, "PaperPile", new Vector3(-3.4f, 0.93f, 13.4f), new Vector3(0.35f, 0.02f, 0.45f), Paper, geo, false);
             Blockout.Box(env, "PaperPile2", new Vector3(-1.8f, 0.93f, 13.5f), new Vector3(0.28f, 0.02f, 0.38f), Paper, geo, false);
             Blockout.Box(env, "OpChair", new Vector3(-2.5f, 0.5f, 12.4f), new Vector3(0.6f, 1f, 0.6f), ConcreteDark, geo);
+            // The sealed incident report — half-buried on the hub desk,
+            // it corroborates what the dock memo only hinted at.
+            AddDocument(env, "doc_incident_report", new Vector3(-1.15f, 1.05f, 13.4f));
 
             // Overhead cable tray with a drooping run that sways gently.
             Blockout.Box(env, "CableTray", new Vector3(0, 3.1f, 7.5f), new Vector3(18.5f, 0.08f, 0.4f), Metal, geo, false);
@@ -1026,6 +1029,11 @@ namespace Escape.EditorTools
             // route between rack banks clangs underfoot.
             Blockout.Box(env, "Trench", new Vector3(0, 0.05f, 6.25f), new Vector3(16.5f, 0.1f, 0.45f), GrateMat, geo);
 
+            // The vault terminal — the archive's physical home. Recovers
+            // the keylog fragment and can blind the vault camera.
+            Blockout.Box(env, "TermPedestal", new Vector3(5.5f, 0.5f, 15.15f), new Vector3(0.9f, 1f, 0.4f), Metal, geo);
+            AddTerminal(env, "bunker_terminal", new Vector3(5.5f, 1.05f, 15.1f), 180f);
+
             AddAmbience(env, "amb_bunker", 0.45f);
 
             // Exit alcove — stairwell up to the tower
@@ -1172,9 +1180,12 @@ namespace Escape.EditorTools
             Blockout.Box(env, "VentB", new Vector3(2.5f, 0.9f, 1f), new Vector3(1.8f, 1.8f, 1.4f), Metal, geo);
             Blockout.Box(env, "CrateT", new Vector3(-4.5f, 0.6f, 6.5f), new Vector3(1.2f, 1.2f, 1.2f), Crate, geo);
 
-            // The finale — relay console on the top deck
+            // The finale — relay console on the top deck, with the script
+            // they meant to run left beside it. Holding the archive turns
+            // it from the story into the lie.
             var console = Spawn("BroadcastConsole", new Vector3(4f, 4.8f, 6.5f), new Vector3(0, -90, 0));
             console.transform.SetParent(env, true);
+            AddDocument(env, "doc_broadcast_script", new Vector3(3.05f, 4.95f, 6.3f));
 
             // Ground guard + the tower camera the hub terminal can blind
             AddGuard(env, new Vector3(0, 0.1f, -3f),

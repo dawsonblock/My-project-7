@@ -125,6 +125,37 @@
           "requiredEvidence": ["keycard_staff"]
         }
       ]
+    },
+    {
+      "id": "bunker_terminal",
+      "displayName": "ARCHIVE VAULT B-01",
+      "unlockCode": "",
+      "requiredObjective": "",
+      "associatedDoors": [],
+      "associatedCameras": ["bunker_cam_01"],
+      "commands": [
+        {
+          "command": "STATUS",
+          "label": "STATUS",
+          "action": "ListStatus",
+          "successText": "VAULT B-01 ONLINE\nCORE TEMP: NOMINAL\nLOG STORE: 1 FRAGMENT RECOVERABLE\nCAMERA B-01: SWEEPING"
+        },
+        {
+          "command": "RECOVER LOGS",
+          "label": "RECOVER LOG FRAGMENT",
+          "action": "CollectEvidence",
+          "targetId": "vault_keylog_001",
+          "successText": "Fragment exported. Three vault accesses never reached the official log.",
+          "failureText": "LOG STORE EMPTY — FRAGMENT ALREADY EXPORTED"
+        },
+        {
+          "command": "DISABLE B-01",
+          "label": "DISABLE CAMERA B-01",
+          "action": "DisableCamera",
+          "targetId": "bunker_cam_01",
+          "successText": "Camera B-01 feed cut. Looping last frame."
+        }
+      ]
     }
   ]
 }
