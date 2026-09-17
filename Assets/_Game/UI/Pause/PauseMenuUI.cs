@@ -133,10 +133,12 @@ namespace Escape.UI
             _root.SetActive(true);
             Time.timeScale = 0f;
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             Time.timeScale = 1f;
             _services.Get<IInputGate>().PopUi(this);

@@ -136,12 +136,14 @@ namespace Escape.UI
             Rebuild();
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
 
         public void Cancel() => Close();
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             _services.Get<IInputGate>().PopUi(this);
         }

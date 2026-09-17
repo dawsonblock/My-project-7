@@ -133,6 +133,7 @@ namespace Escape.UI
             _settings ??= _services.Get<ISettingsService>();
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
 
         private void Update()
@@ -149,6 +150,7 @@ namespace Escape.UI
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             _settings?.Persist(); // flush deferred writes when the menu closes
             _services.Get<IInputGate>().PopUi(this);

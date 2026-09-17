@@ -5,6 +5,7 @@ using Escape.UI;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 
@@ -99,6 +100,36 @@ namespace Escape.Tests.PlayMode
             Assert.AreEqual(1, modal.Cancels, "Escape should cancel the top modal");
             Assert.IsFalse(_pause.IsOpen, "Pause must not open over a modal");
             gate.PopUi(modal);
+        }
+
+        [UnityTest]
+        public IEnumerator Pause_SelectsControlOnOpen_DeselectsOnClose()
+        {
+            // Keyboard/gamepad nav needs a selected control to anchor to;
+            // closing must drop it so a stale selection can't ghost-submit.
+            var es = new GameObject("EventSystem", typeof(EventSystem),
+                typeof(UnityEngine.InputSystem.UI.InputSystemUIInputModule));
+            yield return null;
+            yield return null;
+
+            Press(Keyboard.current.escapeKey);
+            yield return null;
+            Release(Keyboard.current.escapeKey);
+            yield return null;
+
+            var sel = EventSystem.current.currentSelectedGameObject;
+            Assert.IsNotNull(sel, "Opening pause should select a control");
+            Assert.IsTrue(sel.transform.IsChildOf(_pause.transform),
+                "Selected control should be inside the pause menu");
+
+            Press(Keyboard.current.escapeKey);
+            yield return null;
+            Release(Keyboard.current.escapeKey);
+            yield return null;
+
+            Assert.IsNull(EventSystem.current.currentSelectedGameObject,
+                "Closing pause should clear the selection");
+            Object.DestroyImmediate(es);
         }
 
         private sealed class FakeModal : ICancelableUi
