@@ -109,9 +109,38 @@ namespace Escape.EditorTools
 
             var ordered = docs.OrderBy(d => d.Rank)
                 .ThenBy(d => d.OwnSig, StringComparer.Ordinal).ToList();
+
+            // Stripped-object ids are NOT free: Unity requires them to be
+            // (prefabInstanceFileID + k) for the k-th stripped doc of that
+            // instance, or prefab resolution fails on load. Assign a
+            // PrefabInstance's id, then its stripped docs contiguously.
+            var strippedOf = new Dictionary<long, List<Doc>>();
+            foreach (var d in docs)
+            {
+                if (!d.Stripped) continue;
+                var m = Regex.Match(d.Body, @"m_PrefabInstance: \{fileID: (-?\d+)\}");
+                if (m.Success)
+                {
+                    var inst = long.Parse(m.Groups[1].Value);
+                    if (!strippedOf.TryGetValue(inst, out var l))
+                        strippedOf[inst] = l = new List<Doc>();
+                    l.Add(d);
+                }
+            }
+            foreach (var l in strippedOf.Values)
+                l.Sort((a, b) => string.CompareOrdinal(a.ClassId + a.OwnSig, b.ClassId + b.OwnSig));
+
             var newId = new Dictionary<long, long>(docs.Count);
-            for (var i = 0; i < ordered.Count; i++)
-                newId[ordered[i].OldId] = i + 1;
+            var next = 1L;
+            foreach (var d in ordered)
+            {
+                if (d.Stripped) continue;
+                newId[d.OldId] = next++;
+                if (d.ClassId == "1001" && strippedOf.TryGetValue(d.OldId, out var kids))
+                    foreach (var k in kids) newId[k.OldId] = next++;
+            }
+            foreach (var d in docs)
+                if (!newId.ContainsKey(d.OldId)) newId[d.OldId] = next++;
 
             var outSb = new StringBuilder(text.Length + 64);
             outSb.Append(prefix);

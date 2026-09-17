@@ -34,7 +34,9 @@ namespace Escape.EditorTools
             Guard();
             GameUi();
             AssetDatabase.SaveAssets();
-            SceneYamlNormalizer.NormalizeDirectory(PrefabDir, "*.prefab");
+            // NOTE: prefab files must NOT be fileID-normalized — scenes
+            // reference prefab internals via {fileID, guid} pairs, so
+            // renumbering corrupts every prefab instance reference.
             Debug.Log("[PrefabFactory] All prefabs built.");
         }
 
