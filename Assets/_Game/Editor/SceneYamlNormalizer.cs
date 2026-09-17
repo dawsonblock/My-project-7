@@ -47,10 +47,10 @@ namespace Escape.EditorTools
             public int Rank;
         }
 
-        public static void NormalizeDirectory(string dir)
+        public static void NormalizeDirectory(string dir, string pattern = "*.unity")
         {
             if (!Directory.Exists(dir)) return;
-            foreach (var path in Directory.GetFiles(dir, "*.unity"))
+            foreach (var path in Directory.GetFiles(dir, pattern, SearchOption.AllDirectories))
                 NormalizeFile(path);
         }
 

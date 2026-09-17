@@ -34,6 +34,7 @@ namespace Escape.EditorTools
             Guard();
             GameUi();
             AssetDatabase.SaveAssets();
+            SceneYamlNormalizer.NormalizeDirectory(PrefabDir, "*.prefab");
             Debug.Log("[PrefabFactory] All prefabs built.");
         }
 
