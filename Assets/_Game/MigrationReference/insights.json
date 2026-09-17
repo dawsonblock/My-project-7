@@ -1,0 +1,25 @@
+{
+  "insights": [
+    {
+      "id": "travel_pattern_confirmed",
+      "title": "Travel Pattern Confirmed",
+      "description": "Guest log dates match the transport manifest exactly. The visits and the shipments were coordinated.",
+      "requiredEvidence": ["guest_log_001", "transport_manifest_001"],
+      "unlocksObjective": ""
+    },
+    {
+      "id": "private_security_coverup",
+      "title": "Private Security Cover-Up",
+      "description": "The public statement denies private security; the access log proves they badged in all weekend.",
+      "requiredEvidence": ["public_statement_001", "access_log_001"],
+      "unlocksObjective": ""
+    },
+    {
+      "id": "server_archive_authentic",
+      "title": "Server Archive Authentic",
+      "description": "Archive timestamps align with the access log badge events. The footage is genuine.",
+      "requiredEvidence": ["server_archive_001", "access_log_001"],
+      "unlocksObjective": ""
+    }
+  ]
+}

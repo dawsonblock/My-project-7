@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d044680215b43b680c880812408999, type: 3}
+  m_Name: END_ending_bad
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.EndingDefinition
+  Id: ending_bad
+  Title: Static
+  Description: You transmitted fragments. Rumors, not proof. By morning the estate's lawyers had buried it under a hundred denials, and the dock was quiet again.
+  MinPrimaryEvidence: 0
+  RequiredEvidence: []
+  RequiredInsights: []
+  Priority: 0
+  IsSecret: 0

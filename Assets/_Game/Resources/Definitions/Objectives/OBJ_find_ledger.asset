@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
+  m_Name: OBJ_find_ledger
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
+  Id: find_ledger
+  Title: Follow the money
+  Description: Rumor says a private ledger page survived the shredding.
+  RequiredObjectives: []
+  RequiredEvidence:
+  - {fileID: 11400000, guid: 53541f284608448bea0ee38fc2579b79, type: 2}
+  Optional: 1

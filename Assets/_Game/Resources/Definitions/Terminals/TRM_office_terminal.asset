@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65dba38201f5e4cc69d5659e0e228fa0, type: 3}
+  m_Name: TRM_office_terminal
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.TerminalDefinition
+  Id: office_terminal
+  DisplayName: SECURITY NODE S-04
+  UnlockCode: 7391
+  RequiredObjective: {fileID: 11400000, guid: e43ecb7047135489a987db8e0b897201, type: 2}
+  Commands:
+  - Command: STATUS
+    Label: STATUS
+    SuccessText: 'NODE S-04 ONLINE
+
+      ARCHIVE LINK: STANDBY
+
+      RELAY: REACHABLE'
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 9
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: ARCHIVE
+    Label: DOWNLOAD ARCHIVE
+    SuccessText: Archive pulled. Timestamps intact.
+    FailureText: "ARCHIVE SEALED \u2014 CORROBORATION REQUIRED"
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights:
+    - {fileID: 11400000, guid: f7ca816fb17364e89a4c9cd6637abd9e, type: 2}
+    Action: 1
+    TargetId: server_archive_001
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: BROADCAST
+    Label: ROUTE BROADCAST SIGNAL
+    SuccessText: Signal routed to the relay console. Transmit when ready.
+    FailureText: "RELAY REJECTED \u2014 BROADCAST KEY REQUIRED"
+    RequiredEvidence:
+    - {fileID: 11400000, guid: d0e496c3404a14e81bbf5c5dc21fd3f8, type: 2}
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 6
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  AssociatedDoorIds: []
+  AssociatedCameraIds: []

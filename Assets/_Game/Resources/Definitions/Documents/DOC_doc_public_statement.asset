@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337612f4a65fc42cb99b619d09688adf, type: 3}
+  m_Name: DOC_doc_public_statement
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.DocumentDefinition
+  Id: doc_public_statement
+  Title: Public Statement Draft
+  Body: "DRAFT \u2014 FOR RELEASE IF ASKED\n\n'At no time during the summit weekend did any private security contractor operate on the estate. All access was handled by the residence staff.'\n\n\u2014 approved, initials only"
+  GrantsEvidence: {fileID: 11400000, guid: 1dcbfe79bc9ee442d82ba894ed20317a, type: 2}

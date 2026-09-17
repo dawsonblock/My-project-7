@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "sceneId": "service_entrance",
+  "player": {
+    "position": { "x": 0, "y": 1, "z": 0 },
+    "eulerRotation": { "x": 0, "y": 0, "z": 0 },
+    "flashlightOn": false
+  },
+  "collectedEvidence": [],
+  "readDocuments": [],
+  "completedObjectives": [],
+  "activeObjectives": [],
+  "gainedInsights": [],
+  "unlockedDoors": [],
+  "disabledCameras": [],
+  "unlockedTerminals": [],
+  "usedTerminalCommands": [],
+  "alert": false,
+  "lockdown": false,
+  "broadcastStarted": false,
+  "broadcastCompleted": false,
+  "endingId": "",
+  "detection": 0,
+  "savedAtUtc": ""
+}

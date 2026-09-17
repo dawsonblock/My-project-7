@@ -13,13 +13,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - WorldGeometry
+  - Interactable
+  - Player
+  - Guard
+  - Security
+  - HidingZone
+  - LightingZone
   - 
   - 
   - 

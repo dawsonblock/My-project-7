@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd514fc2ed851473d99faebf61da93fe, type: 3}
+  m_Name: ClipLibrary
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ClipLibrary
+  stepsConcrete:
+  - {fileID: 8300000, guid: 053895a4ec9064a1697552320ba55fe0, type: 3}
+  - {fileID: 8300000, guid: 368bd0ade5cd040c38dc32ca0f99c937, type: 3}
+  - {fileID: 8300000, guid: 5cdf0212c59d349388282eac2bc858a5, type: 3}
+  - {fileID: 8300000, guid: aa2eb2fcf4b9d4e72a707b703a6b9a36, type: 3}
+  - {fileID: 8300000, guid: e3bb96b2a50cb48bcaef77e88fc8e0e1, type: 3}
+  stepsCarpet:
+  - {fileID: 8300000, guid: 676b3112d30d34091827c384391901cc, type: 3}
+  - {fileID: 8300000, guid: bf7acfcedca27441c8e5ade0f44928a4, type: 3}
+  - {fileID: 8300000, guid: c83b6d886579b47ffafbf81499789460, type: 3}
+  - {fileID: 8300000, guid: ed8458fb2e8da497fb14e53ba2cb49d0, type: 3}
+  - {fileID: 8300000, guid: fb47df0290afb44179d0bfc8e9876dba, type: 3}
+  stepsWood:
+  - {fileID: 8300000, guid: 0e80d0865dd6c4f76af31e8912874e69, type: 3}
+  - {fileID: 8300000, guid: 1a905711e2bc84dd792fdf64f236527a, type: 3}
+  - {fileID: 8300000, guid: 5e6f7f546868c4e5b93b33cc7b6c0b42, type: 3}
+  - {fileID: 8300000, guid: 899acbf3137944dab8537c6a079898ce, type: 3}
+  - {fileID: 8300000, guid: f77d8ab1e24c447eda56d897ccd36762, type: 3}
+  stepsMetal:
+  - {fileID: 8300000, guid: 1dfb4e939668b4ccbb9d79a81e09ac5e, type: 3}
+  - {fileID: 8300000, guid: 2286479d67e1c4349a342b36db36d4df, type: 3}
+  - {fileID: 8300000, guid: 3b1d20b80b03c4144b3566a7da7d81c6, type: 3}
+  - {fileID: 8300000, guid: 51e42bb9fb4434a8cb461b2e71370283, type: 3}
+  - {fileID: 8300000, guid: ac621f008c32f4eaca351772cd0d47e4, type: 3}
+  glassImpacts:
+  - {fileID: 8300000, guid: 1767e274e646e4b5490da4f944d1db6d, type: 3}
+  - {fileID: 8300000, guid: 284eb13db9fa64841b3a236c0fe2bcfd, type: 3}
+  - {fileID: 8300000, guid: 567aac04c3d04482b8f5e5427d668150, type: 3}
+  - {fileID: 8300000, guid: cd199536c37a84cbdbd25a6df8be0707, type: 3}
+  - {fileID: 8300000, guid: d612b68c1447e4fb49a6a81b8f5ce3e6, type: 3}
+  metalImpacts:
+  - {fileID: 8300000, guid: 7e5a415e7e26b48a98ca008c40ed6ca0, type: 3}
+  - {fileID: 8300000, guid: b21e832f416024b0e9b27965d58a830d, type: 3}
+  - {fileID: 8300000, guid: c6e40511b4c5a4f8c92e267b0d92b467, type: 3}
+  - {fileID: 8300000, guid: d6eb3a4e4b8fa485199ac1bdd35febc1, type: 3}
+  - {fileID: 8300000, guid: fc4861620522d4fcc92419a6b7ee2aee, type: 3}
+  whistle: {fileID: 8300000, guid: fd42f7032b8434b68b438fb3f64e3a1d, type: 3}
+  throwWhoosh: {fileID: 8300000, guid: 796fae14657ee489ba622dfd35ced7c3, type: 3}
+  pickup: {fileID: 8300000, guid: b07b95858a95f4777a7b14a2b2882225, type: 3}
+  doorClunk: {fileID: 8300000, guid: 1427b44faf17747d6bf0a8e48b2a4bfe, type: 3}
+  cameraHum: {fileID: 8300000, guid: cba94b8f1bdac40208b53c523e6cc815, type: 3}
+  alertSting: {fileID: 8300000, guid: 8393676118e474258a196806934c1190, type: 3}
+  uiClick: {fileID: 8300000, guid: cc4dade9e87454cfab127ec610392b5e, type: 3}
+  uiConfirm: {fileID: 8300000, guid: 6b9afe78acae140579d48d830985f1c1, type: 3}
+  uiError: {fileID: 8300000, guid: 8e2038410843641d9a856fc53d1d72f1, type: 3}
+  uiBack: {fileID: 8300000, guid: d65652bfc03a7467c8ba27f092c173a4, type: 3}
+  uiHover: {fileID: 8300000, guid: f02101eabf00248d2955bf91e049984a, type: 3}

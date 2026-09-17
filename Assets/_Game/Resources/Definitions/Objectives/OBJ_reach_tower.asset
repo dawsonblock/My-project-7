@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
+  m_Name: OBJ_reach_tower
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
+  Id: reach_tower
+  Title: Reach the broadcast tower
+  Description: The relay console sits above the bunker. Get to it before they find you.
+  RequiredObjectives:
+  - {fileID: 11400000, guid: 043a3fd453e50455782e87c3a80faecb, type: 2}
+  RequiredEvidence: []
+  Optional: 0

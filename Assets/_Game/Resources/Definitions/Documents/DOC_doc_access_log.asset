@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337612f4a65fc42cb99b619d09688adf, type: 3}
+  m_Name: DOC_doc_access_log
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.DocumentDefinition
+  Id: doc_access_log
+  Title: Security Access Log
+  Body: 'ACCESS CONTROL EXPORT
+
+
+    22:03  BADGE P-118  SERVICE DOOR
+
+    22:11  BADGE P-119  OFFICE WING
+
+    23:47  BADGE P-118  OFFICE WING
+
+    01:12  BADGE P-121  SERVER ROOM
+
+
+    Badges P-1xx are not residence staff.'
+  GrantsEvidence: {fileID: 11400000, guid: 068716e0592384813b62fb22f885d72e, type: 2}

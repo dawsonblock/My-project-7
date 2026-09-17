@@ -1,0 +1,17 @@
+{
+    "name": "Escape.UI",
+    "rootNamespace": "Escape.UI",
+    "references": [
+        "Escape.Data",
+        "Escape.Core",
+        "Escape.Gameplay",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

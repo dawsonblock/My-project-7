@@ -1,0 +1,130 @@
+{
+  "terminals": [
+    {
+      "id": "service_terminal",
+      "displayName": "SECURITY NODE S-01",
+      "unlockCode": "",
+      "requiredObjective": "find_keycard",
+      "associatedDoors": ["service_security_door"],
+      "associatedCameras": ["service_cam_01"],
+      "commands": [
+        {
+          "command": "STATUS",
+          "label": "STATUS",
+          "action": "ListStatus",
+          "successText": "NODE S-01 ONLINE\nDOOR LOCK: ENGAGED\nCAMERA S-01: SWEEPING\nALERT STATE: NOMINAL"
+        },
+        {
+          "command": "CAMERAS",
+          "label": "CAMERAS",
+          "action": "ListCameras",
+          "successText": "S-01 SERVICE CORRIDOR — SWEEPING"
+        },
+        {
+          "command": "DISABLE S-01",
+          "label": "DISABLE CAMERA S-01",
+          "action": "DisableCamera",
+          "targetId": "service_cam_01",
+          "successText": "Camera S-01 feed cut. Looping last frame.",
+          "requiredEvidence": ["keycard_staff"]
+        },
+        {
+          "command": "UNLOCK SERVICE",
+          "label": "UNLOCK INTERIOR DOOR",
+          "action": "UnlockDoor",
+          "targetId": "service_security_door",
+          "completesObjective": "unlock_service_door",
+          "successText": "Interior door released.",
+          "failureText": "ACCESS DENIED — STAFF BADGE REQUIRED",
+          "requiredEvidence": ["keycard_staff"]
+        }
+      ]
+    },
+    {
+      "id": "office_terminal",
+      "displayName": "SECURITY NODE S-04",
+      "unlockCode": "7391",
+      "requiredObjective": "search_office",
+      "associatedDoors": [],
+      "associatedCameras": [],
+      "commands": [
+        {
+          "command": "STATUS",
+          "label": "STATUS",
+          "action": "ListStatus",
+          "successText": "NODE S-04 ONLINE\nARCHIVE LINK: STANDBY\nRELAY: REACHABLE"
+        },
+        {
+          "command": "ARCHIVE",
+          "label": "DOWNLOAD ARCHIVE",
+          "action": "CollectEvidence",
+          "targetId": "server_archive_001",
+          "successText": "Archive pulled. Timestamps intact.",
+          "failureText": "ARCHIVE SEALED — CORROBORATION REQUIRED",
+          "requiredInsights": ["private_security_coverup"]
+        },
+        {
+          "command": "BROADCAST",
+          "label": "ROUTE BROADCAST SIGNAL",
+          "action": "StartBroadcast",
+          "targetId": "",
+          "successText": "Signal routed to the relay console. Transmit when ready.",
+          "failureText": "RELAY REJECTED — BROADCAST KEY REQUIRED",
+          "requiredEvidence": ["broadcast_key_001"]
+        }
+      ]
+    },
+    {
+      "id": "security_hub_terminal",
+      "displayName": "SECURITY HUB W-02",
+      "unlockCode": "",
+      "requiredObjective": "",
+      "associatedDoors": ["wing_bunker_door"],
+      "associatedCameras": ["wing_cam_01", "wing_cam_02", "tower_cam_01"],
+      "commands": [
+        {
+          "command": "STATUS",
+          "label": "STATUS",
+          "action": "ListStatus",
+          "successText": "HUB W-02 ONLINE\nWING CAMERAS: 2 SWEEPING\nTOWER CAM T-01: SWEEPING\nBUNKER DOOR: SEALED"
+        },
+        {
+          "command": "CAMERAS",
+          "label": "CAMERAS",
+          "action": "ListCameras",
+          "successText": "W-01 WEST MONITORS — SWEEPING\nW-02 EAST AISLE — SWEEPING\nT-01 TOWER RELAY — SWEEPING"
+        },
+        {
+          "command": "DISABLE W-01",
+          "label": "DISABLE CAMERA W-01",
+          "action": "DisableCamera",
+          "targetId": "wing_cam_01",
+          "successText": "Camera W-01 feed cut."
+        },
+        {
+          "command": "DISABLE W-02",
+          "label": "DISABLE CAMERA W-02",
+          "action": "DisableCamera",
+          "targetId": "wing_cam_02",
+          "successText": "Camera W-02 feed cut."
+        },
+        {
+          "command": "DISABLE T-01",
+          "label": "DISABLE CAMERA T-01",
+          "action": "DisableCamera",
+          "targetId": "tower_cam_01",
+          "successText": "Camera T-01 feed cut. The tower approach is blind."
+        },
+        {
+          "command": "UNLOCK BUNKER",
+          "label": "UNLOCK BUNKER DOOR",
+          "action": "UnlockDoor",
+          "targetId": "wing_bunker_door",
+          "successText": "Bunker door released. Stairwell is open.",
+          "failureText": "ACCESS DENIED — STAFF BADGE REQUIRED",
+          "requiredEvidence": ["keycard_staff"]
+        }
+      ]
+    }
+  ]
+}

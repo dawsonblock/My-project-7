@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
+  m_Name: OBJ_broadcast_truth
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
+  Id: broadcast_truth
+  Title: Broadcast the evidence
+  Description: Route the signal and transmit everything before they reach you.
+  RequiredObjectives:
+  - {fileID: 11400000, guid: 02ee1e16d4ece471b8f541b098214305, type: 2}
+  RequiredEvidence:
+  - {fileID: 11400000, guid: d0e496c3404a14e81bbf5c5dc21fd3f8, type: 2}
+  Optional: 0

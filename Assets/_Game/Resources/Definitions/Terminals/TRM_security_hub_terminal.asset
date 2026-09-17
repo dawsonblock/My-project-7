@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65dba38201f5e4cc69d5659e0e228fa0, type: 3}
+  m_Name: TRM_security_hub_terminal
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.TerminalDefinition
+  Id: security_hub_terminal
+  DisplayName: SECURITY HUB W-02
+  UnlockCode: 
+  RequiredObjective: {fileID: 0}
+  Commands:
+  - Command: STATUS
+    Label: STATUS
+    SuccessText: 'HUB W-02 ONLINE
+
+      WING CAMERAS: 2 SWEEPING
+
+      TOWER CAM T-01: SWEEPING
+
+      BUNKER DOOR: SEALED'
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 9
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: CAMERAS
+    Label: CAMERAS
+    SuccessText: "W-01 WEST MONITORS \u2014 SWEEPING\nW-02 EAST AISLE \u2014 SWEEPING\nT-01 TOWER RELAY \u2014 SWEEPING"
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 8
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: DISABLE W-01
+    Label: DISABLE CAMERA W-01
+    SuccessText: Camera W-01 feed cut.
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 4
+    TargetId: wing_cam_01
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: DISABLE W-02
+    Label: DISABLE CAMERA W-02
+    SuccessText: Camera W-02 feed cut.
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 4
+    TargetId: wing_cam_02
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: DISABLE T-01
+    Label: DISABLE CAMERA T-01
+    SuccessText: Camera T-01 feed cut. The tower approach is blind.
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 4
+    TargetId: tower_cam_01
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: UNLOCK BUNKER
+    Label: UNLOCK BUNKER DOOR
+    SuccessText: Bunker door released. Stairwell is open.
+    FailureText: "ACCESS DENIED \u2014 STAFF BADGE REQUIRED"
+    RequiredEvidence:
+    - {fileID: 11400000, guid: d6342055ec0204073920d6e3434a18ee, type: 2}
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 3
+    TargetId: wing_bunker_door
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  AssociatedDoorIds:
+  - wing_bunker_door
+  AssociatedCameraIds:
+  - wing_cam_01
+  - wing_cam_02
+  - tower_cam_01

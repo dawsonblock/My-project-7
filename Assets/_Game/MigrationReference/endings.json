@@ -1,0 +1,44 @@
+{
+  "endings": [
+    {
+      "id": "ending_bad",
+      "title": "Static",
+      "description": "You transmitted fragments. Rumors, not proof. By morning the estate's lawyers had buried it under a hundred denials, and the dock was quiet again.",
+      "minPrimaryEvidence": 0,
+      "requiredEvidence": [],
+      "requiredInsights": [],
+      "priority": 0,
+      "isSecret": false
+    },
+    {
+      "id": "ending_partial",
+      "title": "Cracks in the Facade",
+      "description": "The names and dates went out on every channel. They couldn't deny the visits — only explain them. Investigations opened. The estate went dark.",
+      "minPrimaryEvidence": 2,
+      "requiredEvidence": ["guest_log_001"],
+      "requiredInsights": [],
+      "priority": 10,
+      "isSecret": false
+    },
+    {
+      "id": "ending_best",
+      "title": "The Broadcast",
+      "description": "Guest log, manifest, access log, archive — corroborated and undeniable. The cover-up collapsed on live television. Nobody at the estate answered the door again.",
+      "minPrimaryEvidence": 3,
+      "requiredEvidence": ["server_archive_001"],
+      "requiredInsights": ["private_security_coverup"],
+      "priority": 20,
+      "isSecret": false
+    },
+    {
+      "id": "ending_secret",
+      "title": "The Whole Truth",
+      "description": "You didn't just expose the visits — you followed the money. The ledger page named the account, the account named the network, and the network ran out of places to hide.",
+      "minPrimaryEvidence": 3,
+      "requiredEvidence": ["server_archive_001", "ledger_page_001"],
+      "requiredInsights": ["private_security_coverup", "server_archive_authentic"],
+      "priority": 30,
+      "isSecret": true
+    }
+  ]
+}

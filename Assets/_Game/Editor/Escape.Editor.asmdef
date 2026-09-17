@@ -1,0 +1,22 @@
+{
+    "name": "Escape.Editor",
+    "rootNamespace": "Escape.Editor",
+    "references": [
+        "Escape.Data",
+        "Escape.Core",
+        "Escape.Gameplay",
+        "Escape.AI",
+        "Escape.UI",
+        "Unity.AI.Navigation",
+        "Unity.AI.Navigation.Editor",
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

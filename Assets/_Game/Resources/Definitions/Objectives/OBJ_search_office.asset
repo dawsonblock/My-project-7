@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
+  m_Name: OBJ_search_office
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
+  Id: search_office
+  Title: Search the office
+  Description: The guest wing office holds the paperwork that proves who was here.
+  RequiredObjectives:
+  - {fileID: 11400000, guid: d5cca15f54f964c14ba9f6032c983828, type: 2}
+  RequiredEvidence:
+  - {fileID: 11400000, guid: 37ed11c66d0d746bcb8ea06c8178a6bd, type: 2}
+  Optional: 0

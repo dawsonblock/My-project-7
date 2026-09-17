@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337612f4a65fc42cb99b619d09688adf, type: 3}
+  m_Name: DOC_doc_guest_log
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.DocumentDefinition
+  Id: doc_guest_log
+  Title: Guest Log
+  Body: "GUEST REGISTER \u2014 PRIVATE RESIDENCE\n\nFri 21:14  M. HALVORSEN +2\nFri 21:40  R. DRAKE\nSat 22:05  M. HALVORSEN +2\nSat 22:31  E. VANCE, T. OKONKWO\nSun 20:58  R. DRAKE\n\nNote in margin: 'Same window every night the boat ran. Keep the corridor clear.'"
+  GrantsEvidence: {fileID: 11400000, guid: 37ed11c66d0d746bcb8ea06c8178a6bd, type: 2}

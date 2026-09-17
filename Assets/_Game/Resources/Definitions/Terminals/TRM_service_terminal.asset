@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65dba38201f5e4cc69d5659e0e228fa0, type: 3}
+  m_Name: TRM_service_terminal
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.TerminalDefinition
+  Id: service_terminal
+  DisplayName: SECURITY NODE S-01
+  UnlockCode: 
+  RequiredObjective: {fileID: 11400000, guid: b68c2fc7c184c4ecf95ed3c88b211970, type: 2}
+  Commands:
+  - Command: STATUS
+    Label: STATUS
+    SuccessText: 'NODE S-01 ONLINE
+
+      DOOR LOCK: ENGAGED
+
+      CAMERA S-01: SWEEPING
+
+      ALERT STATE: NOMINAL'
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 9
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: CAMERAS
+    Label: CAMERAS
+    SuccessText: "S-01 SERVICE CORRIDOR \u2014 SWEEPING"
+    FailureText: COMMAND FAILED
+    RequiredEvidence: []
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 8
+    TargetId: 
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: DISABLE S-01
+    Label: DISABLE CAMERA S-01
+    SuccessText: Camera S-01 feed cut. Looping last frame.
+    FailureText: COMMAND FAILED
+    RequiredEvidence:
+    - {fileID: 11400000, guid: d6342055ec0204073920d6e3434a18ee, type: 2}
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 4
+    TargetId: service_cam_01
+    CompletesObjective: {fileID: 0}
+    HideUntilUnlocked: 0
+  - Command: UNLOCK SERVICE
+    Label: UNLOCK INTERIOR DOOR
+    SuccessText: Interior door released.
+    FailureText: "ACCESS DENIED \u2014 STAFF BADGE REQUIRED"
+    RequiredEvidence:
+    - {fileID: 11400000, guid: d6342055ec0204073920d6e3434a18ee, type: 2}
+    RequiredObjectives: []
+    RequiredInsights: []
+    Action: 3
+    TargetId: service_security_door
+    CompletesObjective: {fileID: 11400000, guid: d5cca15f54f964c14ba9f6032c983828, type: 2}
+    HideUntilUnlocked: 0
+  AssociatedDoorIds:
+  - service_security_door
+  AssociatedCameraIds:
+  - service_cam_01

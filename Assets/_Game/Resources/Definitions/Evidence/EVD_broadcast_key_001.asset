@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcde3ea43a304f74aba3f0778eb3554, type: 3}
+  m_Name: EVD_broadcast_key_001
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.EvidenceDefinition
+  Id: broadcast_key_001
+  Title: Broadcast Key
+  Description: Hardware key that authorizes an emergency override transmission on the compound relay.
+  Category: 3
+  Corroborates: []
+  Contradicts: []
+  RequiredForBroadcast: 1
+  EndingWeight: 2

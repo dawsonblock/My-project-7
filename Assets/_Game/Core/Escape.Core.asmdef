@@ -1,0 +1,12 @@
+{
+    "name": "Escape.Core",
+    "rootNamespace": "Escape.Core",
+    "references": [
+        "Escape.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

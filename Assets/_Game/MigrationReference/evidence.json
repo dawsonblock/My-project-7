@@ -1,0 +1,78 @@
+{
+  "evidence": [
+    {
+      "id": "keycard_staff",
+      "title": "Staff Keycard",
+      "description": "A maintenance keycard issued to compound service staff. Grants access to the service wing security node.",
+      "category": "Operational",
+      "requiredForBroadcast": false,
+      "endingWeight": 1
+    },
+    {
+      "id": "guest_log_001",
+      "title": "Guest Log",
+      "description": "A handwritten log of visitors to the estate. Several names recur on the same nights the boats came in.",
+      "category": "Primary",
+      "corroborates": ["transport_manifest_001"],
+      "requiredForBroadcast": true,
+      "endingWeight": 3
+    },
+    {
+      "id": "transport_manifest_001",
+      "title": "Transport Manifest",
+      "description": "Sealed shipping manifest for unmarked crates delivered to the dock on the same dates as the guest log entries.",
+      "category": "Primary",
+      "requiredForBroadcast": true,
+      "endingWeight": 3
+    },
+    {
+      "id": "public_statement_001",
+      "title": "Public Statement Draft",
+      "description": "A prepared press statement claiming no private security operated on the estate during the summit weekend.",
+      "category": "Contradictory",
+      "contradicts": ["access_log_001"],
+      "requiredForBroadcast": false,
+      "endingWeight": 2
+    },
+    {
+      "id": "access_log_001",
+      "title": "Security Access Log",
+      "description": "Printed access-control export showing a private security detail badging into the office wing all weekend.",
+      "category": "Primary",
+      "requiredForBroadcast": true,
+      "endingWeight": 3
+    },
+    {
+      "id": "security_memo_001",
+      "title": "Security Memo",
+      "description": "Internal memo ordering patrols to 'keep the service corridor clear between 22:00 and 02:00.'",
+      "category": "Corroborating",
+      "requiredForBroadcast": false,
+      "endingWeight": 1
+    },
+    {
+      "id": "server_archive_001",
+      "title": "Server Archive",
+      "description": "Encrypted archive pulled from the estate server. Raw camera footage and transfer records, timestamped.",
+      "category": "Primary",
+      "requiredForBroadcast": true,
+      "endingWeight": 4
+    },
+    {
+      "id": "broadcast_key_001",
+      "title": "Broadcast Key",
+      "description": "Hardware key that authorizes an emergency override transmission on the compound relay.",
+      "category": "Operational",
+      "requiredForBroadcast": true,
+      "endingWeight": 2
+    },
+    {
+      "id": "ledger_page_001",
+      "title": "Ledger Page",
+      "description": "A torn page from a private ledger: shell-company payments routed through the estate, initialed by hand.",
+      "category": "Hidden",
+      "requiredForBroadcast": false,
+      "endingWeight": 3
+    }
+  ]
+}

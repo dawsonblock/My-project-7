@@ -1,0 +1,28 @@
+{
+    "name": "Escape.Tests.EditMode",
+    "rootNamespace": "Escape.Tests.EditMode",
+    "references": [
+        "Escape.Data",
+        "Escape.Core",
+        "Escape.Gameplay",
+        "Escape.AI",
+        "Escape.UI",
+        "Escape.Editor",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "noEngineReferences": false
+}

@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 337612f4a65fc42cb99b619d09688adf, type: 3}
+  m_Name: DOC_doc_manifest
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.DocumentDefinition
+  Id: doc_manifest
+  Title: Transport Manifest
+  Body: "MANIFEST \u2014 DOCK 3 (SEALED)\n\nFri 22:00  4 crates, no customs ref\nSat 22:45  3 crates, no customs ref\nSun 21:30  2 crates, no customs ref\n\nCarrier: unmarked launch, running dark."
+  GrantsEvidence: {fileID: 11400000, guid: d3f3d8456caba4d628cf0ff7d5625537, type: 2}

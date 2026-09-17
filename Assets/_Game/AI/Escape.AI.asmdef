@@ -1,0 +1,15 @@
+{
+    "name": "Escape.AI",
+    "rootNamespace": "Escape.AI",
+    "references": [
+        "Escape.Data",
+        "Escape.Core",
+        "Escape.Gameplay",
+        "Unity.AI.Navigation"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": true,
+    "noEngineReferences": false
+}

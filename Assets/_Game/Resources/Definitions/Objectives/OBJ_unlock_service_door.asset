@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
+  m_Name: OBJ_unlock_service_door
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
+  Id: unlock_service_door
+  Title: Unlock the interior door
+  Description: Use the service security node to release the door to the office wing.
+  RequiredObjectives:
+  - {fileID: 11400000, guid: b68c2fc7c184c4ecf95ed3c88b211970, type: 2}
+  RequiredEvidence: []
+  Optional: 0

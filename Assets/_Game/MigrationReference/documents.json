@@ -1,0 +1,46 @@
+{
+  "documents": [
+    {
+      "id": "doc_guest_log",
+      "title": "Guest Log",
+      "body": "GUEST REGISTER — PRIVATE RESIDENCE\n\nFri 21:14  M. HALVORSEN +2\nFri 21:40  R. DRAKE\nSat 22:05  M. HALVORSEN +2\nSat 22:31  E. VANCE, T. OKONKWO\nSun 20:58  R. DRAKE\n\nNote in margin: 'Same window every night the boat ran. Keep the corridor clear.'",
+      "grantsEvidence": "guest_log_001"
+    },
+    {
+      "id": "doc_manifest",
+      "title": "Transport Manifest",
+      "body": "MANIFEST — DOCK 3 (SEALED)\n\nFri 22:00  4 crates, no customs ref\nSat 22:45  3 crates, no customs ref\nSun 21:30  2 crates, no customs ref\n\nCarrier: unmarked launch, running dark.",
+      "grantsEvidence": "transport_manifest_001"
+    },
+    {
+      "id": "doc_public_statement",
+      "title": "Public Statement Draft",
+      "body": "DRAFT — FOR RELEASE IF ASKED\n\n'At no time during the summit weekend did any private security contractor operate on the estate. All access was handled by the residence staff.'\n\n— approved, initials only",
+      "grantsEvidence": "public_statement_001"
+    },
+    {
+      "id": "doc_access_log",
+      "title": "Security Access Log",
+      "body": "ACCESS CONTROL EXPORT\n\n22:03  BADGE P-118  SERVICE DOOR\n22:11  BADGE P-119  OFFICE WING\n23:47  BADGE P-118  OFFICE WING\n01:12  BADGE P-121  SERVER ROOM\n\nBadges P-1xx are not residence staff.",
+      "grantsEvidence": "access_log_001"
+    },
+    {
+      "id": "doc_security_memo",
+      "title": "Security Memo",
+      "body": "MEMO — SHIFT LEAD\n\nKeep the service corridor clear 22:00–02:00. No rounds inside. Cameras stay on the gate, not the dock.\n\nBurn after reading.",
+      "grantsEvidence": "security_memo_001"
+    },
+    {
+      "id": "doc_archive_code",
+      "title": "Maintenance Sticky Note",
+      "body": "Scrawled on a sticky note under the desk:\n\n'Office node code is 7391. STOP WRITING IT DOWN.'",
+      "grantsEvidence": ""
+    },
+    {
+      "id": "doc_ledger",
+      "title": "Ledger Page",
+      "body": "A torn page, half-shredded:\n\n'...transfer to MERIDIAN HOLDINGS via estate account 88-441 ... consulting ... $4.2M ...'\n\nInitialed in the corner by the same hand as the guest log margin note.",
+      "grantsEvidence": "ledger_page_001"
+    }
+  ]
+}

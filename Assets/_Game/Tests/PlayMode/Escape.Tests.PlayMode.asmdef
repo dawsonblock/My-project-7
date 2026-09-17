@@ -1,0 +1,27 @@
+{
+    "name": "Escape.Tests.PlayMode",
+    "rootNamespace": "Escape.Tests.PlayMode",
+    "references": [
+        "Escape.Data",
+        "Escape.Core",
+        "Escape.Gameplay",
+        "Escape.AI",
+        "Escape.UI",
+        "Unity.InputSystem",
+        "Unity.AI.Navigation",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "autoReferenced": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll"
+    ],
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "noEngineReferences": false
+}

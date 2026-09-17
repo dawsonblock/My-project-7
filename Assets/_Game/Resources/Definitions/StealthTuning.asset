@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f818ac19982443369f8dfdd9219f4ac, type: 3}
+  m_Name: StealthTuning
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.StealthTuning
+  WalkSpeed: 3
+  CrouchSpeed: 1.6
+  SprintSpeed: 5
+  Acceleration: 14
+  Deceleration: 18
+  Gravity: -18
+  SuspiciousThreshold: 25
+  ImminentThreshold: 60
+  DetectedThreshold: 100
+  CameraDetectionPerSecond: 45
+  GuardDetectionPerSecond: 70
+  DecayHiddenPerSecond: 50
+  DecayOutOfSightPerSecond: 18
+  DecayLockdownPerSecond: 6
+  CameraRange: 14
+  CameraFovDegrees: 62
+  CameraSweepDegrees: 45
+  CameraSweepPeriod: 6
+  GuardVisionRange: 16
+  GuardFovDegrees: 100
+  GuardHearingRadiusMultiplier: 1
+  GuardWalkSpeed: 1.7
+  GuardInvestigateSpeed: 2.6
+  GuardChaseSpeed: 4.6
+  GuardCatchDistance: 1.1
+  SearchDuration: 12
+  SearchRadius: 5
+  LoseSightAfterSeconds: 4
+  FootstepBaseRadius: 6
+  SprintNoiseMultiplier: 2.4
+  WalkNoiseMultiplier: 1
+  CrouchNoiseMultiplier: 0.3
+  DoorNoiseRadius: 7
+  TerminalNoiseRadius: 2
+  AlarmNoiseRadius: 40
+  ThrownNoiseRadius: 14
+  BrightVisibility: 1.3
+  NormalVisibility: 1
+  DimVisibility: 0.7
+  DarkVisibility: 0.45
+  HidingVisibility: 0.25
+  CrouchVisibilityBonus: 0.8
+  FlashlightVisibilityPenalty: 1.35
+  InteractDistance: 2.6

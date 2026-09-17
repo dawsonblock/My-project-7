@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50d044680215b43b680c880812408999, type: 3}
+  m_Name: END_ending_best
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.EndingDefinition
+  Id: ending_best
+  Title: The Broadcast
+  Description: "Guest log, manifest, access log, archive \u2014 corroborated and undeniable. The cover-up collapsed on live television. Nobody at the estate answered the door again."
+  MinPrimaryEvidence: 3
+  RequiredEvidence:
+  - {fileID: 11400000, guid: 55f426f16d57e47328fc1a8ed99958b5, type: 2}
+  RequiredInsights:
+  - {fileID: 11400000, guid: f7ca816fb17364e89a4c9cd6637abd9e, type: 2}
+  Priority: 20
+  IsSecret: 0
