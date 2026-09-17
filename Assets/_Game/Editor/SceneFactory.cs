@@ -46,6 +46,9 @@ namespace Escape.EditorTools
             BroadcastTower();
             UpdateBuildSettings();
             AssetDatabase.SaveAssets();
+            // Renumber local fileIDs deterministically — Unity assigns random
+            // ids per save, which would defeat the empty-diff generation check.
+            SceneYamlNormalizer.NormalizeDirectory(SceneDir);
             Debug.Log("[SceneFactory] Scenes built.");
         }
 
