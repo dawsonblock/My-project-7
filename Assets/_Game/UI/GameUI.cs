@@ -14,8 +14,8 @@ namespace Escape.UI
     {
         private void Awake()
         {
-            var canvas = gameObject.AddComponent<Canvas>();
-            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            _canvas = gameObject.AddComponent<Canvas>();
+            _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             var scaler = gameObject.AddComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = new Vector2(1920, 1080);
@@ -43,8 +43,20 @@ namespace Escape.UI
             _services.Register<IDocumentUI>(_document = document);
             _services.Register<IEvidenceBoardUI>(_board = board);
             _services.Register<IEndingScreenUI>(_ending = ending);
+
+            _settings = _services.Get<ISettingsService>();
+            _settings.Changed += ApplyDisplaySettings;
+            ApplyDisplaySettings();
         }
 
+        private void ApplyDisplaySettings()
+        {
+            if (_canvas != null && _settings != null)
+                _canvas.scaleFactor = _settings.LargeUI ? 1.25f : 1f;
+        }
+
+        private Canvas _canvas;
+        private ISettingsService _settings;
         private IScreenFader _fader;
         private ITerminalUI _terminal;
         private IDocumentUI _document;
@@ -54,6 +66,7 @@ namespace Escape.UI
 
         private void OnDestroy()
         {
+            if (_settings != null) _settings.Changed -= ApplyDisplaySettings;
             if (_services == null) return;
             _services.Unregister<IScreenFader>(_fader);
             _services.Unregister<ITerminalUI>(_terminal);

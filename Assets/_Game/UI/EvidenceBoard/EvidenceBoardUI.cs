@@ -12,7 +12,7 @@ namespace Escape.UI
     /// contradiction relationships, insights. Predefined relationships only
     /// — no free-form graph editor.
     /// </summary>
-    public sealed class EvidenceBoardUI : MonoBehaviour, IEvidenceBoardUI
+    public sealed class EvidenceBoardUI : MonoBehaviour, IEvidenceBoardUI, ICancelableUi
     {
         private GameObject _root;
         private RectTransform _list;
@@ -39,9 +39,15 @@ namespace Escape.UI
             rt.SetParent(canvasRoot, false);
             UiBuilder.Stretch(rt);
             var ui = go.GetComponent<EvidenceBoardUI>();
-            ui.Build(rt);
-            ui._root = go;
-            go.SetActive(false);
+            // Host stays active so Update() can retry the reader bind;
+            // only the visual panel toggles.
+            var panelGo = new GameObject("Panel", typeof(RectTransform));
+            var panelRt = (RectTransform)panelGo.transform;
+            panelRt.SetParent(rt, false);
+            UiBuilder.Stretch(panelRt);
+            ui.Build(panelRt);
+            ui._root = panelGo;
+            panelGo.SetActive(false);
             return ui;
         }
 
@@ -103,12 +109,15 @@ namespace Escape.UI
         private void Start()
         {
             _services = GameRoot.Instance.Services;
-            _input = new PlayerInputReaderRef
-            {
-                Reader = FindAnyObjectByType<Escape.Gameplay.PlayerInputReader>()
-            };
-            if (_input.Reader != null)
-                _input.Reader.EvidenceBoardPressed += Toggle;
+            TryBindInput();
+        }
+
+        private void TryBindInput()
+        {
+            var reader = FindAnyObjectByType<Escape.Gameplay.PlayerInputReader>();
+            if (reader == null) return;
+            _input = new PlayerInputReaderRef { Reader = reader };
+            _input.Reader.EvidenceBoardPressed += Toggle;
         }
 
         private void OnDestroy()
@@ -128,6 +137,8 @@ namespace Escape.UI
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
         }
+
+        public void Cancel() => Close();
 
         public void Close()
         {
@@ -200,9 +211,9 @@ namespace Escape.UI
 
         private void Update()
         {
-            var kb = UnityEngine.InputSystem.Keyboard.current;
-            if (IsOpen && kb != null && kb.escapeKey.wasPressedThisFrame)
-                Close();
+            // The player prefab can spawn after the UI is built; retry until
+            // the reader exists or EvidenceBoard presses are silently lost.
+            if (_input.Reader == null) TryBindInput();
         }
     }
 }

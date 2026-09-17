@@ -51,8 +51,9 @@ namespace Escape.Gameplay
 
         private void OnCrouchPressed()
         {
+            // Toggle mode: press flips. Hold mode is driven by CrouchHeld
+            // in Update — press-down crouches, release stands.
             if (_settings.ToggleCrouch) _crouchToggled = !_crouchToggled;
-            else _state.Crouching = !_state.Crouching;
         }
 
         private void Update()
@@ -65,7 +66,7 @@ namespace Escape.Gameplay
                 return;
             }
 
-            bool crouch = _settings.ToggleCrouch ? _crouchToggled : _state.Crouching;
+            bool crouch = _settings.ToggleCrouch ? _crouchToggled : _input.CrouchHeld;
             _state.Crouching = crouch;
 
             bool sprint = _settings.ToggleSprint ? _sprintToggled : _input.SprintHeld;

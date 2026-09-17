@@ -66,6 +66,10 @@ namespace Escape.Core
             Services.Register<ISceneService>(scenes);
             Services.Register(endings);
 
+            // Master volume applies immediately and follows setting changes.
+            AudioListener.volume = settings.MasterVolume;
+            settings.Changed += () => AudioListener.volume = settings.MasterVolume;
+
             dispatcher.Register<CollectEvidenceCommand>(evidence);
             dispatcher.Register<ReadDocumentCommand>(evidence);
             dispatcher.Register<ActivateObjectiveCommand>(objectives);
@@ -95,6 +99,14 @@ namespace Escape.Core
         {
             _detection?.Tick(Time.deltaTime);
         }
+
+        private void OnApplicationPause(bool paused)
+        {
+            if (paused) Services.Get<ISettingsService>().Persist();
+        }
+
+        private void OnApplicationQuit() =>
+            Services.Get<ISettingsService>().Persist();
 
         private void OnDestroy()
         {

@@ -5,11 +5,28 @@ using UnityEngine;
 
 namespace Escape.Core
 {
+    /// <summary>Metadata about a save slot for load-game menus.</summary>
+    public sealed class SaveSlotInfo
+    {
+        public string Slot;
+        public bool Exists;
+        /// <summary>Parses + validates cleanly (or repairably).</summary>
+        public bool Valid;
+        /// <summary>A backup exists that can recover a corrupt primary.</summary>
+        public bool Recoverable;
+        public string SceneId = "";
+        public string SceneName = "";
+        public string TimestampUtc = "";
+        public int EvidenceCount;
+        public int ObjectivesCompleted;
+    }
+
     public interface ISaveService
     {
         string[] Slots { get; }
         bool HasSave(string slot);
         string MostRecentSlot();
+        SaveSlotInfo GetSlotInfo(string slot);
         bool Save(string slot);
         bool Load(string slot);
         bool Delete(string slot);
@@ -66,6 +83,34 @@ namespace Escape.Core
                 if (t > bestTime) { bestTime = t; best = slot; }
             }
             return best;
+        }
+
+        public SaveSlotInfo GetSlotInfo(string slot)
+        {
+            var info = new SaveSlotInfo { Slot = slot };
+            var final = PathFor(slot);
+            info.Exists = File.Exists(final) || File.Exists(SaveFileIO.BakPath(final));
+            if (!info.Exists) return info;
+
+            bool primaryBad = false;
+            foreach (var path in new[] { final, SaveFileIO.BakPath(final) })
+            {
+                if (!File.Exists(path)) continue;
+                if (TryParse(File.ReadAllText(path), out var data, out var result))
+                {
+                    info.Valid = true;
+                    info.SceneId = data.sceneId;
+                    info.SceneName = _content.SceneName(data.sceneId) ?? data.sceneId;
+                    info.TimestampUtc = data.savedAtUtc;
+                    info.EvidenceCount = data.collectedEvidence?.Count ?? 0;
+                    info.ObjectivesCompleted = data.completedObjectives?.Count ?? 0;
+                    break;
+                }
+                if (path == final) primaryBad = true;
+            }
+            // Loadable from backup even though the primary file is corrupt.
+            info.Recoverable = primaryBad && info.Valid;
+            return info;
         }
 
         public bool Save(string slot)

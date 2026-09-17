@@ -13,7 +13,7 @@ namespace Escape.UI
     /// command checks requirements and dispatches through the command
     /// dispatcher; this view never mutates game state.
     /// </summary>
-    public sealed class TerminalUI : MonoBehaviour, ITerminalUI
+    public sealed class TerminalUI : MonoBehaviour, ITerminalUI, ICancelableUi
     {
         private GameObject _root;
         private TextMeshProUGUI _title;
@@ -130,6 +130,8 @@ namespace Escape.UI
             Sfx(Data.ClipLibrary.Get()?.uiHover);
             _services.Get<IInputGate>().PushUi(this);
         }
+
+        public void Cancel() => Close();
 
         public void Close()
         {

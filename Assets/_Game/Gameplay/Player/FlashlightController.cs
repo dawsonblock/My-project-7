@@ -46,8 +46,15 @@ namespace Escape.Gameplay
 
         private void OnFlashlight()
         {
-            if (!_settings.ToggleFlashlight) { SetOn(!On); return; }
-            SetOn(!On);
+            // Toggle mode: press inverts. Hold mode is driven by
+            // FlashlightHeld in Update — down is on, release is off.
+            if (_settings != null && _settings.ToggleFlashlight) SetOn(!On);
+        }
+
+        private void Update()
+        {
+            if (_settings == null || _input == null) return;
+            if (!_settings.ToggleFlashlight) SetOn(_input.FlashlightHeld);
         }
 
         public void SetOn(bool on)
