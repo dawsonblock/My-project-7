@@ -1,0 +1,15 @@
+{
+  "pid": 38380,
+  "port": 7900,
+  "platform": "OSXEditor",
+  "unityVersion": "6000.6.0f1",
+  "buildGuid": "00000000000000000000000000000000",
+  "startedAt": "2026-09-17T08:19:54.675764Z",
+  "lastHeartbeat": "2026-09-17T08:19:54.675777Z",
+  "workingDirectory": "/Users/dawsonblock/unity/My project (7)",
+  "evalToken": "J2k4sSZ3qihYkw2xi9uSIHS/yvv7KGyVZU4FShTlCcM=",
+  "capabilities": [
+    "exec.argv",
+    "exec.commandLine"
+  ]
+}

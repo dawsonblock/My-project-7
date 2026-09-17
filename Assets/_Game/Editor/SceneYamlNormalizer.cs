@@ -16,16 +16,17 @@ namespace Escape.EditorTools
     ///
     ///   1. Every document gets a signature from its class, stripped-flag and
     ///      body with local fileID refs blanked.
-    ///   2. Signatures are iteratively refined by folding in the signatures of
-    ///      each document's local ref targets (WL-style), so docs that differ
-    ///      only in who they point at — e.g. stripped Transforms of sibling
-    ///      prefab instances — separate correctly.
-    ///   3. Documents are emitted sorted by final signature; local ids become
-    ///      the sorted rank. External refs (which carry a guid) are untouched.
+    ///   2. Docs are iteratively re-partitioned by (own signature, sorted
+    ///      ranks of local ref targets) — WL-style refinement using RANKS,
+    ///      not hash-chaining. Rank refinement is synchronous and order-free,
+    ///      so it reaches the same coarsest partition on cyclic graphs
+    ///      (Transform parent/child refs) regardless of input doc order.
+    ///   3. Documents are emitted sorted by final rank; local ids become the
+    ///      sorted position. External refs (which carry a guid) are untouched.
     ///
     /// Deterministic generation then yields a byte-identical file. Residual
-    /// risk: truly automorphic doc sets (identical content AND identical
-    /// resolved refs) sort by input order — generated content uses unique
+    /// risk: truly automorphic docs (identical content AND identical resolved
+    /// neighborhoods) order by input position — generated content uses unique
     /// names/ids, so this does not occur in practice.
     /// </summary>
     public static class SceneYamlNormalizer
@@ -40,11 +41,10 @@ namespace Escape.EditorTools
             public string ClassId;
             public long OldId;
             public bool Stripped;
-            public string Body;          // verbatim text after the header line
+            public string Body;
             public long[] Refs;          // ordered local fileID targets in Body
-            public string Sig0;          // own-content signature
-            public string Sig;           // refined signature
-            public int InputIndex;
+            public string OwnSig;        // content signature, refs blanked
+            public int Rank;
         }
 
         public static void NormalizeDirectory(string dir)
@@ -78,34 +78,37 @@ namespace Escape.EditorTools
                     Body = body,
                     Refs = LocalRef.Matches(body).Cast<Match>()
                         .Select(r => long.Parse(r.Groups[1].Value)).ToArray(),
-                    InputIndex = i,
                 });
             }
 
             var byOldId = docs.ToDictionary(d => d.OldId);
-            var blanked = docs.Select(d => LocalRef.Replace(d.Body, "{fileID: *}")).ToArray();
-            for (var i = 0; i < docs.Count; i++)
-                docs[i].Sig0 = docs[i].Sig = Hash(docs[i].ClassId + "|" + docs[i].Stripped + "|" + blanked[i]);
-
-            // Refine until the partition is stable (bounded).
-            for (var iter = 0; iter < 16; iter++)
+            foreach (var d in docs)
             {
-                var changed = false;
-                foreach (var d in docs)
-                {
-                    var sb = new StringBuilder(d.Sig0);
-                    foreach (var r in d.Refs)
-                    {
-                        sb.Append('|');
-                        sb.Append(byOldId.TryGetValue(r, out var t) ? t.Sig : "ext");
-                    }
-                    var next = Hash(sb.ToString());
-                    if (next != d.Sig) { d.Sig = next; changed = true; }
-                }
-                if (!changed) break;
+                var blanked = LocalRef.Replace(d.Body, "{fileID: *}");
+                d.OwnSig = Hash(d.ClassId + "|" + d.Stripped + "|" + blanked);
             }
 
-            var ordered = docs.OrderBy(d => d.Sig, StringComparer.Ordinal).ToList();
+            // Rank-based refinement: partition by (OwnSig, target ranks) until
+            // the partition is stable. Ranks are canonical (sorted unique
+            // keys), so the fixpoint is independent of document input order.
+            AssignRanks(docs, d => d.OwnSig);
+            for (var iter = 0; iter < 64; iter++)
+            {
+                var snapshot = docs.ToDictionary(d => d, d => d.Rank);
+                AssignRanks(docs, d =>
+                {
+                    var sb = new StringBuilder(d.OwnSig);
+                    foreach (var r in d.Refs)
+                        sb.Append('|').Append(
+                            byOldId.TryGetValue(r, out var t) ? snapshot[t] : -1);
+                    return sb.ToString();
+                });
+                if (docs.All(d => snapshot[d] == d.Rank))
+                    break;
+            }
+
+            var ordered = docs.OrderBy(d => d.Rank)
+                .ThenBy(d => d.OwnSig, StringComparer.Ordinal).ToList();
             var newId = new Dictionary<long, long>(docs.Count);
             for (var i = 0; i < ordered.Count; i++)
                 newId[ordered[i].OldId] = i + 1;
@@ -125,6 +128,19 @@ namespace Escape.EditorTools
 
             File.WriteAllText(path, outSb.ToString());
             Debug.Log($"[SceneYamlNormalizer] Normalized {Path.GetFileName(path)} ({docs.Count} objects)");
+        }
+
+        /// <summary>Assigns canonical ranks: docs sorted by key get ranks
+        /// 0..k-1; equal keys share a rank. Returns the distinct-key count.</summary>
+        private static int AssignRanks(List<Doc> docs, Func<Doc, string> key)
+        {
+            var keyed = docs.Select(d => (d, k: key(d))).ToList();
+            var distinct = keyed.Select(x => x.k).Distinct()
+                .OrderBy(k => k, StringComparer.Ordinal).ToList();
+            var rankOf = new Dictionary<string, int>(distinct.Count);
+            for (var i = 0; i < distinct.Count; i++) rankOf[distinct[i]] = i;
+            foreach (var (d, k) in keyed) d.Rank = rankOf[k];
+            return distinct.Count;
         }
 
         private static string Hash(string s)

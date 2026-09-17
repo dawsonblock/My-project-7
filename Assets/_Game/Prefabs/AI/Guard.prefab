@@ -261,7 +261,7 @@ Transform:
   m_GameObject: {fileID: 8696869546500783580}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.6666667, y: 0.08333337, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -344,5 +344,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Escape.AI::Escape.AI.GuardAnimatorDriver
   animator: {fileID: 0}
-  agent: {fileID: 0}
-  brain: {fileID: 0}
+  agent: {fileID: 8806297246166236087}
+  brain: {fileID: 7828265551145911180}
