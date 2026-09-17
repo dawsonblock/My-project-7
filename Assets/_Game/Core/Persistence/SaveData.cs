@@ -7,11 +7,13 @@ namespace Escape.Core
     /// <summary>
     /// Versioned on-disk save format. GameState is the live runtime form;
     /// SaveData is the serialized form that migrations evolve over time.
+    /// v1 → v2: wrapped in SaveEnvelope; player pose became explicit
+    /// yaw/pitch instead of root eulerAngles.
     /// </summary>
     [Serializable]
     public sealed class SaveData
     {
-        public const int CurrentVersion = 1;
+        public const int CurrentVersion = 2;
 
         public int version = CurrentVersion;
         public string sceneId = "dock";
@@ -35,9 +37,14 @@ namespace Escape.Core
         public List<string> collectedLures = new List<string>();
         public string savedAtUtc = "";
 
+        /// <summary>
+        /// Snapshot of live state. Every id list is canonicalized on the way
+        /// out: no nulls, no empties, no duplicates, ordinal-sorted — so two
+        /// identical states produce identical files.
+        /// </summary>
         public static SaveData FromState(GameState s)
         {
-            return new SaveData
+            var data = new SaveData
             {
                 version = CurrentVersion,
                 sceneId = s.SceneId,
@@ -61,10 +68,38 @@ namespace Escape.Core
                 collectedLures = new List<string>(s.CollectedLures),
                 savedAtUtc = DateTime.UtcNow.ToString("o")
             };
+            data.Canonicalize();
+            return data;
+        }
+
+        /// <summary>Applies set semantics to every id list, in place.</summary>
+        public void Canonicalize()
+        {
+            Canonicalize(collectedEvidence);
+            Canonicalize(readDocuments);
+            Canonicalize(completedObjectives);
+            Canonicalize(activeObjectives);
+            Canonicalize(gainedInsights);
+            Canonicalize(unlockedDoors);
+            Canonicalize(disabledCameras);
+            Canonicalize(unlockedTerminals);
+            Canonicalize(usedTerminalCommands);
+            Canonicalize(collectedLures);
+        }
+
+        private static void Canonicalize(List<string> ids)
+        {
+            if (ids == null) return;
+            var seen = new HashSet<string>(StringComparer.Ordinal);
+            for (int i = ids.Count - 1; i >= 0; i--)
+                if (string.IsNullOrEmpty(ids[i]) || !seen.Add(ids[i]))
+                    ids.RemoveAt(i);
+            ids.Sort(StringComparer.Ordinal);
         }
 
         public GameState ToState()
         {
+            Canonicalize(); // defense in depth — don't trust the validator alone
             return new GameState
             {
                 SceneId = sceneId,
@@ -92,6 +127,7 @@ namespace Escape.Core
 
     /// <summary>
     /// One step of save migration. Chain versions: v1 → v2, v2 → v3, ...
+    /// Never edit a released schema — add a step instead.
     /// </summary>
     public interface ISaveMigration
     {
@@ -101,18 +137,21 @@ namespace Escape.Core
 
     public static class SaveMigrator
     {
-        private static readonly List<ISaveMigration> Migrations = new List<ISaveMigration>();
+        private static readonly List<ISaveMigration> Migrations = new List<ISaveMigration>
+        {
+            new SaveMigrationV1ToV2()
+        };
 
         public static SaveData MigrateToCurrent(SaveData data)
         {
             int guard = 0;
-            while (data.version < SaveData.CurrentVersion && guard++ < 32)
+            while (data != null && data.version < SaveData.CurrentVersion && guard++ < 32)
             {
                 var step = Migrations.Find(m => m.FromVersion == data.version);
                 if (step == null) return null; // unsupported version
                 data = step.Migrate(data);
             }
-            return data.version == SaveData.CurrentVersion ? data : null;
+            return data != null && data.version == SaveData.CurrentVersion ? data : null;
         }
     }
 }

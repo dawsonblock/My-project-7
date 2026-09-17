@@ -33,7 +33,9 @@ namespace Escape.Gameplay
             // Capture the pose before leaving so autosave stores it.
             var pose = player.GameState.Player;
             pose.Position = player.Transform.position;
-            pose.EulerRotation = player.Transform.eulerAngles;
+            pose.Yaw = player.Transform.eulerAngles.y;
+            var look = player.Transform.GetComponentInChildren<PlayerLook>();
+            pose.Pitch = look != null ? look.Pitch : 0f;
             if (!string.IsNullOrEmpty(completesObjectiveId))
                 player.Dispatcher.Dispatch(new CompleteObjectiveCommand(completesObjectiveId, name));
             player.Dispatcher.Dispatch(new ChangeSceneCommand(targetSceneId, targetSpawnId));

@@ -16,9 +16,11 @@ namespace Escape.Core
     }
 
     /// <summary>
-    /// JSON file saves under persistentDataPath/saves. Autosave plus three
-    /// manual slots. Every write is validated on read-back structure, every
-    /// load is validated against the content database.
+    /// JSON file saves under persistentDataPath/saves. Save flow:
+    /// capture live participant state → canonicalize → envelope →
+    /// serialize → tmp → read-back verify → atomic replace with .bak.
+    /// Load flow: slot.json → slot.bak → fail, each parsed, migrated,
+    /// and validated before touching live state.
     /// </summary>
     public sealed class SaveService : ISaveService,
         IGameCommandHandler<SaveGameCommand>,
@@ -30,23 +32,27 @@ namespace Escape.Core
         private readonly IContentDatabase _content;
         private readonly IGameEventBus _events;
         private readonly IGameCommandDispatcher _dispatcher;
+        private readonly ISaveCoordinator _coordinator;
         private readonly string _dir;
 
         public string[] Slots { get; } = { Autosave, "slot1", "slot2", "slot3" };
 
         public SaveService(IGameStateService state, IContentDatabase content,
-            IGameEventBus events, IGameCommandDispatcher dispatcher, string directory = null)
+            IGameEventBus events, IGameCommandDispatcher dispatcher,
+            string directory = null, ISaveCoordinator coordinator = null)
         {
             _state = state;
             _content = content;
             _events = events;
             _dispatcher = dispatcher;
+            _coordinator = coordinator;
             _dir = directory ?? Path.Combine(Application.persistentDataPath, "saves");
         }
 
         private string PathFor(string slot) => Path.Combine(_dir, slot + ".json");
 
-        public bool HasSave(string slot) => File.Exists(PathFor(slot));
+        public bool HasSave(string slot) =>
+            File.Exists(PathFor(slot)) || File.Exists(SaveFileIO.BakPath(PathFor(slot)));
 
         public string MostRecentSlot()
         {
@@ -67,8 +73,20 @@ namespace Escape.Core
             try
             {
                 Directory.CreateDirectory(_dir);
-                var json = JsonUtility.ToJson(SaveData.FromState(_state.State), true);
-                File.WriteAllText(PathFor(slot), json);
+                // Capture volatile runtime state (live pose, flashlight)
+                // before snapshotting — GameState lists are already current.
+                _coordinator?.CaptureInto(_state.State);
+                var data = SaveData.FromState(_state.State);
+                var envelope = new SaveEnvelope
+                {
+                    schemaVersion = SaveData.CurrentVersion,
+                    gameVersion = Application.version,
+                    timestampUtc = DateTime.UtcNow.ToString("o"),
+                    slotId = slot,
+                    payload = data
+                };
+                var json = JsonUtility.ToJson(envelope, true);
+                SaveFileIO.AtomicWrite(PathFor(slot), json);
                 _events.Publish(new GameSavedEvent(slot));
                 return true;
             }
@@ -83,22 +101,74 @@ namespace Escape.Core
         public bool LoadIntoState(string slot, out List<string> errors)
         {
             errors = new List<string>();
-            var path = PathFor(slot);
-            if (!File.Exists(path)) { errors.Add("No save in slot."); return false; }
-            try
+            var final = PathFor(slot);
+            // Recovery order: primary, then backup.
+            foreach (var path in new[] { final, SaveFileIO.BakPath(final) })
             {
-                var data = JsonUtility.FromJson<SaveData>(File.ReadAllText(path));
-                data = SaveMigrator.MigrateToCurrent(data);
-                if (data == null) { errors.Add("Save version unsupported."); return false; }
-                if (!SaveValidator.Validate(data, _content, errors)) return false;
+                if (!SaveFileIO.TryRead(path, out var json))
+                {
+                    if (path == final) errors.Add("No save in slot.");
+                    continue;
+                }
+                if (!TryParse(json, out var data, out var result))
+                {
+                    errors.AddRange(result.Errors);
+                    foreach (var w in result.Warnings) errors.Add($"warning: {w}");
+                    continue; // fall through to the backup
+                }
+                if (result.WasRepaired)
+                    Debug.LogWarning($"[SaveService] Repaired save '{Path.GetFileName(path)}': " +
+                                     string.Join("; ", result.Warnings));
                 _state.ReplaceState(data.ToState());
                 return true;
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Parse → version-inspect → migrate → validate. Returns false when
+        /// the file is unusable; the caller falls back to the .bak.
+        /// </summary>
+        private bool TryParse(string json, out SaveData data, out SaveValidationResult result)
+        {
+            data = null;
+            result = new SaveValidationResult();
+            SaveData raw;
+            try
+            {
+                var probe = JsonUtility.FromJson<SaveEnvelopeProbe>(json);
+                if (probe != null && probe.schemaVersion >= 1)
+                {
+                    // Enveloped format: schemaVersion is authoritative.
+                    if (probe.schemaVersion > SaveData.CurrentVersion)
+                    {
+                        result.Errors.Add($"Save schema {probe.schemaVersion} is newer than supported {SaveData.CurrentVersion}.");
+                        return false;
+                    }
+                    raw = JsonUtility.FromJson<SaveEnvelope>(json)?.payload;
+                    if (raw != null) raw.version = probe.schemaVersion;
+                }
+                else
+                {
+                    // Legacy v1: bare SaveData, no envelope.
+                    raw = JsonUtility.FromJson<SaveData>(json);
+                    if (raw != null && raw.version < 1) raw.version = 1;
+                }
+            }
             catch (Exception e)
             {
-                errors.Add(e.Message);
+                result.Errors.Add($"Unparseable save: {e.Message}");
                 return false;
             }
+
+            data = SaveMigrator.MigrateToCurrent(raw);
+            if (data == null)
+            {
+                result.Errors.Add("Save version unsupported.");
+                return false;
+            }
+            result = SaveValidator.Validate(data, _content);
+            return result.IsValid;
         }
 
         public bool Load(string slot)
@@ -117,9 +187,10 @@ namespace Escape.Core
         public bool Delete(string slot)
         {
             var p = PathFor(slot);
-            if (!File.Exists(p)) return false;
-            File.Delete(p);
-            return true;
+            bool any = false;
+            foreach (var f in new[] { p, SaveFileIO.BakPath(p), SaveFileIO.TmpPath(p) })
+                if (File.Exists(f)) { File.Delete(f); any = true; }
+            return any;
         }
 
         public void Handle(SaveGameCommand command) => Save(command.Slot);

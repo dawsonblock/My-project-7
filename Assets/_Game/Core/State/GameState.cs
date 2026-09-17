@@ -8,8 +8,13 @@ namespace Escape.Core
     public sealed class PlayerSaveState
     {
         public Vector3 Position;
-        public Vector3 EulerRotation;
+        /// <summary>Player root yaw, degrees.</summary>
+        public float Yaw;
+        /// <summary>Camera pitch, degrees. Lives on PlayerLook, not the root.</summary>
+        public float Pitch;
         public bool FlashlightOn;
+        /// <summary>Legacy v1 field — read by SaveMigrationV1ToV2 only.</summary>
+        public Vector3 EulerRotation;
     }
 
     public enum DetectionLevel

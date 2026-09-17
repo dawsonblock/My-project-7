@@ -44,7 +44,9 @@ namespace Escape.Core
             var settings = new SettingsService();
             var audio = new AudioService(transform);
             var inputGate = new InputGate();
-            var saves = new SaveService(state, content, events, dispatcher);
+            var saveCoordinator = new SaveCoordinator();
+            var saves = new SaveService(state, content, events, dispatcher,
+                coordinator: saveCoordinator);
             var scenes = new SceneService(this, Services, state, content, events);
 
             Services.Register<IGameCommandDispatcher>(dispatcher);
@@ -59,6 +61,7 @@ namespace Escape.Core
             Services.Register<ISettingsService>(settings);
             Services.Register<IAudioService>(audio);
             Services.Register<IInputGate>(inputGate);
+            Services.Register<ISaveCoordinator>(saveCoordinator);
             Services.Register<ISaveService>(saves);
             Services.Register<ISceneService>(scenes);
             Services.Register(endings);

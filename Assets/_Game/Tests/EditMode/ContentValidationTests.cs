@@ -75,25 +75,65 @@ namespace Escape.Tests.EditMode
             var all = LoadAll<ObjectiveDefinition>();
             var byId = new Dictionary<string, ObjectiveDefinition>();
             foreach (var o in all) byId[o.Id] = o;
+            // Missing dependency check — the cycle checker treats unknown
+            // ids as leaves, so validate references separately.
             foreach (var o in all)
+                foreach (var req in o.RequiredObjectives)
+                    Assert.IsTrue(req == null || byId.ContainsKey(req.Id),
+                        $"{o.Id} requires missing objective");
+            Assert.IsFalse(
+                DependencyGraph.HasCycle(
+                    byId.Keys,
+                    id => byId.TryGetValue(id, out var o)
+                        ? Deps(o) : null,
+                    out var cycleAt),
+                $"Objective dependency cycle at '{cycleAt}'");
+        }
+
+        private static IEnumerable<string> Deps(ObjectiveDefinition o)
+        {
+            foreach (var req in o.RequiredObjectives)
+                if (req != null) yield return req.Id;
+        }
+
+        // --- DependencyGraph unit tests -----------------------------------
+
+        [Test]
+        public void DependencyGraph_Diamond_IsNotCycle()
+        {
+            //   A → B,C ; B → D ; C → D — shared dep is legal.
+            var edges = new Dictionary<string, string[]>
             {
-                // DFS for cycles
-                var visiting = new HashSet<string>();
-                var stack = new Stack<ObjectiveDefinition>();
-                stack.Push(o);
-                while (stack.Count > 0)
-                {
-                    var cur = stack.Pop();
-                    if (!visiting.Add(cur.Id))
-                        Assert.Fail($"Objective dependency cycle at '{cur.Id}'");
-                    foreach (var req in cur.RequiredObjectives)
-                    {
-                        Assert.IsTrue(req == null || byId.ContainsKey(req.Id),
-                            $"{cur.Id} requires missing objective");
-                        if (req != null) stack.Push(req);
-                    }
-                }
-            }
+                ["A"] = new[] { "B", "C" },
+                ["B"] = new[] { "D" },
+                ["C"] = new[] { "D" },
+                ["D"] = new string[0]
+            };
+            Assert.IsFalse(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out _));
+        }
+
+        [Test]
+        public void DependencyGraph_SimpleCycle_Fails()
+        {
+            var edges = new Dictionary<string, string[]>
+            {
+                ["A"] = new[] { "B" },
+                ["B"] = new[] { "C" },
+                ["C"] = new[] { "A" }
+            };
+            Assert.IsTrue(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out var at));
+            Assert.IsTrue(at == "A" || at == "B" || at == "C");
+        }
+
+        [Test]
+        public void DependencyGraph_SelfLoop_Fails()
+        {
+            var edges = new Dictionary<string, string[]> { ["A"] = new[] { "A" } };
+            Assert.IsTrue(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out var at));
+            Assert.AreEqual("A", at);
         }
 
         [Test]

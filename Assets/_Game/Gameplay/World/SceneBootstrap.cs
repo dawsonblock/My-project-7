@@ -74,7 +74,12 @@ namespace Escape.Gameplay
             if (string.IsNullOrEmpty(spawnId) && savedPose != null &&
                 savedPose.Position != Vector3.zero)
             {
-                movement?.Teleport(savedPose.Position, savedPose.EulerRotation);
+                // Load path — save participants restore volatile state
+                // (pose, flashlight). Spawn-point entries skip this.
+                if (_services.TryGet<ISaveCoordinator>(out var coord))
+                    coord.RestoreFrom(_services.Get<IGameStateService>().State);
+                else
+                    movement?.Teleport(savedPose.Position, savedPose.Yaw, savedPose.Pitch);
                 WritePose();
                 return;
             }
@@ -87,7 +92,7 @@ namespace Escape.Gameplay
             if (target == null && points.Length > 0) target = points[0];
 
             if (target != null)
-                movement?.Teleport(target.transform.position, target.transform.eulerAngles);
+                movement?.Teleport(target.transform.position, target.transform.eulerAngles.y, 0f);
             WritePose();
         }
 
@@ -96,7 +101,9 @@ namespace Escape.Gameplay
             if (_services == null || playerRoot == null) return;
             var pose = _services.Get<IGameStateService>().State.Player;
             pose.Position = playerRoot.position;
-            pose.EulerRotation = playerRoot.eulerAngles;
+            pose.Yaw = playerRoot.eulerAngles.y;
+            var look = playerRoot.GetComponentInChildren<PlayerLook>();
+            pose.Pitch = look != null ? look.Pitch : 0f;
         }
     }
 }
