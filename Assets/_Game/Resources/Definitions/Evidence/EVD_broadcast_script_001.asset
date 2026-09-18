@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebcde3ea43a304f74aba3f0778eb3554, type: 3}
+  m_Name: EVD_broadcast_script_001
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.EvidenceDefinition
+  Id: broadcast_script_001
+  Title: Prepared Broadcast Script
+  Description: The statement queued for tonight's broadcast. It claims the archive was destroyed in a server fire and names a scapegoat. Holding the real archive proves it a lie.
+  Category: 2
+  Corroborates: []
+  Contradicts:
+  - {fileID: 11400000, guid: 55f426f16d57e47328fc1a8ed99958b5, type: 2}
+  RequiredForBroadcast: 0
+  EndingWeight: 1

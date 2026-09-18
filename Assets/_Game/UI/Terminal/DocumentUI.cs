@@ -9,7 +9,7 @@ namespace Escape.UI
     /// <summary>
     /// Readable document viewer. Esc/E closes.
     /// </summary>
-    public sealed class DocumentUI : MonoBehaviour, IDocumentUI
+    public sealed class DocumentUI : MonoBehaviour, IDocumentUI, ICancelableUi
     {
         private GameObject _root;
         private TextMeshProUGUI _title;
@@ -59,10 +59,14 @@ namespace Escape.UI
             _body.text = doc.Body;
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
+
+        public void Cancel() => Close();
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             _services.Get<IInputGate>().PopUi(this);
         }

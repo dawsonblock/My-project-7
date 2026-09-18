@@ -23,7 +23,9 @@ namespace Escape.Tests.PlayMode
         [TearDown]
         public void Teardown()
         {
-            Object.Destroy(_root);
+            // Immediate: deferred Destroy can let the next test's GameRoot
+            // see a live Instance and destroy itself in Awake.
+            Object.DestroyImmediate(_root);
         }
 
         [UnityTest]
@@ -40,6 +42,7 @@ namespace Escape.Tests.PlayMode
             Assert.IsNotNull(s.Get<ISaveService>());
             Assert.IsNotNull(s.Get<ISceneService>());
             Assert.IsNotNull(s.Get<IInputGate>());
+            Assert.IsNotNull(s.Get<ISaveCoordinator>());
         }
 
         [UnityTest]

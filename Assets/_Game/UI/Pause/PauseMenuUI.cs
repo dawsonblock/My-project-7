@@ -6,9 +6,11 @@ namespace Escape.UI
 {
     /// <summary>
     /// Pause menu: resume, settings, save, quit to menu. Pauses via
-    /// timeScale so AI/detection freeze.
+    /// timeScale so AI/detection freeze. Owns the global pause/back route:
+    /// Escape/pad-start opens pause over gameplay, and backs out of whatever
+    /// modal is on top (including pause itself).
     /// </summary>
-    public sealed class PauseMenuUI : MonoBehaviour
+    public sealed class PauseMenuUI : MonoBehaviour, ICancelableUi
     {
         private GameObject _root;
         private GameServices _services;
@@ -19,15 +21,21 @@ namespace Escape.UI
 
         public static PauseMenuUI Create(Transform canvasRoot, SettingsUI settings)
         {
+            // The component host stays active so Update() can keep retrying
+            // the input-reader bind; only the visual panel toggles.
             var go = new GameObject("PauseMenu", typeof(RectTransform), typeof(PauseMenuUI));
             var rt = (RectTransform)go.transform;
             rt.SetParent(canvasRoot, false);
             UiBuilder.Stretch(rt);
             var ui = go.GetComponent<PauseMenuUI>();
             ui._settings = settings;
-            ui.Build(rt);
-            ui._root = go;
-            go.SetActive(false);
+            var panelGo = new GameObject("Panel", typeof(RectTransform));
+            var panelRt = (RectTransform)panelGo.transform;
+            panelRt.SetParent(rt, false);
+            UiBuilder.Stretch(panelRt);
+            ui.Build(panelRt);
+            ui._root = panelGo;
+            panelGo.SetActive(false);
             return ui;
         }
 
@@ -63,14 +71,56 @@ namespace Escape.UI
         private void Start()
         {
             _services = GameRoot.Instance.Services;
-            _input = FindAnyObjectByType<Escape.Gameplay.PlayerInputReader>();
-            if (_input != null) _input.PausePressed += Toggle;
+            TryBindInput();
+        }
+
+        // The player prefab can spawn after the UI is built, so keep
+        // retrying the reader lookup until it exists — otherwise global
+        // pause/back events would be silently unbound for the whole scene.
+        private void Update()
+        {
+            if (_input == null) TryBindInput();
+        }
+
+        private void TryBindInput()
+        {
+            var reader = FindAnyObjectByType<Escape.Gameplay.PlayerInputReader>();
+            if (reader == null) return;
+            _input = reader;
+            _input.PausePressed += OnGlobalPause;
+            _input.CancelPressed += OnGlobalCancel;
         }
 
         private void OnDestroy()
         {
-            if (_input != null) _input.PausePressed -= Toggle;
+            if (_input != null)
+            {
+                _input.PausePressed -= OnGlobalPause;
+                _input.CancelPressed -= OnGlobalCancel;
+            }
         }
+
+        /// <summary>
+        /// Global pause/back semantics: nothing open → open pause; pause or
+        /// any modal open → back out of the topmost modal. Keeps Escape as
+        /// "back" everywhere instead of stacking pause over terminals.
+        /// </summary>
+        private void OnGlobalPause()
+        {
+            _services ??= GameRoot.Instance.Services;
+            var gate = _services.Get<IInputGate>();
+            if (!gate.UiOpen) Open();
+            else gate.CancelTop();
+        }
+
+        private void OnGlobalCancel()
+        {
+            _services ??= GameRoot.Instance.Services;
+            _services.Get<IInputGate>().CancelTop();
+        }
+
+        /// <summary>ICancelableUi — invoked when pause is the top modal.</summary>
+        public void Cancel() => Close();
 
         public void Toggle()
         {
@@ -83,10 +133,12 @@ namespace Escape.UI
             _root.SetActive(true);
             Time.timeScale = 0f;
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             Time.timeScale = 1f;
             _services.Get<IInputGate>().PopUi(this);

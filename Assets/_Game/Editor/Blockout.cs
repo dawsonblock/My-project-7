@@ -80,6 +80,26 @@ namespace Escape.EditorTools
             return go;
         }
 
+        public static GameObject Cyl(Transform parent, string name, Vector3 pos, float radius,
+            float height, Material mat = null, string layer = null, bool collider = true,
+            Vector3 euler = default)
+        {
+            var go = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+            go.name = name;
+            if (parent != null) go.transform.SetParent(parent, false);
+            go.transform.position = pos;
+            go.transform.localScale = new Vector3(radius * 2f, height * 0.5f, radius * 2f);
+            go.transform.eulerAngles = euler;
+            if (!collider) Object.DestroyImmediate(go.GetComponent<Collider>());
+            if (mat != null) go.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            if (!string.IsNullOrEmpty(layer))
+            {
+                int l = LayerMask.NameToLayer(layer);
+                if (l >= 0) go.layer = l;
+            }
+            return go;
+        }
+
         /// <summary>Set a [SerializeField] field via SerializedObject.</summary>
         public static void Set(Object target, string field, object value)
         {

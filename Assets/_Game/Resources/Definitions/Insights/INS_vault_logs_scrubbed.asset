@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f026c5e4d5a4863994c507a01834cc, type: 3}
+  m_Name: INS_vault_logs_scrubbed
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.InsightDefinition
+  Id: vault_logs_scrubbed
+  Title: Vault Logs Scrubbed
+  Description: "The vault's own keylog records accesses the official security log omits. Whoever reached the archive had inside credentials \u2014 and cleaned the record after."
+  RequiredEvidence:
+  - {fileID: 11400000, guid: 4df07a5faf0cb4544bb9ea31bc4024ef, type: 2}
+  - {fileID: 11400000, guid: 068716e0592384813b62fb22f885d72e, type: 2}
+  UnlocksObjective: {fileID: 0}

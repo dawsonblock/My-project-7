@@ -63,6 +63,7 @@ namespace Escape.Gameplay
             Cursor.visible = ui;
         }
 
+        public float Pitch => _pitch;
         public void SetPitch(float pitch) => _pitch = pitch;
 
         private void Update()

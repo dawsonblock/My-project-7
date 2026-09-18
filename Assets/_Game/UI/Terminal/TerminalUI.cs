@@ -13,7 +13,7 @@ namespace Escape.UI
     /// command checks requirements and dispatches through the command
     /// dispatcher; this view never mutates game state.
     /// </summary>
-    public sealed class TerminalUI : MonoBehaviour, ITerminalUI
+    public sealed class TerminalUI : MonoBehaviour, ITerminalUI, ICancelableUi
     {
         private GameObject _root;
         private TextMeshProUGUI _title;
@@ -78,6 +78,7 @@ namespace Escape.UI
             _codeField.textViewport = areaRt;
             _codeField.textComponent = fieldText;
             _codeField.characterValidation = TMP_InputField.CharacterValidation.Integer;
+            _codeField.onSubmit.AddListener(_ => SubmitCode());
 
             var submit = UiBuilder.Button(_codeRow, "ENTER");
             submit.gameObject.AddComponent<LayoutElement>().preferredWidth = 110;
@@ -129,10 +130,24 @@ namespace Escape.UI
             _root.SetActive(true);
             Sfx(Data.ClipLibrary.Get()?.uiHover);
             _services.Get<IInputGate>().PushUi(this);
+            // Locked → put the caret in the code field so typing just works;
+            // unlocked → anchor keyboard nav on the first command.
+            if (!_unlocked)
+            {
+                _codeField.Select();
+                _codeField.ActivateInputField();
+            }
+            else
+            {
+                UiBuilder.SelectFirst(_root.transform);
+            }
         }
+
+        public void Cancel() => Close();
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
             Sfx(Data.ClipLibrary.Get()?.uiBack);
             _services.Get<IInputGate>().PopUi(this);
@@ -185,6 +200,10 @@ namespace Escape.UI
                 btn.onClick.AddListener(() => RunCommand(captured));
                 _buttons.Add(btn.gameObject);
             }
+            // Rebuilt buttons are new objects — re-anchor the selection so
+            // keyboard nav isn't stranded after unlocking.
+            if (_root.activeSelf)
+                UiBuilder.SelectFirst(_root.transform);
         }
 
         private bool RequirementsMet(TerminalCommandDefinition cmd, GameState state)

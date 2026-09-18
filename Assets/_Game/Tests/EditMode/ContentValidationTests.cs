@@ -75,25 +75,65 @@ namespace Escape.Tests.EditMode
             var all = LoadAll<ObjectiveDefinition>();
             var byId = new Dictionary<string, ObjectiveDefinition>();
             foreach (var o in all) byId[o.Id] = o;
+            // Missing dependency check — the cycle checker treats unknown
+            // ids as leaves, so validate references separately.
             foreach (var o in all)
+                foreach (var req in o.RequiredObjectives)
+                    Assert.IsTrue(req == null || byId.ContainsKey(req.Id),
+                        $"{o.Id} requires missing objective");
+            Assert.IsFalse(
+                DependencyGraph.HasCycle(
+                    byId.Keys,
+                    id => byId.TryGetValue(id, out var o)
+                        ? Deps(o) : null,
+                    out var cycleAt),
+                $"Objective dependency cycle at '{cycleAt}'");
+        }
+
+        private static IEnumerable<string> Deps(ObjectiveDefinition o)
+        {
+            foreach (var req in o.RequiredObjectives)
+                if (req != null) yield return req.Id;
+        }
+
+        // --- DependencyGraph unit tests -----------------------------------
+
+        [Test]
+        public void DependencyGraph_Diamond_IsNotCycle()
+        {
+            //   A → B,C ; B → D ; C → D — shared dep is legal.
+            var edges = new Dictionary<string, string[]>
             {
-                // DFS for cycles
-                var visiting = new HashSet<string>();
-                var stack = new Stack<ObjectiveDefinition>();
-                stack.Push(o);
-                while (stack.Count > 0)
-                {
-                    var cur = stack.Pop();
-                    if (!visiting.Add(cur.Id))
-                        Assert.Fail($"Objective dependency cycle at '{cur.Id}'");
-                    foreach (var req in cur.RequiredObjectives)
-                    {
-                        Assert.IsTrue(req == null || byId.ContainsKey(req.Id),
-                            $"{cur.Id} requires missing objective");
-                        if (req != null) stack.Push(req);
-                    }
-                }
-            }
+                ["A"] = new[] { "B", "C" },
+                ["B"] = new[] { "D" },
+                ["C"] = new[] { "D" },
+                ["D"] = new string[0]
+            };
+            Assert.IsFalse(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out _));
+        }
+
+        [Test]
+        public void DependencyGraph_SimpleCycle_Fails()
+        {
+            var edges = new Dictionary<string, string[]>
+            {
+                ["A"] = new[] { "B" },
+                ["B"] = new[] { "C" },
+                ["C"] = new[] { "A" }
+            };
+            Assert.IsTrue(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out var at));
+            Assert.IsTrue(at == "A" || at == "B" || at == "C");
+        }
+
+        [Test]
+        public void DependencyGraph_SelfLoop_Fails()
+        {
+            var edges = new Dictionary<string, string[]> { ["A"] = new[] { "A" } };
+            Assert.IsTrue(DependencyGraph.HasCycle(
+                edges.Keys, id => edges[id], out var at));
+            Assert.AreEqual("A", at);
         }
 
         [Test]
@@ -135,6 +175,45 @@ namespace Escape.Tests.EditMode
                     e.RequiredInsights.Length == 0)
                     fallback = true;
             Assert.IsTrue(fallback, "No fallback ending (zero-requirement) exists.");
+        }
+
+        [Test]
+        public void RealContent_MainObjectiveChain_IsCompletable()
+        {
+            // Simulates a full run through the shipped content graph:
+            // traversal objectives fired the way SceneBootstrap fires them,
+            // the terminal unlock, then every evidence pickup. If any
+            // main-chain objective is completable by nothing, this fails.
+            var content = ContentDatabase.Load();
+            var events = new GameEventBus();
+            var state = new GameStateService();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(echoToConsole: false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+            dispatcher.Register<ActivateObjectiveCommand>(objectives);
+            dispatcher.Register<CompleteObjectiveCommand>(objectives);
+            dispatcher.Register<GainInsightCommand>(insights);
+
+            foreach (var id in new[] { "reach_compound", "infiltrate_service",
+                     "unlock_service_door", "reach_bunker", "reach_tower" })
+                dispatcher.Dispatch(new CompleteObjectiveCommand(id, "test"));
+
+            foreach (var ev in content.Evidence)
+                dispatcher.Dispatch(new CollectEvidenceCommand(ev.Id, "test"));
+
+            var s = state.State;
+            foreach (var id in new[] { "reach_compound", "infiltrate_service",
+                     "find_keycard", "unlock_service_door", "search_office",
+                     "corroborate_story", "download_archive", "broadcast_truth",
+                     "reach_bunker", "reach_tower" })
+                Assert.IsTrue(s.CompletedObjectives.Contains(id),
+                    $"Main-chain objective '{id}' did not complete");
+
+            foreach (var ins in content.Insights)
+                Assert.IsTrue(s.GainedInsights.Contains(ins.Id),
+                    $"Insight '{ins.Id}' did not form from full evidence collection");
         }
     }
 }

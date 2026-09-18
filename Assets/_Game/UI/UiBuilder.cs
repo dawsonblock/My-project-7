@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Escape.UI
@@ -128,6 +129,32 @@ namespace Escape.UI
             scroll.content = content;
             scroll.horizontal = false;
             return scroll;
+        }
+
+        /// <summary>
+        /// Anchors keyboard/gamepad navigation: selects the first
+        /// interactable Selectable under root so arrow keys have somewhere
+        /// to start from. Call after the panel is active.
+        /// </summary>
+        public static void SelectFirst(Transform root)
+        {
+            if (EventSystem.current == null) return;
+            foreach (var s in root.GetComponentsInChildren<Selectable>(false))
+            {
+                if (!s.interactable || !s.IsActive()) continue;
+                EventSystem.current.SetSelectedGameObject(s.gameObject);
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Drops any selection so a stale selected control can't take a
+        /// submit input after its screen closes.
+        /// </summary>
+        public static void Deselect()
+        {
+            if (EventSystem.current != null)
+                EventSystem.current.SetSelectedGameObject(null);
         }
     }
 }

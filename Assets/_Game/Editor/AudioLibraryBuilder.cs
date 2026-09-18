@@ -87,8 +87,18 @@ namespace Escape.EditorTools
             WriteWav($"{GenDir}/camera_hum.wav", CameraHum());
             WriteWav($"{GenDir}/door_clunk.wav", DoorClunk());
             WriteWav($"{GenDir}/throw_whoosh.wav", ThrowWhoosh());
+            WriteWav($"{GenDir}/amb_dock.wav", AmbDock(), AmbRate);
+            WriteWav($"{GenDir}/amb_service.wav", AmbService(), AmbRate);
+            WriteWav($"{GenDir}/amb_office.wav", AmbOffice(), AmbRate);
+            WriteWav($"{GenDir}/amb_security.wav", AmbSecurity(), AmbRate);
+            WriteWav($"{GenDir}/amb_bunker.wav", AmbBunker(), AmbRate);
+            WriteWav($"{GenDir}/amb_tower.wav", AmbTower(), AmbRate);
+            WriteWav($"{GenDir}/drip_loop.wav", DripLoop(), AmbRate);
+            WriteWav($"{GenDir}/fan_loop.wav", FanLoop(), AmbRate);
             AssetDatabase.Refresh();
         }
+
+        private const int AmbRate = 22050;
 
         /// <summary>Two-tone whistle warble, ~0.6s.</summary>
         private static float[] Whistle()
@@ -180,10 +190,232 @@ namespace Escape.EditorTools
             return s;
         }
 
+        /// <summary>Wind wash + water lapping the pier, 8s — dock ambience.</summary>
+        private static float[] AmbDock()
+        {
+            const float dur = 8f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(23);
+            float lp = 0f, lp2 = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.035f * (noise - lp);
+                lp2 += 0.005f * (lp - lp2);
+                // All periodic terms complete integer cycles in `dur` → seamless.
+                float swell = 0.6f + 0.4f * Mathf.Sin(2f * Mathf.PI * (2f / dur) * t);
+                float lap = Mathf.Pow(0.5f + 0.5f * Mathf.Sin(2f * Mathf.PI * (5f / dur) * t + 1.7f), 3f);
+                raw[i] = lp2 * swell * 1.9f + lp * lap * 1.1f;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>HVAC hum + vent rumble + two pipe drips, 4s — service corridor.</summary>
+        private static float[] AmbService()
+        {
+            const float dur = 4f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(31);
+            float lp = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.02f * (noise - lp);
+                float hum = 0.22f * Mathf.Sin(2f * Mathf.PI * 60f * t)
+                          + 0.09f * Mathf.Sin(2f * Mathf.PI * 120f * t)
+                          + 0.04f * Mathf.Sin(2f * Mathf.PI * 180f * t);
+                float drip = DripPing(t - 1.3f, 2100f) + DripPing(t - 3.4f, 1700f);
+                raw[i] = hum + lp * 0.5f + drip;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Muffled rain on glass + ticking clock, 6s — office ambience.</summary>
+        private static float[] AmbOffice()
+        {
+            const float dur = 6f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(47);
+            float lp = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.07f * (noise - lp);
+                float gust = 0.65f + 0.35f * Mathf.Sin(2f * Mathf.PI * (3f / dur) * t + 0.9f);
+                float tick = 0f;
+                for (int k = 0; k < 6; k++)
+                {
+                    float tt = t - (0.5f + k);
+                    if (tt >= 0f && tt < 0.05f)
+                        tick += Mathf.Sin(2f * Mathf.PI * (k % 2 == 0 ? 1900f : 1500f) * tt)
+                                * Mathf.Exp(-tt * 90f) * 0.35f;
+                }
+                raw[i] = lp * gust * 0.8f + tick;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Monitor whine + equipment hum + walkie squelch blips, 6s — security hub.</summary>
+        private static float[] AmbSecurity()
+        {
+            const float dur = 6f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(59);
+            float lp = 0f;
+            float squelchPhase = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.09f * (noise - lp);
+                float hum = 0.14f * Mathf.Sin(2f * Mathf.PI * 60f * t)
+                          + 0.06f * Mathf.Sin(2f * Mathf.PI * 180f * t);
+                // faint CRT whine — amplitude-wobbled so it breathes
+                float whine = 0.02f * Mathf.Sin(2f * Mathf.PI * 3900f * t)
+                            * (0.5f + 0.5f * Mathf.Sin(2f * Mathf.PI * (2f / dur) * t));
+                // two walkie squelch blips at integer-safe positions
+                float blip = 0f;
+                foreach (var tb in new[] { 1.8f, 4.6f })
+                {
+                    float td = t - tb;
+                    if (td >= 0f && td < 0.12f)
+                    {
+                        squelchPhase += 2f * Mathf.PI * 1400f / AmbRate;
+                        blip += lp * Mathf.Exp(-td * 30f) * 4f;
+                    }
+                }
+                raw[i] = hum + whine + lp * 0.35f + blip;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Server fan drone + drive clicks + deep electrical hum, 6s — server vault.</summary>
+        private static float[] AmbBunker()
+        {
+            const float dur = 6f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(67);
+            float lp = 0f, lp2 = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.15f * (noise - lp);   // fan rush — brighter than wind
+                lp2 += 0.008f * (noise - lp2); // deep rumble
+                float drone = 0.2f * Mathf.Sin(2f * Mathf.PI * 120f * t)
+                            + 0.08f * Mathf.Sin(2f * Mathf.PI * 240f * t)
+                            + 0.03f * Mathf.Sin(2f * Mathf.PI * 480f * t);
+                // sparse disk clicks
+                float click = 0f;
+                foreach (var tb in new[] { 0.9f, 2.3f, 3.1f, 4.9f })
+                {
+                    float td = t - tb;
+                    if (td >= 0f && td < 0.015f)
+                        click += noise * Mathf.Exp(-td * 400f) * 0.3f;
+                }
+                raw[i] = drone + lp * 0.5f + lp2 * 1.2f + click;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Hard rooftop wind + antenna wire-song + distant metal groan, 8s — tower.</summary>
+        private static float[] AmbTower()
+        {
+            const float dur = 8f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(83);
+            float lp = 0f, lp2 = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.05f * (noise - lp);
+                lp2 += 0.004f * (noise - lp2);
+                float gust = 0.55f + 0.45f * Mathf.Sin(2f * Mathf.PI * (3f / dur) * t + 0.4f);
+                // wire-song: two detuned high sines, swelling with the gusts
+                float song = (Mathf.Sin(2f * Mathf.PI * 860f * t) + Mathf.Sin(2f * Mathf.PI * 867f * t))
+                             * 0.03f * gust;
+                // low metal groan once per loop, decaying before wrap
+                float td = t - 3.2f;
+                float groan = td >= 0f && td < 1.6f
+                    ? Mathf.Sin(2f * Mathf.PI * 55f * td + Mathf.Sin(td * 7f)) * Mathf.Exp(-td * 3f) * 0.25f
+                    : 0f;
+                raw[i] = lp * gust * 1.1f + lp2 * gust * 1.4f + song + groan;
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Steady machine fan — rush + blade chug, 2s — localized 3D loop.</summary>
+        private static float[] FanLoop()
+        {
+            const float dur = 2f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            var rng = new System.Random(97);
+            float lp = 0f;
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                float noise = (float)(rng.NextDouble() * 2 - 1);
+                lp += 0.18f * (noise - lp);
+                // blade pass at 8Hz — integer cycles per loop → seamless
+                float chug = 0.75f + 0.25f * Mathf.Sin(2f * Mathf.PI * 8f * t);
+                raw[i] = lp * chug * 1.1f + 0.08f * Mathf.Sin(2f * Mathf.PI * 120f * t);
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Two water drips, 3s — localized 3D loop for puddles.</summary>
+        private static float[] DripLoop()
+        {
+            const float dur = 3f;
+            int n = (int)(AmbRate * dur), fade = AmbRate / 8;
+            var raw = new float[n + fade];
+            for (int i = 0; i < raw.Length; i++)
+            {
+                float t = (float)i / AmbRate;
+                raw[i] = DripPing(t - 0.4f, 2300f) + DripPing(t - 1.9f, 1800f);
+            }
+            return LoopFold(raw, n, fade);
+        }
+
+        /// <summary>Short decaying ping with a slight downward pitch bend.</summary>
+        private static float DripPing(float td, float freq)
+        {
+            if (td < 0f || td > 0.35f) return 0f;
+            float f = freq * Mathf.Exp(-td * 2.5f);
+            return Mathf.Sin(2f * Mathf.PI * f * td) * Mathf.Exp(-td * 26f) * 0.5f;
+        }
+
+        /// <summary>
+        /// Folds the extra `fade` samples at the tail of `raw` back onto the
+        /// head, producing a seamless `n`-sample loop.
+        /// </summary>
+        private static float[] LoopFold(float[] raw, int n, int fade)
+        {
+            var s = new float[n];
+            for (int i = 0; i < n; i++)
+            {
+                float v = raw[i];
+                if (i < fade) v = Mathf.Lerp(raw[n + i], raw[i], (float)i / fade);
+                s[i] = v;
+            }
+            return s;
+        }
+
         private static float Envelope(float t) =>
             t <= 0f ? 0f : Mathf.Clamp01(t / 0.08f) * Mathf.Clamp01((1f - t) / 0.15f);
 
-        private static void WriteWav(string assetPath, float[] samples)
+        private static void WriteWav(string assetPath, float[] samples, int rate = Rate)
         {
             string full = Path.Combine(Directory.GetCurrentDirectory(), assetPath);
             using (var fs = new FileStream(full, FileMode.Create))
@@ -196,8 +428,8 @@ namespace Escape.EditorTools
                 w.Write(16);            // PCM chunk size
                 w.Write((short)1);      // PCM format
                 w.Write((short)1);      // mono
-                w.Write(Rate);
-                w.Write(Rate * 2);      // byte rate
+                w.Write(rate);
+                w.Write(rate * 2);      // byte rate
                 w.Write((short)2);      // block align
                 w.Write((short)16);     // bits
                 w.Write(System.Text.Encoding.ASCII.GetBytes("data"));

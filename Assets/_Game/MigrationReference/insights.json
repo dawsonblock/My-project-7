@@ -20,6 +20,20 @@
       "description": "Archive timestamps align with the access log badge events. The footage is genuine.",
       "requiredEvidence": ["server_archive_001", "access_log_001"],
       "unlocksObjective": ""
+    },
+    {
+      "id": "wing_buried_incident",
+      "title": "The Buried Incident",
+      "description": "The dock memo ordered the corridor kept clear; the sealed incident report is what they were clearing it for. A guest was removed mid-function and the record falsified.",
+      "requiredEvidence": ["security_memo_001", "incident_report_001"],
+      "unlocksObjective": ""
+    },
+    {
+      "id": "vault_logs_scrubbed",
+      "title": "Vault Logs Scrubbed",
+      "description": "The vault's own keylog records accesses the official security log omits. Whoever reached the archive had inside credentials — and cleaned the record after.",
+      "requiredEvidence": ["vault_keylog_001", "access_log_001"],
+      "unlocksObjective": ""
     }
   ]
 }

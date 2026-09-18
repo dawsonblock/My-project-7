@@ -34,6 +34,9 @@ namespace Escape.EditorTools
             Guard();
             GameUi();
             AssetDatabase.SaveAssets();
+            // NOTE: prefab files must NOT be fileID-normalized — scenes
+            // reference prefab internals via {fileID, guid} pairs, so
+            // renumbering corrupts every prefab instance reference.
             Debug.Log("[PrefabFactory] All prefabs built.");
         }
 
@@ -76,6 +79,7 @@ namespace Escape.EditorTools
             wAudio.spatialBlend = 0f;
             wAudio.playOnAwake = false;
             Blockout.Set(whistle, "audioSource", wAudio);
+            go.AddComponent<PlayerSaveParticipant>();
 
             var pivot = new GameObject("CameraPivot");
             pivot.transform.SetParent(go.transform, false);

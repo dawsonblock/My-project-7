@@ -27,27 +27,33 @@ namespace Escape.Core
         public static EndingResult Evaluate(GameState state, IContentDatabase content)
         {
             var result = new EndingResult();
-            result.GainedInsights.AddRange(state.GainedInsights);
+            // Don't trust collection hygiene — a corrupted save must not
+            // double-count evidence or insights toward endings.
+            var collected = new HashSet<string>(
+                state.CollectedEvidence ?? new List<string>(), System.StringComparer.Ordinal);
+            var insights = new HashSet<string>(
+                state.GainedInsights ?? new List<string>(), System.StringComparer.Ordinal);
+            result.GainedInsights.AddRange(insights);
 
             int primaryCount = 0;
-            foreach (var id in state.CollectedEvidence)
+            foreach (var id in collected)
             {
                 if (!content.TryGetEvidence(id, out var def)) continue;
                 result.TransmittedEvidence.Add(def.Title);
                 if (def.Category == EvidenceCategory.Primary) primaryCount++;
 
                 foreach (var c in def.Corroborates)
-                    if (c != null && state.CollectedEvidence.Contains(c.Id) &&
+                    if (c != null && collected.Contains(c.Id) &&
                         !result.CorroboratedClaims.Contains(c.Title))
                         result.CorroboratedClaims.Add(c.Title);
                 foreach (var c in def.Contradicts)
-                    if (c != null && !state.CollectedEvidence.Contains(c.Id) &&
+                    if (c != null && !collected.Contains(c.Id) &&
                         !result.UnresolvedContradictions.Contains(c.Title))
                         result.UnresolvedContradictions.Add(c.Title);
             }
 
             foreach (var def in content.Evidence)
-                if (def.RequiredForBroadcast && !state.CollectedEvidence.Contains(def.Id))
+                if (def.RequiredForBroadcast && !collected.Contains(def.Id))
                     result.MissingEvidence.Add(def.Title);
 
             EndingDefinition best = null;
@@ -56,10 +62,10 @@ namespace Escape.Core
                 if (primaryCount < ending.MinPrimaryEvidence) continue;
                 bool ok = true;
                 foreach (var req in ending.RequiredEvidence)
-                    if (req != null && !state.CollectedEvidence.Contains(req.Id)) { ok = false; break; }
+                    if (req != null && !collected.Contains(req.Id)) { ok = false; break; }
                 if (!ok) continue;
                 foreach (var req in ending.RequiredInsights)
-                    if (req != null && !state.GainedInsights.Contains(req.Id)) { ok = false; break; }
+                    if (req != null && !insights.Contains(req.Id)) { ok = false; break; }
                 if (!ok) continue;
                 if (best == null || ending.Priority > best.Priority) best = ending;
             }

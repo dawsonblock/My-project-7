@@ -51,8 +51,9 @@ namespace Escape.Gameplay
 
         private void OnCrouchPressed()
         {
+            // Toggle mode: press flips. Hold mode is driven by CrouchHeld
+            // in Update — press-down crouches, release stands.
             if (_settings.ToggleCrouch) _crouchToggled = !_crouchToggled;
-            else _state.Crouching = !_state.Crouching;
         }
 
         private void Update()
@@ -65,7 +66,7 @@ namespace Escape.Gameplay
                 return;
             }
 
-            bool crouch = _settings.ToggleCrouch ? _crouchToggled : _state.Crouching;
+            bool crouch = _settings.ToggleCrouch ? _crouchToggled : _input.CrouchHeld;
             _state.Crouching = crouch;
 
             bool sprint = _settings.ToggleSprint ? _sprintToggled : _input.SprintHeld;
@@ -127,13 +128,13 @@ namespace Escape.Gameplay
             _vertical += _tuning != null ? _tuning.Gravity * Time.deltaTime : -18f * Time.deltaTime;
         }
 
-        public void Teleport(Vector3 position, Vector3 euler)
+        public void Teleport(Vector3 position, float yaw, float pitch = 0f)
         {
             _cc.enabled = false;
-            transform.SetPositionAndRotation(position, Quaternion.Euler(0, euler.y, 0));
+            transform.SetPositionAndRotation(position, Quaternion.Euler(0, yaw, 0));
             _cc.enabled = true;
             _velocity = Vector3.zero;
-            if (_look != null) _look.SetPitch(euler.x);
+            if (_look != null) _look.SetPitch(pitch);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Escape.UI
     /// Settings panel — accessibility options from day one. Works both from
     /// pause menu and main menu.
     /// </summary>
-    public sealed class SettingsUI : MonoBehaviour
+    public sealed class SettingsUI : MonoBehaviour, ICancelableUi
     {
         private GameObject _root;
         private ISettingsService _settings;
@@ -133,11 +133,26 @@ namespace Escape.UI
             _settings ??= _services.Get<ISettingsService>();
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
+            UiBuilder.SelectFirst(_root.transform);
         }
+
+        private void Update()
+        {
+            // Escape backs out even in scenes with no PlayerInputReader
+            // (main menu). Close() is idempotent if the input gate already
+            // routed the same key press through CancelTop.
+            if (IsOpen && UnityEngine.InputSystem.Keyboard.current != null &&
+                UnityEngine.InputSystem.Keyboard.current.escapeKey.wasPressedThisFrame)
+                Close();
+        }
+
+        public void Cancel() => Close();
 
         public void Close()
         {
+            UiBuilder.Deselect();
             _root.SetActive(false);
+            _settings?.Persist(); // flush deferred writes when the menu closes
             _services.Get<IInputGate>().PopUi(this);
         }
     }

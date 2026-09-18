@@ -41,6 +41,18 @@
       "title": "Ledger Page",
       "body": "A torn page, half-shredded:\n\n'...transfer to MERIDIAN HOLDINGS via estate account 88-441 ... consulting ... $4.2M ...'\n\nInitialed in the corner by the same hand as the guest log margin note.",
       "grantsEvidence": "ledger_page_001"
+    },
+    {
+      "id": "doc_incident_report",
+      "title": "Incident Report 44-C",
+      "body": "INCIDENT REPORT 44-C — SEALED\n\n23:40  Unregistered guest located at the relay corridor.\n23:52  Guest escorted off property via the dock. No charges filed.\n00:15  Shift lead: 'This never happened. Log the gap as a patrol sweep.'\n\nFiled by officer W-114. Stamped: DO NOT DUPLICATE.",
+      "grantsEvidence": "incident_report_001"
+    },
+    {
+      "id": "doc_broadcast_script",
+      "title": "Broadcast Script — FINAL",
+      "body": "TONIGHT'S STATEMENT — APPROVED FINAL\n\n'...the so-called archive was destroyed in a server fire last month. Any materials claiming otherwise are forgeries planted by a disgruntled technician acting alone...'\n\nMargin note, different hand: 'Run it verbatim. No questions from the floor.'",
+      "grantsEvidence": "broadcast_script_001"
     }
   ]
 }

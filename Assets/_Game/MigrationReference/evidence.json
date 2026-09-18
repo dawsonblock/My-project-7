@@ -73,6 +73,39 @@
       "category": "Hidden",
       "requiredForBroadcast": false,
       "endingWeight": 3
+    },
+    {
+      "id": "incident_report_001",
+      "title": "Incident Report 44-C",
+      "description": "Sealed incident report: an unregistered guest was escorted off the property mid-function, and the attending guard was told to log the gap as a patrol sweep.",
+      "category": "Corroborating",
+      "corroborates": [
+        "security_memo_001"
+      ],
+      "requiredForBroadcast": false,
+      "endingWeight": 2
+    },
+    {
+      "id": "vault_keylog_001",
+      "title": "Vault Keylog Fragment",
+      "description": "Recovered fragment of the archive vault's own keylog. Three entries record access during a window the official security log shows as empty.",
+      "category": "Corroborating",
+      "corroborates": [
+        "access_log_001"
+      ],
+      "requiredForBroadcast": false,
+      "endingWeight": 2
+    },
+    {
+      "id": "broadcast_script_001",
+      "title": "Prepared Broadcast Script",
+      "description": "The statement queued for tonight's broadcast. It claims the archive was destroyed in a server fire and names a scapegoat. Holding the real archive proves it a lie.",
+      "category": "Contradictory",
+      "contradicts": [
+        "server_archive_001"
+      ],
+      "requiredForBroadcast": false,
+      "endingWeight": 1
     }
   ]
 }

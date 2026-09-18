@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2f026c5e4d5a4863994c507a01834cc, type: 3}
+  m_Name: INS_wing_buried_incident
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.InsightDefinition
+  Id: wing_buried_incident
+  Title: The Buried Incident
+  Description: The dock memo ordered the corridor kept clear; the sealed incident report is what they were clearing it for. A guest was removed mid-function and the record falsified.
+  RequiredEvidence:
+  - {fileID: 11400000, guid: f5356ab937a5747e5abdeb323c793826, type: 2}
+  - {fileID: 11400000, guid: 4adbb924f53a04b80ad0b6c70c47bcbb, type: 2}
+  UnlocksObjective: {fileID: 0}
