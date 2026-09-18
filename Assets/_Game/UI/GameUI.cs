@@ -36,13 +36,29 @@ namespace Escape.UI
             var document = DocumentUI.Create(transform);
             var board = EvidenceBoardUI.Create(transform);
             var ending = EndingScreenUI.Create(transform);
+            _fader = fader;
+            _terminal = terminal;
+            _document = document;
+            _board = board;
+            _ending = ending;
 
+            TryBind();
+        }
+
+        // Register facades on enable, unregister on disable — symmetric.
+        // Start retries the bind in case GameRoot lagged the scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
+        {
+            if (_services != null || GameRoot.Instance == null) return;
             _services = GameRoot.Instance.Services;
-            _services.Register<IScreenFader>(_fader = fader);
-            _services.Register<ITerminalUI>(_terminal = terminal);
-            _services.Register<IDocumentUI>(_document = document);
-            _services.Register<IEvidenceBoardUI>(_board = board);
-            _services.Register<IEndingScreenUI>(_ending = ending);
+            _services.Register<IScreenFader>(_fader);
+            _services.Register<ITerminalUI>(_terminal);
+            _services.Register<IDocumentUI>(_document);
+            _services.Register<IEvidenceBoardUI>(_board);
+            _services.Register<IEndingScreenUI>(_ending);
 
             _settings = _services.Get<ISettingsService>();
             _settings.Changed += ApplyDisplaySettings;
@@ -64,7 +80,7 @@ namespace Escape.UI
         private IEndingScreenUI _ending;
         private GameServices _services;
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_settings != null) _settings.Changed -= ApplyDisplaySettings;
             if (_services == null) return;
@@ -73,6 +89,7 @@ namespace Escape.UI
             _services.Unregister<IDocumentUI>(_document);
             _services.Unregister<IEvidenceBoardUI>(_board);
             _services.Unregister<IEndingScreenUI>(_ending);
+            _services = null;
         }
     }
 }

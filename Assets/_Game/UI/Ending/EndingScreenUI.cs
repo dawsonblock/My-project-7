@@ -55,16 +55,24 @@ namespace Escape.UI
             });
         }
 
-        private void Start()
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the event subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_events != null || GameRoot.Instance == null) return;
             _services = GameRoot.Instance.Services;
             _events = _services.Get<IGameEventBus>();
             _events.Subscribe<BroadcastCompletedEvent>(OnBroadcast);
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _events?.Unsubscribe<BroadcastCompletedEvent>(OnBroadcast);
+            _events = null;
         }
 
         private void OnBroadcast(BroadcastCompletedEvent e)
@@ -75,7 +83,8 @@ namespace Escape.UI
 
         public void Show(EndingResult result)
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBind();
+            if (_services == null) return;
             _title.text = result.Ending != null ? result.Ending.Title : "SIGNAL LOST";
 
             var sb = new StringBuilder();
@@ -116,7 +125,7 @@ namespace Escape.UI
         {
             UiBuilder.Deselect();
             _root.SetActive(false);
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
         }
     }
 }

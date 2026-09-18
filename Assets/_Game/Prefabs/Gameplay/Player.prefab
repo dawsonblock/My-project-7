@@ -51,6 +51,8 @@ MonoBehaviour:
   leanOffset: 0.45
   bobFrequency: 9
   bobAmplitude: 0.035
+  yawRoot: {fileID: 0}
+  controllerDegreesPerSecond: 140
 --- !u!114 &4140288688158108792
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -68,10 +68,20 @@ namespace Escape.UI
             b.onClick.AddListener(act);
         }
 
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load — the menu must never NRE on a missing service root.
+        private void OnEnable() => TryBindServices();
+
         private void Start()
         {
-            _services = GameRoot.Instance.Services;
+            TryBindServices();
             TryBindInput();
+        }
+
+        private void TryBindServices()
+        {
+            if (_services == null && GameRoot.Instance != null)
+                _services = GameRoot.Instance.Services;
         }
 
         // The player prefab can spawn after the UI is built, so keep
@@ -79,6 +89,7 @@ namespace Escape.UI
         // pause/back events would be silently unbound for the whole scene.
         private void Update()
         {
+            if (_services == null) TryBindServices();
             if (_input == null) TryBindInput();
         }
 
@@ -107,7 +118,8 @@ namespace Escape.UI
         /// </summary>
         private void OnGlobalPause()
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             var gate = _services.Get<IInputGate>();
             if (!gate.UiOpen) Open();
             else gate.CancelTop();
@@ -115,7 +127,8 @@ namespace Escape.UI
 
         private void OnGlobalCancel()
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             _services.Get<IInputGate>().CancelTop();
         }
 
@@ -129,7 +142,8 @@ namespace Escape.UI
 
         public void Open()
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             _root.SetActive(true);
             Time.timeScale = 0f;
             _services.Get<IInputGate>().PushUi(this);
@@ -141,7 +155,7 @@ namespace Escape.UI
             UiBuilder.Deselect();
             _root.SetActive(false);
             Time.timeScale = 1f;
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
             if (_settings != null && _settings.IsOpen) _settings.Close();
         }
     }

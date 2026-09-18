@@ -14,11 +14,21 @@ namespace Escape.Gameplay
         private Data.StealthTuning _tuning;
         private float _t;
 
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. _tuning doubles as the bound flag — Update guards on it.
+        private void OnEnable() => TryBind();
+
         private void Start()
         {
-            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
+            TryBind();
             if (head == null) head = transform;
             centerYaw = head.localEulerAngles.y;
+        }
+
+        private void TryBind()
+        {
+            if (_tuning != null || GameRoot.Instance == null) return;
+            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
         }
 
         private void Update()

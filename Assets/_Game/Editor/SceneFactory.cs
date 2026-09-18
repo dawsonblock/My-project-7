@@ -183,7 +183,8 @@ namespace Escape.EditorTools
 
         private static void AddTransition(Transform parent, string targetScene, string spawnId,
             Vector3 pos, float yaw, string prompt, string completesObjective = "",
-            string requiredObjective = "", string blockedText = "")
+            string requiredObjective = "", string blockedText = "",
+            string requiredEvidence = "")
         {
             var go = Blockout.Box(parent, "Transition_" + targetScene, pos,
                 new Vector3(1.6f, 2.4f, 0.4f),
@@ -195,6 +196,7 @@ namespace Escape.EditorTools
             Blockout.Set(t, "prompt", prompt);
             Blockout.Set(t, "completesObjectiveId", completesObjective);
             Blockout.Set(t, "requiredObjectiveId", requiredObjective);
+            Blockout.Set(t, "requiredEvidenceId", requiredEvidence);
             if (!string.IsNullOrEmpty(blockedText)) Blockout.Set(t, "blockedText", blockedText);
         }
 
@@ -393,6 +395,9 @@ namespace Escape.EditorTools
             go.AddComponent<MainMenuUI>();
             RenderSettings.fog = true;
             RenderSettings.fogColor = new Color(0.01f, 0.02f, 0.02f);
+            // Every scene must emit SceneReady — the menu has no player to
+            // place, but SceneService still waits on the handshake.
+            AddSceneBootstrap(scene, Escape.Data.SceneId.MainMenu);
             Save(scene, "MainMenu");
         }
 
@@ -504,12 +509,16 @@ namespace Escape.EditorTools
             AddLure(env, new Vector3(-3.6f, 1.6f, -0.8f));
             AddLure(env, new Vector3(2, 1.35f, 5.5f));
 
-            // Player + spawn + gate transition
+            // Player + spawn + gate transition. The broadcast key is
+            // mandatory: the gate is the point of no return, and the office
+            // relay command five scenes later cannot run without it.
             Spawn("Player", new Vector3(0, 0.1f, -6));
             AddSpawn(env, "default", new Vector3(0, 0.1f, -6), 0f);
             AddTransition(env, Escape.Data.SceneId.ServiceEntrance, "default",
                 new Vector3(0, 1.2f, 8.3f), 0, "[E] Slip through the gate",
-                completesObjective: "reach_compound");
+                completesObjective: "reach_compound",
+                requiredEvidence: "broadcast_key_001",
+                blockedText: "Not yet — find the broadcast key on the pier");
 
             Spawn("GameUI", Vector3.zero);
             AddSceneBootstrap(scene, Escape.Data.SceneId.Dock, firstObjective: "reach_compound");
@@ -793,11 +802,14 @@ namespace Escape.EditorTools
 
             AddTerminal(env, "office_terminal", new Vector3(1.4f, 0.95f, 3), 180f);
 
-            // Security wing doorway — sealed until the archive reveals the relay route.
+            // Security wing doorway — sealed until the archive is pulled AND
+            // the relay signal is routed. route_broadcast can only complete
+            // after download_archive (the terminal command is gated on it),
+            // so this single check covers both halves of the office's job.
             AddTransition(env, Escape.Data.SceneId.SecurityWing, "default",
                 new Vector3(9.2f, 1.2f, 4.5f), 90f, "[E] Enter the security wing",
-                requiredObjective: "download_archive",
-                blockedText: "Sealed — the relay route isn't confirmed yet");
+                requiredObjective: "route_broadcast",
+                blockedText: "Sealed — pull the archive and route the relay at the office terminal");
 
             // One guard drifts through the main room, keeping pressure on.
             // Patrol stays out of the entry hall (z < -6) so the spawn is safe.

@@ -50,11 +50,19 @@ namespace Escape.UI
             close.onClick.AddListener(Close);
         }
 
-        private void Start() => _services = GameRoot.Instance.Services;
+        private void Start() => TryBindServices();
+        private void OnEnable() => TryBindServices();
+
+        private void TryBindServices()
+        {
+            if (_services == null && GameRoot.Instance != null)
+                _services = GameRoot.Instance.Services;
+        }
 
         public void Show(DocumentDefinition doc)
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             _title.text = doc.Title;
             _body.text = doc.Body;
             _root.SetActive(true);
@@ -68,7 +76,7 @@ namespace Escape.UI
         {
             UiBuilder.Deselect();
             _root.SetActive(false);
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
         }
 
         private void Update()

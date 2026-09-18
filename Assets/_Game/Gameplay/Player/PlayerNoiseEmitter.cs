@@ -31,13 +31,24 @@ namespace Escape.Gameplay
             _steps.playOnAwake = false;
         }
 
-        private void Start()
+        private bool _bound;
+
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. Update already guards on the bound services.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _noise = services.Get<INoiseService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
             _gate = services.Get<IInputGate>();
+            _bound = true;
         }
+
+        private void OnDisable() => _bound = false;
 
         private void Update()
         {

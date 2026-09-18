@@ -13,6 +13,7 @@ namespace Escape.Gameplay
         [SerializeField] private string targetSpawnId = "default";
         [SerializeField] private string prompt = "[E] Continue";
         [SerializeField] private string requiredObjectiveId = "";
+        [SerializeField] private string requiredEvidenceId = "";
         [SerializeField] private string blockedText = "Locked";
         [SerializeField] private string completesObjectiveId = "";
 
@@ -21,12 +22,17 @@ namespace Escape.Gameplay
             if (!string.IsNullOrEmpty(requiredObjectiveId) &&
                 !player.GameState.CompletedObjectives.Contains(requiredObjectiveId))
                 return new InteractionPrompt(blockedText, false);
+            if (!string.IsNullOrEmpty(requiredEvidenceId) &&
+                !player.GameState.CollectedEvidence.Contains(requiredEvidenceId))
+                return new InteractionPrompt(blockedText, false);
             return new InteractionPrompt(prompt);
         }
 
         public bool CanInteract(PlayerContext player) =>
-            string.IsNullOrEmpty(requiredObjectiveId) ||
-            player.GameState.CompletedObjectives.Contains(requiredObjectiveId);
+            (string.IsNullOrEmpty(requiredObjectiveId) ||
+             player.GameState.CompletedObjectives.Contains(requiredObjectiveId)) &&
+            (string.IsNullOrEmpty(requiredEvidenceId) ||
+             player.GameState.CollectedEvidence.Contains(requiredEvidenceId));
 
         public void Interact(PlayerContext player)
         {

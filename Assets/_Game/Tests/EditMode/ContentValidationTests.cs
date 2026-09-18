@@ -182,19 +182,23 @@ namespace Escape.Tests.EditMode
         {
             // Simulates a full run through the shipped content graph:
             // traversal objectives fired the way SceneBootstrap fires them,
-            // the terminal unlock, then every evidence pickup. If any
-            // main-chain objective is completable by nothing, this fails.
+            // every evidence pickup, then the real terminal/console actions.
+            // If any main-chain objective is completable by nothing, this fails.
             var content = ContentDatabase.Load();
             var events = new GameEventBus();
             var state = new GameStateService();
             var objectives = new ObjectiveService(state, content, events);
             var insights = new InsightService(state, content, events, objectives);
             var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var endings = new EndingService(state, content);
+            var world = new WorldService(state, events, endings);
             var dispatcher = new GameCommandDispatcher(new CommandJournal(echoToConsole: false));
             dispatcher.Register<CollectEvidenceCommand>(evidence);
             dispatcher.Register<ActivateObjectiveCommand>(objectives);
             dispatcher.Register<CompleteObjectiveCommand>(objectives);
             dispatcher.Register<GainInsightCommand>(insights);
+            dispatcher.Register<StartBroadcastCommand>(world);
+            dispatcher.Register<CompleteBroadcastCommand>(world);
 
             foreach (var id in new[] { "reach_compound", "infiltrate_service",
                      "unlock_service_door", "reach_bunker", "reach_tower" })
@@ -204,10 +208,29 @@ namespace Escape.Tests.EditMode
                 dispatcher.Dispatch(new CollectEvidenceCommand(ev.Id, "test"));
 
             var s = state.State;
+
+            // Evidence alone must NOT finish the explicit objectives —
+            // routing the signal and transmitting are actions, not pickups.
+            Assert.IsFalse(s.CompletedObjectives.Contains("route_broadcast"),
+                "route_broadcast completed without the terminal action");
+            Assert.IsFalse(s.CompletedObjectives.Contains("broadcast_truth"),
+                "broadcast_truth completed without an actual broadcast");
+
+            // Office terminal BROADCAST: routes the signal (CompletesObjective
+            // on the command def fires CompleteObjectiveCommand like TerminalUI does).
+            dispatcher.Dispatch(new StartBroadcastCommand("office_terminal"));
+            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "office_terminal"));
+            Assert.IsTrue(s.BroadcastStarted, "Terminal BROADCAST did not set BroadcastStarted");
+            Assert.IsTrue(s.CompletedObjectives.Contains("route_broadcast"));
+
+            // Tower relay console: the actual transmission completes the objective.
+            dispatcher.Dispatch(new CompleteBroadcastCommand());
+            dispatcher.Dispatch(new CompleteObjectiveCommand("broadcast_truth", "broadcast_console"));
+
             foreach (var id in new[] { "reach_compound", "infiltrate_service",
                      "find_keycard", "unlock_service_door", "search_office",
-                     "corroborate_story", "download_archive", "broadcast_truth",
-                     "reach_bunker", "reach_tower" })
+                     "corroborate_story", "download_archive", "route_broadcast",
+                     "broadcast_truth", "reach_bunker", "reach_tower" })
                 Assert.IsTrue(s.CompletedObjectives.Contains(id),
                     $"Main-chain objective '{id}' did not complete");
 

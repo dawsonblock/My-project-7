@@ -20,4 +20,5 @@ MonoBehaviour:
   RequiredEvidence:
   - {fileID: 11400000, guid: d3f3d8456caba4d628cf0ff7d5625537, type: 2}
   - {fileID: 11400000, guid: 068716e0592384813b62fb22f885d72e, type: 2}
+  Completion: 0
   Optional: 0

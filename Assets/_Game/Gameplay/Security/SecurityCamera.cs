@@ -21,8 +21,15 @@ namespace Escape.Gameplay
         public string Id => id;
         public bool Disabled { get; private set; }
 
-        private void Start()
+        // Bind + register on enable, unregister on disable — symmetric, so a
+        // disable/enable cycle leaves the camera registered exactly once.
+        // Start retries the bind in case GameRoot lagged behind scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_world != null || GameRoot.Instance == null) return;
             _world = GameRoot.Instance.Services.Get<IWorldService>();
             if (motorAudio == null) motorAudio = GetComponent<AudioSource>();
             if (motorAudio != null && motorAudio.clip == null)
@@ -32,7 +39,11 @@ namespace Escape.Gameplay
                 motorAudio.Play();
         }
 
-        private void OnDisable() => _world?.Unregister(this);
+        private void OnDisable()
+        {
+            _world?.Unregister(this);
+            _world = null;
+        }
 
         public void RestoreFromState(GameState state)
         {

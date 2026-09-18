@@ -24,6 +24,7 @@ namespace Escape.Gameplay
         private bool _sprintToggled;
         private float _standHeight;
         private Vector3 _standCenter;
+        private bool _bound;
 
         private void Awake()
         {
@@ -35,18 +36,27 @@ namespace Escape.Gameplay
             _standCenter = _cc.center;
         }
 
-        private void Start()
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the input subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _tuning = services.Get<IContentDatabase>().Tuning;
             _settings = services.Get<ISettingsService>();
             _gate = services.Get<IInputGate>();
-            _input.CrouchPressed += OnCrouchPressed;
+            if (_input != null) _input.CrouchPressed += OnCrouchPressed;
+            _bound = true;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_input != null) _input.CrouchPressed -= OnCrouchPressed;
+            _bound = false;
         }
 
         private void OnCrouchPressed()

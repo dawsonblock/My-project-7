@@ -19,6 +19,7 @@ namespace Escape.AI
         private PlayerVisibility _visibility;
         private PlayerState _playerState;
         private int _mask;
+        private bool _bound;
 
         /// <summary>Continuous 0..1 perception this frame.</summary>
         public float Perception { get; private set; }
@@ -32,18 +33,28 @@ namespace Escape.AI
             if (eye == null) eye = transform;
         }
 
-        private void Start()
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. Unbound vision contributes nothing rather than NRE-ing.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _detection = services.Get<IDetectionService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
             _mask = GameLayers.OcclusionMask;
             if (_mask == 0) _mask = Physics.DefaultRaycastLayers;
+            _bound = true;
         }
+
+        private void OnDisable() => _bound = false;
 
         private void Update()
         {
             Perception = 0f;
+            if (!_bound) return;
             TimeSinceSeen += Time.deltaTime;
             var player = FindPlayer();
             if (player == null || _playerState.Caught) return;

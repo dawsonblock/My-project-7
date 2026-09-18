@@ -89,7 +89,7 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5}
+  m_GameObject: {fileID: 6}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -134,7 +134,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!104 &4
+--- !u!114 &4
+
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dfdfb5ac942b409cb48590fc1995113, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Escape.Gameplay::Escape.Gameplay.CaughtSequence
+  playerState: {fileID: 0}
+--- !u!104 &5
 
 RenderSettings:
   m_ObjectHideFlags: 0
@@ -164,7 +178,7 @@ RenderSettings:
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
   m_UseRadianceAmbientProbe: 0
---- !u!1 &5
+--- !u!1 &6
 
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +187,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 9}
+  - component: {fileID: 12}
   - component: {fileID: 3}
   m_Layer: 0
   m_Name: MenuCamera
@@ -182,7 +196,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!29 &6
+--- !u!29 &7
 
 OcclusionCullingSettings:
   m_ObjectHideFlags: 0
@@ -193,13 +207,6 @@ OcclusionCullingSettings:
     backfaceThreshold: 100
   m_SceneGUID: 00000000000000000000000000000000
   m_OcclusionCullingData: {fileID: 0}
---- !u!1660057539 &7
-
-SceneRoots:
-  m_ObjectHideFlags: 0
-  m_Roots:
-  - {fileID: 9}
-  - {fileID: 10}
 --- !u!1 &8
 
 GameObject:
@@ -209,8 +216,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 10}
-  - component: {fileID: 11}
+  - component: {fileID: 13}
+  - component: {fileID: 14}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
@@ -218,14 +225,39 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &9
+--- !u!114 &9
+
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 15}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7928d1db2e41a4ad59a4c1c93bfc97b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Escape.Gameplay::Escape.Gameplay.SceneBootstrap
+  sceneId: main_menu
+  firstObjectiveId: 
+  completesObjectiveId: 
+  playerRoot: {fileID: 0}
+--- !u!1660057539 &10
+
+SceneRoots:
+  m_ObjectHideFlags: 0
+  m_Roots:
+  - {fileID: 12}
+  - {fileID: 13}
+  - {fileID: 11}
+--- !u!4 &11
 
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5}
+  m_GameObject: {fileID: 15}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -234,7 +266,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &10
+--- !u!4 &12
+
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &13
 
 Transform:
   m_ObjectHideFlags: 0
@@ -250,7 +298,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &11
+--- !u!114 &14
 
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,3 +311,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8a61e9eb8cdd403580917a90c136be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Escape.UI::Escape.UI.MainMenuUI
+--- !u!1 &15
+
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 11}
+  - component: {fileID: 9}
+  - component: {fileID: 4}
+  m_Layer: 0
+  m_Name: SceneBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1

@@ -12,7 +12,9 @@
       "id": "infiltrate_service",
       "title": "Breach the service entrance",
       "description": "The main gate is watched. Find the staff way in.",
-      "requiredObjectives": ["reach_compound"],
+      "requiredObjectives": [
+        "reach_compound"
+      ],
       "requiredEvidence": [],
       "optional": false
     },
@@ -20,15 +22,21 @@
       "id": "find_keycard",
       "title": "Find a staff keycard",
       "description": "The interior door is badge-locked. Someone on shift must have left one behind.",
-      "requiredObjectives": ["infiltrate_service"],
-      "requiredEvidence": ["keycard_staff"],
+      "requiredObjectives": [
+        "infiltrate_service"
+      ],
+      "requiredEvidence": [
+        "keycard_staff"
+      ],
       "optional": false
     },
     {
       "id": "unlock_service_door",
       "title": "Unlock the interior door",
       "description": "Use the service security node to release the door to the office wing.",
-      "requiredObjectives": ["find_keycard"],
+      "requiredObjectives": [
+        "find_keycard"
+      ],
       "requiredEvidence": [],
       "optional": false
     },
@@ -36,39 +44,70 @@
       "id": "search_office",
       "title": "Search the office",
       "description": "The guest wing office holds the paperwork that proves who was here.",
-      "requiredObjectives": ["unlock_service_door"],
-      "requiredEvidence": ["guest_log_001"],
+      "requiredObjectives": [
+        "unlock_service_door"
+      ],
+      "requiredEvidence": [
+        "guest_log_001"
+      ],
       "optional": false
     },
     {
       "id": "corroborate_story",
       "title": "Corroborate the story",
       "description": "One document is a claim. Two matching records are a story. Find what backs it up.",
-      "requiredObjectives": ["search_office"],
-      "requiredEvidence": ["transport_manifest_001", "access_log_001"],
+      "requiredObjectives": [
+        "search_office"
+      ],
+      "requiredEvidence": [
+        "transport_manifest_001",
+        "access_log_001"
+      ],
       "optional": false
     },
     {
       "id": "download_archive",
       "title": "Pull the server archive",
       "description": "The office terminal still talks to the estate server. Download what's left.",
-      "requiredObjectives": ["corroborate_story"],
-      "requiredEvidence": ["server_archive_001"],
+      "requiredObjectives": [
+        "corroborate_story"
+      ],
+      "requiredEvidence": [
+        "server_archive_001"
+      ],
+      "optional": false
+    },
+    {
+      "id": "route_broadcast",
+      "title": "Route the broadcast signal",
+      "description": "The relay is cold. Route the signal to the tower from the office security node.",
+      "requiredObjectives": [
+        "download_archive"
+      ],
+      "requiredEvidence": [],
+      "completion": "explicit",
       "optional": false
     },
     {
       "id": "broadcast_truth",
       "title": "Broadcast the evidence",
-      "description": "Route the signal and transmit everything before they reach you.",
-      "requiredObjectives": ["download_archive"],
-      "requiredEvidence": ["broadcast_key_001"],
-      "optional": false
+      "description": "Transmit everything from the tower relay before they reach you.",
+      "requiredObjectives": [
+        "route_broadcast"
+      ],
+      "requiredEvidence": [
+        "broadcast_key_001"
+      ],
+      "optional": false,
+      "completion": "explicit"
     },
     {
       "id": "reach_bunker",
       "title": "Reach the server bunker",
       "description": "The relay feed routes through the estate's server room, under the security wing.",
-      "requiredObjectives": ["download_archive"],
+      "requiredObjectives": [
+        "download_archive"
+      ],
       "requiredEvidence": [],
       "optional": false
     },
@@ -76,7 +115,9 @@
       "id": "reach_tower",
       "title": "Reach the broadcast tower",
       "description": "The relay console sits above the bunker. Get to it before they find you.",
-      "requiredObjectives": ["reach_bunker"],
+      "requiredObjectives": [
+        "reach_bunker"
+      ],
       "requiredEvidence": [],
       "optional": false
     },
@@ -85,7 +126,9 @@
       "title": "Follow the money",
       "description": "Rumor says a private ledger page survived the shredding.",
       "requiredObjectives": [],
-      "requiredEvidence": ["ledger_page_001"],
+      "requiredEvidence": [
+        "ledger_page_001"
+      ],
       "optional": true
     }
   ]

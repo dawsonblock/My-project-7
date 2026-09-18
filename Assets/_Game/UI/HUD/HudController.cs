@@ -39,12 +39,17 @@ namespace Escape.UI
 
         public static HudController Create(Transform canvasRoot)
         {
-            var go = new GameObject("HUD", typeof(RectTransform), typeof(HudController));
-            var rt = (RectTransform)go.transform;
+            // Inactive until Build() populates the view fields — OnEnable
+            // fires TryBind, and RefreshObjective must not run before the
+            // labels exist.
+            var go = new GameObject("HUD");
+            go.SetActive(false);
+            var rt = go.AddComponent<RectTransform>();
+            var hud = go.AddComponent<HudController>();
             rt.SetParent(canvasRoot, false);
             UiBuilder.Stretch(rt);
-            var hud = go.GetComponent<HudController>();
             hud.Build(rt);
+            go.SetActive(true);
             return hud;
         }
 
@@ -109,8 +114,15 @@ namespace Escape.UI
             _staminaFill.fillAmount = 1f;
         }
 
-        private void Start()
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the event subscriptions intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_events != null || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _events = services.Get<IGameEventBus>();
             _detection = services.Get<IDetectionService>();
@@ -124,11 +136,12 @@ namespace Escape.UI
             RefreshObjective();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_events == null) return;
             _events.Unsubscribe<SystemMessageEvent>(OnSystemMessage);
             _events.Unsubscribe<ObjectiveUpdatedEvent>(OnObjectives);
+            _events = null;
         }
 
         private void OnObjectives(ObjectiveUpdatedEvent _) => RefreshObjective();

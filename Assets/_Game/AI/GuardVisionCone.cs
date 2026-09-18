@@ -32,9 +32,13 @@ namespace Escape.AI
             if (brain == null) brain = GetComponentInParent<GuardBrain>();
         }
 
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. _tuning doubles as the bound flag — LateUpdate guards on it.
+        private void OnEnable() => TryBind();
+
         private void Start()
         {
-            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
+            TryBind();
             if (_mr.sharedMaterial == null)
             {
                 var mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
@@ -45,6 +49,12 @@ namespace Escape.AI
                 mat.renderQueue = 3000;
                 _mr.sharedMaterial = mat;
             }
+        }
+
+        private void TryBind()
+        {
+            if (_tuning != null || GameRoot.Instance == null) return;
+            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
         }
 
         private void LateUpdate()

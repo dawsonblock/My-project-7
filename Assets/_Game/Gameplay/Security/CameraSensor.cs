@@ -19,24 +19,39 @@ namespace Escape.Gameplay
         private PlayerVisibility _visibility;
         private PlayerState _playerState;
         private int _occlusionMask;
+        private bool _bound;
 
         /// <summary>0..1 — how strongly the player is currently perceived.</summary>
         public float Perception { get; private set; }
 
-        private void Start()
+        private void Awake()
         {
+            if (string.IsNullOrEmpty(sourceId)) sourceId = name;
+            if (eye == null) eye = transform;
+        }
+
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. Unbound sensor contributes nothing rather than NRE-ing.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
+        {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _detection = services.Get<IDetectionService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
-            if (string.IsNullOrEmpty(sourceId)) sourceId = name;
-            if (eye == null) eye = transform;
             _occlusionMask = GameLayers.OcclusionMask;
             if (_occlusionMask == 0) _occlusionMask = Physics.DefaultRaycastLayers;
+            _bound = true;
         }
+
+        private void OnDisable() => _bound = false;
 
         private void Update()
         {
             Perception = 0f;
+            if (!_bound) return;
             var player = FindPlayer();
             if (player == null) return;
 

@@ -40,6 +40,38 @@ namespace Escape.Core
             CleanSet(data.disabledCameras, "camera", r);
             CleanSet(data.usedTerminalCommands, "terminal command", r);
             CleanSet(data.collectedLures, "lure", r);
+
+            // Cross-field invariants — repairable contradictions in the
+            // relationship between fields, not inside any single one.
+            if (data.activeObjectives != null && data.completedObjectives != null)
+            {
+                for (int i = data.activeObjectives.Count - 1; i >= 0; i--)
+                    if (data.completedObjectives.Contains(data.activeObjectives[i]))
+                    {
+                        r.Warnings.Add($"Dropped active objective '{data.activeObjectives[i]}' (also completed).");
+                        data.activeObjectives.RemoveAt(i);
+                        r.WasRepaired = true;
+                    }
+            }
+            if (data.lures < 0)
+            {
+                r.Warnings.Add($"Clamped negative lure count {data.lures} to 0.");
+                data.lures = 0;
+                r.WasRepaired = true;
+            }
+            if (data.broadcastCompleted && !data.broadcastStarted)
+            {
+                r.Warnings.Add("BroadcastCompleted without BroadcastStarted — repaired.");
+                data.broadcastStarted = true;
+                r.WasRepaired = true;
+            }
+            if (!string.IsNullOrEmpty(data.endingId) &&
+                !content.TryGetEnding(data.endingId, out _))
+            {
+                r.Warnings.Add($"Dropped unknown ending id '{data.endingId}'.");
+                data.endingId = "";
+                r.WasRepaired = true;
+            }
             return Done(r);
         }
 

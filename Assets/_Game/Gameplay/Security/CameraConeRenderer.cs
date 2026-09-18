@@ -30,9 +30,13 @@ namespace Escape.Gameplay
             if (sensor == null) sensor = GetComponentInParent<CameraSensor>();
         }
 
+        // Bind on enable; Start retries in case GameRoot lagged the scene
+        // load. _tuning doubles as the bound flag — LateUpdate guards on it.
+        private void OnEnable() => TryBind();
+
         private void Start()
         {
-            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
+            TryBind();
             if (_mr.sharedMaterial == null)
             {
                 var mat = new Material(Shader.Find("Universal Render Pipeline/Unlit"));
@@ -43,6 +47,12 @@ namespace Escape.Gameplay
                 mat.renderQueue = 3000;
                 _mr.sharedMaterial = mat;
             }
+        }
+
+        private void TryBind()
+        {
+            if (_tuning != null || GameRoot.Instance == null) return;
+            _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
         }
 
         public void SetDisabled(bool disabled) => _disabled = disabled;

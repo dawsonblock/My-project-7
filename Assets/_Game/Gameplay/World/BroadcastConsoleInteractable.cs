@@ -11,6 +11,7 @@ namespace Escape.Gameplay
         public sealed class BroadcastConsoleInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField] private string label = "TRANSMIT";
+        [SerializeField] private string completesObjectiveId = "";
 
         public InteractionPrompt GetPrompt(PlayerContext player)
         {
@@ -28,6 +29,10 @@ namespace Escape.Gameplay
         {
             player.Dispatcher.Dispatch(new SetAlertCommand(true, "broadcast"));
             player.Dispatcher.Dispatch(new CompleteBroadcastCommand());
+            // The broadcast objective is Explicit — holding the key never
+            // finishes it; only an actual transmission does.
+            if (!string.IsNullOrEmpty(completesObjectiveId))
+                player.Dispatcher.Dispatch(new CompleteObjectiveCommand(completesObjectiveId, name));
         }
     }
 }

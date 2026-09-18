@@ -27,8 +27,17 @@ namespace Escape.Gameplay
             _look = GetComponentInChildren<PlayerLook>();
         }
 
-        private void Start()
+        private bool _bound;
+
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the input subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _gate = services.Get<IInputGate>();
             _distance = services.Get<IContentDatabase>().Tuning.InteractDistance;
@@ -39,12 +48,14 @@ namespace Escape.Gameplay
                 State = _state,
                 Services = services
             };
-            _input.InteractPressed += OnInteract;
+            if (_input != null) _input.InteractPressed += OnInteract;
+            _bound = true;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_input != null) _input.InteractPressed -= OnInteract;
+            _bound = false;
         }
 
         private void Update()

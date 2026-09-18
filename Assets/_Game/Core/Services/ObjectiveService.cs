@@ -105,6 +105,9 @@ namespace Escape.Core
                 foreach (var def in _content.Objectives)
                 {
                     if (s.CompletedObjectives.Contains(def.Id) || !s.ActiveObjectives.Contains(def.Id)) continue;
+                    // Explicit objectives finish only through commands —
+                    // required evidence gates availability, not completion.
+                    if (def.Completion != ObjectiveCompletionMode.Evidence) continue;
                     if (def.RequiredEvidence.Length == 0) continue;
                     bool all = true;
                     foreach (var ev in def.RequiredEvidence)

@@ -5,8 +5,12 @@
       "displayName": "SECURITY NODE S-01",
       "unlockCode": "",
       "requiredObjective": "find_keycard",
-      "associatedDoors": ["service_security_door"],
-      "associatedCameras": ["service_cam_01"],
+      "associatedDoors": [
+        "service_security_door"
+      ],
+      "associatedCameras": [
+        "service_cam_01"
+      ],
       "commands": [
         {
           "command": "STATUS",
@@ -26,7 +30,9 @@
           "action": "DisableCamera",
           "targetId": "service_cam_01",
           "successText": "Camera S-01 feed cut. Looping last frame.",
-          "requiredEvidence": ["keycard_staff"]
+          "requiredEvidence": [
+            "keycard_staff"
+          ]
         },
         {
           "command": "UNLOCK SERVICE",
@@ -36,7 +42,9 @@
           "completesObjective": "unlock_service_door",
           "successText": "Interior door released.",
           "failureText": "ACCESS DENIED — STAFF BADGE REQUIRED",
-          "requiredEvidence": ["keycard_staff"]
+          "requiredEvidence": [
+            "keycard_staff"
+          ]
         }
       ]
     },
@@ -61,7 +69,9 @@
           "targetId": "server_archive_001",
           "successText": "Archive pulled. Timestamps intact.",
           "failureText": "ARCHIVE SEALED — CORROBORATION REQUIRED",
-          "requiredInsights": ["private_security_coverup"]
+          "requiredInsights": [
+            "private_security_coverup"
+          ]
         },
         {
           "command": "BROADCAST",
@@ -69,8 +79,14 @@
           "action": "StartBroadcast",
           "targetId": "",
           "successText": "Signal routed to the relay console. Transmit when ready.",
-          "failureText": "RELAY REJECTED — BROADCAST KEY REQUIRED",
-          "requiredEvidence": ["broadcast_key_001"]
+          "failureText": "RELAY REJECTED — ARCHIVE + BROADCAST KEY REQUIRED",
+          "requiredEvidence": [
+            "broadcast_key_001"
+          ],
+          "requiredObjectives": [
+            "download_archive"
+          ],
+          "completesObjective": "route_broadcast"
         }
       ]
     },
@@ -79,8 +95,14 @@
       "displayName": "SECURITY HUB W-02",
       "unlockCode": "",
       "requiredObjective": "",
-      "associatedDoors": ["wing_bunker_door"],
-      "associatedCameras": ["wing_cam_01", "wing_cam_02", "tower_cam_01"],
+      "associatedDoors": [
+        "wing_bunker_door"
+      ],
+      "associatedCameras": [
+        "wing_cam_01",
+        "wing_cam_02",
+        "tower_cam_01"
+      ],
       "commands": [
         {
           "command": "STATUS",
@@ -122,7 +144,9 @@
           "targetId": "wing_bunker_door",
           "successText": "Bunker door released. Stairwell is open.",
           "failureText": "ACCESS DENIED — STAFF BADGE REQUIRED",
-          "requiredEvidence": ["keycard_staff"]
+          "requiredEvidence": [
+            "keycard_staff"
+          ]
         }
       ]
     },
@@ -132,7 +156,9 @@
       "unlockCode": "",
       "requiredObjective": "",
       "associatedDoors": [],
-      "associatedCameras": ["bunker_cam_01"],
+      "associatedCameras": [
+        "bunker_cam_01"
+      ],
       "commands": [
         {
           "command": "STATUS",

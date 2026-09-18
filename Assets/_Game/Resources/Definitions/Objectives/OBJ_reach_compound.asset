@@ -17,4 +17,5 @@ MonoBehaviour:
   Description: Get off the dock and find a way into the estate grounds.
   RequiredObjectives: []
   RequiredEvidence: []
+  Completion: 0
   Optional: 0

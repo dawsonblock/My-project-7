@@ -73,14 +73,24 @@ namespace Escape.Core
 
         public string MostRecentSlot()
         {
+            // A backup-only slot is still a recoverable save — HasSave and
+            // Load agree, so slot discovery must too. Otherwise the menu
+            // disables CONTINUE/LOAD for a save the storage layer can load.
             string best = null;
             DateTime bestTime = DateTime.MinValue;
             foreach (var slot in Slots)
             {
-                var p = PathFor(slot);
-                if (!File.Exists(p)) continue;
-                var t = File.GetLastWriteTimeUtc(p);
-                if (t > bestTime) { bestTime = t; best = slot; }
+                foreach (var p in new[] { PathFor(slot), SaveFileIO.BakPath(PathFor(slot)) })
+                {
+                    DateTime t;
+                    try
+                    {
+                        if (!File.Exists(p)) continue;
+                        t = File.GetLastWriteTimeUtc(p);
+                    }
+                    catch (Exception) { continue; }
+                    if (t > bestTime) { bestTime = t; best = slot; }
+                }
             }
             return best;
         }
@@ -95,8 +105,14 @@ namespace Escape.Core
             bool primaryBad = false;
             foreach (var path in new[] { final, SaveFileIO.BakPath(final) })
             {
-                if (!File.Exists(path)) continue;
-                if (TryParse(File.ReadAllText(path), out var data, out var result))
+                string json;
+                try
+                {
+                    if (!File.Exists(path)) continue;
+                    json = File.ReadAllText(path);
+                }
+                catch (Exception) { continue; } // locked/unreadable file — treat as absent
+                if (TryParse(json, out var data, out var result))
                 {
                     info.Valid = true;
                     info.SceneId = data.sceneId;
@@ -234,7 +250,16 @@ namespace Escape.Core
             var p = PathFor(slot);
             bool any = false;
             foreach (var f in new[] { p, SaveFileIO.BakPath(p), SaveFileIO.TmpPath(p) })
-                if (File.Exists(f)) { File.Delete(f); any = true; }
+            {
+                try
+                {
+                    if (File.Exists(f)) { File.Delete(f); any = true; }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogWarning($"[SaveService] Could not delete '{f}': {e.Message}");
+                }
+            }
             return any;
         }
 

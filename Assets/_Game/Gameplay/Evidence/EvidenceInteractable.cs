@@ -18,14 +18,24 @@ namespace Escape.Gameplay
 
         public string Id => evidence != null ? evidence.Id : "";
 
-        private void Start()
+        // Register on enable, unregister on disable — symmetric, so a
+        // disable/enable cycle leaves the pickup registered exactly once.
+        // Start retries the bind in case GameRoot lagged behind scene load.
+        private void OnEnable() => TryRegister();
+        private void Start() => TryRegister();
+
+        private void TryRegister()
         {
-            var services = GameRoot.Instance.Services;
-            _world = services.Get<IWorldService>();
+            if (_world != null || GameRoot.Instance == null) return;
+            _world = GameRoot.Instance.Services.Get<IWorldService>();
             _world.Register(this);
         }
 
-        private void OnDisable() => _world?.Unregister(this);
+        private void OnDisable()
+        {
+            _world?.Unregister(this);
+            _world = null;
+        }
 
         public void RestoreFromState(GameState state)
         {

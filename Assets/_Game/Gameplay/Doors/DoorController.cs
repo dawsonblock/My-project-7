@@ -44,6 +44,7 @@ namespace Escape.Gameplay
         {
             get
             {
+                if (_state == null) return false; // unbound — fail closed
                 var s = _state.State;
                 switch (requirement)
                 {
@@ -64,8 +65,15 @@ namespace Escape.Gameplay
                 audioSource.clip = Data.ClipLibrary.Get()?.doorClunk;
         }
 
-        private void Start()
+        // Bind + register on enable, unregister on disable — symmetric, so a
+        // disable/enable cycle leaves the door registered exactly once.
+        // Start retries the bind in case GameRoot lagged behind scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_world != null || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _state = services.Get<IGameStateService>();
             _dispatcher = services.Get<IGameCommandDispatcher>();
@@ -78,6 +86,7 @@ namespace Escape.Gameplay
         private void OnDisable()
         {
             _world?.Unregister(this);
+            _world = null;
         }
 
         public void RestoreFromState(GameState state)

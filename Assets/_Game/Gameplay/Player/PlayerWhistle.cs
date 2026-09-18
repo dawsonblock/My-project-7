@@ -25,18 +25,29 @@ namespace Escape.Gameplay
             _state = GetComponent<PlayerState>();
         }
 
-        private void Start()
+        private bool _bound;
+
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the input subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _gate = services.Get<IInputGate>();
             _noise = services.Get<INoiseService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
-            _input.WhistlePressed += OnWhistle;
+            if (_input != null) _input.WhistlePressed += OnWhistle;
+            _bound = true;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             if (_input != null) _input.WhistlePressed -= OnWhistle;
+            _bound = false;
         }
 
         private void OnWhistle()

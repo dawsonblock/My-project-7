@@ -21,7 +21,7 @@ namespace Escape.EditorTools
         [Serializable] private class IdRef { public string[] ids = new string[0]; }
         [Serializable] private class EvidenceDto { public string id; public string title; public string description; public string category; public string[] corroborates = new string[0]; public string[] contradicts = new string[0]; public bool requiredForBroadcast; public int endingWeight; }
         [Serializable] private class EvidenceFile { public EvidenceDto[] evidence; }
-        [Serializable] private class ObjectiveDto { public string id; public string title; public string description; public string[] requiredObjectives = new string[0]; public string[] requiredEvidence = new string[0]; public bool optional; }
+        [Serializable] private class ObjectiveDto { public string id; public string title; public string description; public string[] requiredObjectives = new string[0]; public string[] requiredEvidence = new string[0]; public string completion; public bool optional; }
         [Serializable] private class ObjectiveFile { public ObjectiveDto[] objectives; }
         [Serializable] private class InsightDto { public string id; public string title; public string description; public string[] requiredEvidence = new string[0]; public string unlocksObjective; }
         [Serializable] private class InsightFile { public InsightDto[] insights; }
@@ -94,6 +94,8 @@ namespace Escape.EditorTools
                 so.Title = dto.title;
                 so.Description = dto.description;
                 so.Optional = dto.optional;
+                so.Completion = Enum.TryParse(dto.completion, true, out ObjectiveCompletionMode mode)
+                    ? mode : ObjectiveCompletionMode.Evidence;
                 so.RequiredEvidence = Resolve(dto.requiredEvidence, evById);
                 byId[dto.id] = so;
                 EditorUtility.SetDirty(so);

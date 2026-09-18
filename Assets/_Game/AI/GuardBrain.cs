@@ -44,8 +44,17 @@ namespace Escape.AI
             _vision = GetComponent<GuardVision>();
         }
 
-        private void Start()
+        private bool _bound;
+
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the alert subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _state = services.Get<IGameStateService>();
             _dispatcher = services.Get<IGameCommandDispatcher>();
@@ -54,11 +63,14 @@ namespace Escape.AI
             _events.Subscribe<AlertChangedEvent>(OnAlertChanged);
             var p = FindAnyObjectByType<PlayerState>();
             if (p != null) _player = p.transform;
+            _bound = true;
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _events?.Unsubscribe<AlertChangedEvent>(OnAlertChanged);
+            _events = null;
+            _bound = false;
         }
 
         private void OnAlertChanged(AlertChangedEvent e)

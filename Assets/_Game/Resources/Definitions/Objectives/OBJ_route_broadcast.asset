@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abf6038ed5b4a464ea71f2fdf20992b4, type: 3}
-  m_Name: OBJ_download_archive
+  m_Name: OBJ_route_broadcast
   m_EditorClassIdentifier: Escape.Data::Escape.Data.ObjectiveDefinition
-  Id: download_archive
-  Title: Pull the server archive
-  Description: The office terminal still talks to the estate server. Download what's left.
+  Id: route_broadcast
+  Title: Route the broadcast signal
+  Description: The relay is cold. Route the signal to the tower from the office security node.
   RequiredObjectives:
-  - {fileID: 11400000, guid: 7415b32002c1249968fee100e1f2fde5, type: 2}
-  RequiredEvidence:
-  - {fileID: 11400000, guid: 55f426f16d57e47328fc1a8ed99958b5, type: 2}
-  Completion: 0
+  - {fileID: 11400000, guid: 02ee1e16d4ece471b8f541b098214305, type: 2}
+  RequiredEvidence: []
+  Completion: 1
   Optional: 0

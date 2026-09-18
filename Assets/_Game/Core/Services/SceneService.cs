@@ -32,6 +32,11 @@ namespace Escape.Core
         /// saved pose" (save-load path), a name means a spawn point.
         /// </summary>
         string PendingSpawnId { get; }
+        /// <summary>
+        /// Reads and clears the pending spawn id. SceneBootstrap must consume
+        /// it so a later direct scene open can't land on a stale spawn point.
+        /// </summary>
+        string ConsumePendingSpawnId();
         void LoadScene(string sceneId, string spawnId = "");
     }
 
@@ -49,6 +54,13 @@ namespace Escape.Core
 
         public bool IsTransitioning { get; private set; }
         public string PendingSpawnId { get; private set; } = "";
+
+        public string ConsumePendingSpawnId()
+        {
+            var spawn = PendingSpawnId;
+            PendingSpawnId = "";
+            return spawn;
+        }
 
         public SceneService(GameRoot host, GameServices services, IGameStateService state,
             IContentDatabase content, IGameEventBus events)
@@ -76,6 +88,15 @@ namespace Escape.Core
         private IEnumerator LoadRoutine(string sceneId, string sceneName, string spawnId)
         {
             IsTransitioning = true;
+            // SceneBootstrap publishes SceneReady once the scene is fully
+            // initialized (placement, entry objectives, checkpoint). This is
+            // the deterministic arrival handshake — never place the player
+            // from here, and never rely on a frame yield lining up with the
+            // scene's own Start coroutine.
+            bool ready = false;
+            System.Action<SceneReadyEvent> onReady =
+                e => { if (e.SceneId == sceneId) ready = true; };
+            _events.Subscribe(onReady);
             try
             {
                 if (_services.TryGet<IScreenFader>(out var fader) && fader != null)
@@ -87,17 +108,19 @@ namespace Escape.Core
 
                 _state.State.SceneId = sceneId;
 
-                // The scene's SceneBootstrap registers IPlayerPlacement in Start,
-                // which runs next frame.
-                yield return null;
-                if (_services.TryGet<IPlayerPlacement>(out var placement))
-                    placement.PlacePlayer(spawnId, _state.State.Player);
+                // Bounded wait: a scene without a bootstrap (or a broken one)
+                // logs and continues rather than wedging behind a black fade.
+                float t = 0f;
+                while (!ready && t < 5f)
+                {
+                    t += Time.unscaledDeltaTime;
+                    yield return null;
+                }
+                if (!ready)
+                    Debug.LogWarning($"[SceneService] '{sceneName}' signalled no SceneReady — continuing.");
 
                 _events.Publish(new SceneChangedEvent(sceneId));
                 _events.Publish(new ObjectiveUpdatedEvent());
-
-                // The arrival checkpoint is written by SceneBootstrap after it
-                // places the player, so the autosave captures the spawn pose.
 
                 // Re-fetch: the fader that faded out lived in the old scene and
                 // was destroyed by the swap — the new scene registers its own.
@@ -106,6 +129,7 @@ namespace Escape.Core
             }
             finally
             {
+                _events.Unsubscribe(onReady);
                 IsTransitioning = false;
             }
         }

@@ -1,0 +1,292 @@
+using System.Collections.Generic;
+using System.IO;
+using Escape.Core;
+using Escape.Data;
+using NUnit.Framework;
+using UnityEngine;
+
+namespace Escape.Tests.EditMode
+{
+    /// <summary>
+    /// Critical-path invariants: the checks that would have caught the
+    /// irreversible softlocks (missable broadcast key, skippable signal
+    /// routing) and the evidence-implies-completion semantic bug.
+    /// These test game-level correctness, not single components.
+    /// </summary>
+    public class ProgressionTests
+    {
+        // ---------- objective semantics ----------
+
+        [Test]
+        public void ExplicitObjective_DoesNotComplete_FromEvidenceAlone()
+        {
+            var content = new TestContent();
+            var events = new GameEventBus();
+            var state = new GameStateService();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+            dispatcher.Register<CompleteObjectiveCommand>(objectives);
+
+            dispatcher.Dispatch(new CollectEvidenceCommand("ev_key", "test"));
+
+            var s = state.State;
+            Assert.IsTrue(s.ActiveObjectives.Contains("obj_transmit"),
+                "Explicit objective should activate when its prerequisites are met");
+            Assert.IsFalse(s.CompletedObjectives.Contains("obj_transmit"),
+                "Explicit objective completed from evidence alone — semantic regression");
+
+            dispatcher.Dispatch(new CompleteObjectiveCommand("obj_transmit", "test"));
+            Assert.IsTrue(s.CompletedObjectives.Contains("obj_transmit"));
+        }
+
+        [Test]
+        public void EvidenceObjective_StillCompletes_FromEvidence()
+        {
+            var content = new TestContent();
+            var events = new GameEventBus();
+            var state = new GameStateService();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+
+            dispatcher.Dispatch(new CollectEvidenceCommand("ev_key", "test"));
+            Assert.IsTrue(state.State.CompletedObjectives.Contains("obj_pickup"),
+                "Evidence-mode objective must still auto-complete");
+        }
+
+        // ---------- real content: the broadcast chain ----------
+
+        [Test]
+        public void BroadcastTruth_RequiresTransmission_NotJustKey()
+        {
+            var content = ContentDatabase.Load();
+            var state = new GameStateService();
+            var events = new GameEventBus();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+            dispatcher.Register<CompleteObjectiveCommand>(objectives);
+
+            var s = state.State;
+            // Drive the real prerequisite chain: routing objective done,
+            // key in hand — the state a player reaches mid-tower.
+            s.CompletedObjectives.Add("download_archive");
+            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "test"));
+            dispatcher.Dispatch(new CollectEvidenceCommand("broadcast_key_001", "test"));
+
+            Assert.IsFalse(s.CompletedObjectives.Contains("broadcast_truth"),
+                "broadcast_truth completed because the key was held — the pre-fix bug");
+        }
+
+        [Test]
+        public void OfficeTerminal_Broadcast_IsGated_AndCompletesRouting()
+        {
+            var content = ContentDatabase.Load();
+            Assert.IsTrue(content.TryGetTerminal("office_terminal", out var term));
+            TerminalCommandDefinition broadcast = null;
+            foreach (var c in term.Commands)
+                if (c.Command == "BROADCAST") broadcast = c;
+            Assert.IsNotNull(broadcast, "Office terminal lost its BROADCAST command");
+
+            bool needsArchive = false;
+            foreach (var o in broadcast.RequiredObjectives)
+                if (o != null && o.Id == "download_archive") needsArchive = true;
+            Assert.IsTrue(needsArchive,
+                "BROADCAST must require download_archive — the routing step is ordered after the pull");
+
+            bool needsKey = false;
+            foreach (var e in broadcast.RequiredEvidence)
+                if (e != null && e.Id == "broadcast_key_001") needsKey = true;
+            Assert.IsTrue(needsKey, "BROADCAST must require the broadcast key");
+
+            Assert.IsNotNull(broadcast.CompletesObjective,
+                "BROADCAST must complete an objective");
+            Assert.AreEqual("route_broadcast", broadcast.CompletesObjective.Id,
+                "BROADCAST must complete route_broadcast — that is what the office exit checks");
+        }
+
+        [Test]
+        public void BroadcastObjectives_AreExplicit_AndOrdered()
+        {
+            var content = ContentDatabase.Load();
+            Assert.IsTrue(content.TryGetObjective("route_broadcast", out var route));
+            Assert.IsTrue(content.TryGetObjective("broadcast_truth", out var truth));
+
+            Assert.AreEqual(ObjectiveCompletionMode.Explicit, route.Completion,
+                "route_broadcast must not complete from evidence");
+            Assert.AreEqual(ObjectiveCompletionMode.Explicit, truth.Completion,
+                "broadcast_truth must not complete from evidence");
+
+            bool truthNeedsRoute = false;
+            foreach (var o in truth.RequiredObjectives)
+                if (o != null && o.Id == "route_broadcast") truthNeedsRoute = true;
+            Assert.IsTrue(truthNeedsRoute,
+                "broadcast_truth must chain after route_broadcast");
+        }
+
+        // ---------- generated scenes: the irreversible-exit guards ----------
+
+        [Test]
+        public void DockExit_RequiresBroadcastKey()
+        {
+            // The Dock → ServiceEntrance transition is the point of no
+            // return for the broadcast key; it must refuse an empty hand.
+            var doc = SceneDoc("Dock", "targetSceneId: service_entrance");
+            StringAssert.Contains("requiredEvidenceId: broadcast_key_001", doc,
+                "Dock exit no longer requires the broadcast key — softlock regression");
+        }
+
+        [Test]
+        public void OfficeExit_RequiresRoutedBroadcast()
+        {
+            // MansionOffice → SecurityWing must not open on the archive pull
+            // alone; the signal has to be routed (route_broadcast implies
+            // download_archive because the terminal command is gated on it).
+            var doc = SceneDoc("MansionOffice", "targetSceneId: security_wing");
+            StringAssert.Contains("requiredObjectiveId: route_broadcast", doc,
+                "Office exit no longer requires route_broadcast — softlock regression");
+        }
+
+        /// <summary>Returns the scene YAML document containing `marker`.</summary>
+        private static string SceneDoc(string sceneName, string marker)
+        {
+            var path = Path.Combine(Application.dataPath, "_Game/Scenes", sceneName + ".unity");
+            Assert.IsTrue(File.Exists(path), $"Scene missing: {path}");
+            foreach (var doc in File.ReadAllText(path).Split(new[] { "--- !u!" },
+                         System.StringSplitOptions.RemoveEmptyEntries))
+                if (doc.Contains(marker)) return doc;
+            Assert.Fail($"No document in {sceneName}.unity contains '{marker}'");
+            return null;
+        }
+
+        // ---------- save invariants ----------
+
+        [Test]
+        public void MostRecentSlot_Finds_BackupOnly_Save()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), "ete_prog_saves_" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                var state = new GameStateService();
+                state.State.SceneId = "dock";
+                var saves = new SaveService(state, new TestContent(), new GameEventBus(),
+                    new GameCommandDispatcher(new CommandJournal(false)), dir);
+                Assert.IsTrue(saves.Save("slot1"));
+
+                var primary = Path.Combine(dir, "slot1.json");
+                File.Copy(primary, primary + ".bak");
+                File.Delete(primary);
+
+                Assert.IsTrue(saves.HasSave("slot1"), "Backup-only slot not seen by HasSave");
+                Assert.AreEqual("slot1", saves.MostRecentSlot(),
+                    "MostRecentSlot ignored a backup-only save — menu would hide a recoverable game");
+                Assert.IsTrue(saves.LoadIntoState("slot1", out var errors), string.Join(";", errors));
+            }
+            finally
+            {
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        [Test]
+        public void Validator_Repairs_ActiveCompletedOverlap()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                completedObjectives = new List<string> { "obj_pickup" },
+                activeObjectives = new List<string> { "obj_pickup", "obj_transmit" }
+            };
+            var r = SaveValidator.Validate(data, new TestContent());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(r.WasRepaired);
+            Assert.IsFalse(data.activeObjectives.Contains("obj_pickup"),
+                "Objective stayed in both active and completed");
+            Assert.IsTrue(data.activeObjectives.Contains("obj_transmit"));
+        }
+
+        [Test]
+        public void Validator_Repairs_BroadcastFlag_Inconsistency()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                broadcastCompleted = true,
+                broadcastStarted = false
+            };
+            var r = SaveValidator.Validate(data, new TestContent());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(data.broadcastStarted,
+                "BroadcastCompleted without BroadcastStarted not repaired");
+        }
+
+        [Test]
+        public void Validator_Clamps_NegativeLures()
+        {
+            var data = new SaveData { sceneId = "dock", lures = -3 };
+            var r = SaveValidator.Validate(data, new TestContent());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.AreEqual(0, data.lures);
+        }
+
+        [Test]
+        public void Validator_Drops_UnknownEnding()
+        {
+            var data = new SaveData { sceneId = "dock", endingId = "ending_bogus" };
+            var r = SaveValidator.Validate(data, new TestContent());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.AreEqual("", data.endingId);
+        }
+
+        // ---------- in-memory content ----------
+
+        private sealed class TestContent : IContentDatabase
+        {
+            public StealthTuning Tuning { get; } = ScriptableObject.CreateInstance<StealthTuning>();
+            private readonly Dictionary<string, EvidenceDefinition> _ev = new();
+            private readonly Dictionary<string, ObjectiveDefinition> _ob = new();
+
+            public TestContent()
+            {
+                var key = ScriptableObject.CreateInstance<EvidenceDefinition>();
+                key.Id = "ev_key"; key.Title = "Key";
+                _ev["ev_key"] = key;
+
+                var pickup = ScriptableObject.CreateInstance<ObjectiveDefinition>();
+                pickup.Id = "obj_pickup"; pickup.Title = "Pick up";
+                pickup.RequiredEvidence = new[] { key };
+                pickup.Completion = ObjectiveCompletionMode.Evidence;
+
+                var transmit = ScriptableObject.CreateInstance<ObjectiveDefinition>();
+                transmit.Id = "obj_transmit"; transmit.Title = "Transmit";
+                transmit.RequiredEvidence = new[] { key };
+                transmit.Completion = ObjectiveCompletionMode.Explicit;
+
+                _ob["obj_pickup"] = pickup;
+                _ob["obj_transmit"] = transmit;
+            }
+
+            public IReadOnlyCollection<EvidenceDefinition> Evidence => _ev.Values;
+            public IReadOnlyCollection<ObjectiveDefinition> Objectives => _ob.Values;
+            public IReadOnlyCollection<TerminalDefinition> Terminals => new List<TerminalDefinition>();
+            public IReadOnlyCollection<EndingDefinition> Endings => new List<EndingDefinition>();
+            public IReadOnlyCollection<InsightDefinition> Insights => new List<InsightDefinition>();
+            public IReadOnlyCollection<DocumentDefinition> Documents => new List<DocumentDefinition>();
+            public bool TryGetEvidence(string id, out EvidenceDefinition d) => _ev.TryGetValue(id, out d);
+            public bool TryGetObjective(string id, out ObjectiveDefinition d) => _ob.TryGetValue(id, out d);
+            public bool TryGetTerminal(string id, out TerminalDefinition d) { d = null; return false; }
+            public bool TryGetEnding(string id, out EndingDefinition d) { d = null; return false; }
+            public bool TryGetInsight(string id, out InsightDefinition d) { d = null; return false; }
+            public bool TryGetDocument(string id, out DocumentDefinition d) { d = null; return false; }
+            public bool IsKnownScene(string id) => id == "dock";
+            public string SceneName(string id) => id == "dock" ? "Dock" : null;
+        }
+    }
+}

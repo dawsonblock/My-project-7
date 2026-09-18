@@ -21,9 +21,12 @@ namespace Escape.Gameplay
 
         private IEnumerator Start()
         {
-            // Wait a frame so GameRoot is guaranteed to exist even if this
-            // scene was opened directly in the editor.
-            yield return null;
+            // Wait for GameRoot — it persists across scene loads, but a scene
+            // opened directly in the editor may need a few frames for it to
+            // appear. Bounded so a missing root can't wedge the coroutine.
+            int waited = 0;
+            while (GameRoot.Instance == null && waited++ < 120)
+                yield return null;
             if (GameRoot.Instance == null)
             {
                 Debug.LogError("[SceneBootstrap] No GameRoot — open Bootstrap scene first.");
@@ -41,7 +44,7 @@ namespace Escape.Gameplay
             // The transition decides placement: a named spawn means "arrive at
             // that point", empty means "restore the saved pose" (save loads).
             var saved = state.State.Player;
-            var spawn = _services.Get<ISceneService>().PendingSpawnId;
+            var spawn = _services.Get<ISceneService>().ConsumePendingSpawnId();
             PlacePlayer(string.IsNullOrEmpty(spawn) ? "" : spawn,
                 string.IsNullOrEmpty(spawn) ? saved : null);
 
@@ -56,9 +59,22 @@ namespace Escape.Gameplay
             if (sceneId != Data.SceneId.MainMenu && sceneId != Data.SceneId.Bootstrap
                 && _services.TryGet<ISaveService>(out var saves))
                 saves.Save(SaveService.Autosave);
+
+            // Deterministic handoff: SceneService blocks the transition on
+            // this signal before publishing SceneChanged and fading in.
+            if (_services.TryGet<IGameEventBus>(out var events))
+                events.Publish(new SceneReadyEvent(sceneId));
         }
 
-        private void OnDestroy()
+        // Start registers on the first run; a later disable/enable cycle must
+        // restore the registration without re-running Start.
+        private void OnEnable()
+        {
+            if (_services != null)
+                _services.Register<IPlayerPlacement>(this);
+        }
+
+        private void OnDisable()
         {
             if (_services != null)
                 _services.Unregister<IPlayerPlacement>(this);
@@ -85,7 +101,7 @@ namespace Escape.Gameplay
             }
 
             PlayerSpawnPoint target = null;
-            var points = FindObjectsByType<PlayerSpawnPoint>();
+            var points = FindObjectsByType<PlayerSpawnPoint>(FindObjectsSortMode.None);
             foreach (var p in points)
                 if (p.SpawnId == (string.IsNullOrEmpty(spawnId) ? "default" : spawnId))
                 { target = p; break; }

@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Escape.Gameplay::Escape.Gameplay.BroadcastConsoleInteractable
   label: TRANSMIT
+  completesObjectiveId: broadcast_truth
 --- !u!1 &6421335928029710131
 GameObject:
   m_ObjectHideFlags: 0

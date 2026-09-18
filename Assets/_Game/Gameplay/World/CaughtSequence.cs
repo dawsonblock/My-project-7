@@ -17,8 +17,15 @@ namespace Escape.Gameplay
         private GameServices _services;
         private bool _running;
 
-        private void Start()
+        // Bind + subscribe on enable, unwind on disable — symmetric, so a
+        // disable/enable cycle leaves the event subscription intact exactly
+        // once. Start retries the bind in case GameRoot lagged scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_events != null || GameRoot.Instance == null) return;
             _services = GameRoot.Instance.Services;
             _events = _services.Get<IGameEventBus>();
             _dispatcher = _services.Get<IGameCommandDispatcher>();
@@ -26,9 +33,10 @@ namespace Escape.Gameplay
             if (playerState == null) playerState = FindAnyObjectByType<PlayerState>();
         }
 
-        private void OnDestroy()
+        private void OnDisable()
         {
             _events?.Unsubscribe<PlayerCaughtEvent>(OnCaught);
+            _events = null;
         }
 
         private void OnCaught(PlayerCaughtEvent evt)

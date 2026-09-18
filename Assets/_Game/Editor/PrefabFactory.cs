@@ -195,7 +195,8 @@ namespace Escape.EditorTools
                 Blockout.Mat("MAT_Screen_Red", new Color(0.8f, 0.15f, 0.1f), 0f, 0.6f, true), null);
             screen.transform.localPosition = new Vector3(0, 1.4f, -0.15f);
             screen.transform.localRotation = Quaternion.Euler(-15f, 0, 0);
-            go.AddComponent<BroadcastConsoleInteractable>();
+            var console = go.AddComponent<BroadcastConsoleInteractable>();
+            Blockout.Set(console, "completesObjectiveId", "broadcast_truth");
             return Save("Gameplay", "BroadcastConsole", go);
         }
 

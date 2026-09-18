@@ -94,6 +94,18 @@ namespace Escape.Core
         public SceneChangedEvent(string sceneId) => SceneId = sceneId;
     }
 
+    /// <summary>
+    /// Published by SceneBootstrap once the scene has finished its arrival
+    /// sequence (service registration, player placement, entry objectives,
+    /// checkpoint). SceneService waits for it before SceneChanged/fade-in —
+    /// the handshake that replaces one-frame coroutine timing guesses.
+    /// </summary>
+    public readonly struct SceneReadyEvent : IGameEvent
+    {
+        public readonly string SceneId;
+        public SceneReadyEvent(string sceneId) => SceneId = sceneId;
+    }
+
     public readonly struct BroadcastStartedEvent : IGameEvent { }
 
     public readonly struct BroadcastCompletedEvent : IGameEvent

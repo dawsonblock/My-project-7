@@ -18,4 +18,5 @@ MonoBehaviour:
   RequiredObjectives:
   - {fileID: 11400000, guid: b68c2fc7c184c4ecf95ed3c88b211970, type: 2}
   RequiredEvidence: []
+  Completion: 0
   Optional: 0

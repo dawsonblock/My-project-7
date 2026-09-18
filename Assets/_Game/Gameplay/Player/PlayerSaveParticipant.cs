@@ -18,12 +18,12 @@ namespace Escape.Gameplay
         {
             _movement = GetComponent<PlayerMovement>();
             _look = GetComponentInChildren<PlayerLook>();
-            // Register in Awake — SceneService places the player one frame
-            // after LoadScene, and Start ordering relative to that coroutine
-            // isn't guaranteed. GameRoot persists across scenes.
-            TryRegister();
         }
 
+        // Registration is symmetric with OnDisable — a disable/enable cycle
+        // must leave the participant registered exactly once. Start retries
+        // the bind in case GameRoot lagged behind the scene load.
+        private void OnEnable() => TryRegister();
         private void Start() => TryRegister();
 
         private void TryRegister()
@@ -33,7 +33,11 @@ namespace Escape.Gameplay
                 (_coordinator = c).Register(this);
         }
 
-        private void OnDisable() => _coordinator?.Unregister(this);
+        private void OnDisable()
+        {
+            _coordinator?.Unregister(this);
+            _coordinator = null;
+        }
 
         public void CaptureSaveState(GameState state)
         {

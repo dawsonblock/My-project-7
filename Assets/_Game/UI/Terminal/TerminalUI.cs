@@ -109,15 +109,20 @@ namespace Escape.UI
             close.onClick.AddListener(Close);
         }
 
-        private void Start()
+        private void Start() => TryBindServices();
+        private void OnEnable() => TryBindServices();
+
+        private void TryBindServices()
         {
-            _services = GameRoot.Instance.Services;
+            if (_services == null && GameRoot.Instance != null)
+                _services = GameRoot.Instance.Services;
         }
 
         public void Open(TerminalDefinition terminal)
         {
             _terminal = terminal;
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             var state = _services.Get<IGameStateService>().State;
             _unlocked = string.IsNullOrEmpty(terminal.UnlockCode) ||
                         state.UnlockedTerminals.Contains(terminal.Id);
@@ -150,7 +155,7 @@ namespace Escape.UI
             UiBuilder.Deselect();
             _root.SetActive(false);
             Sfx(Data.ClipLibrary.Get()?.uiBack);
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
         }
 
         private void Sfx(AudioClip clip, float volume = 0.7f)

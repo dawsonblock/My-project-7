@@ -27,8 +27,15 @@ namespace Escape.Gameplay
 
         private void Awake() => _rb = GetComponent<Rigidbody>();
 
-        private void Start()
+        // Bind + register on enable, unregister on disable — symmetric, so a
+        // disable/enable cycle leaves the lure registered exactly once.
+        // Start retries the bind in case GameRoot lagged behind scene load.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
+            if (_bound || GameRoot.Instance == null) return;
             var services = GameRoot.Instance.Services;
             _noise = services.Get<INoiseService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
@@ -39,9 +46,17 @@ namespace Escape.Gameplay
                 _world = services.Get<IWorldService>();
                 _world.Register(this);
             }
+            _bound = true;
         }
 
-        private void OnDisable() => _world?.Unregister(this);
+        private bool _bound;
+
+        private void OnDisable()
+        {
+            _world?.Unregister(this);
+            _world = null;
+            _bound = false;
+        }
 
         public void RestoreFromState(GameState state)
         {

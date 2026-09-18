@@ -23,6 +23,9 @@ namespace Escape.Gameplay
 
         public Vector2 Move { get; private set; }
         public Vector2 Look { get; private set; }
+        /// <summary>True while the Look action is actuated by a gamepad —
+        /// stick input is a rate (deg/s), mouse input is a per-event delta.</summary>
+        public bool LookFromGamepad { get; private set; }
         public bool SprintHeld { get; private set; }
 
         public event System.Action InteractPressed;
@@ -134,6 +137,7 @@ namespace Escape.Gameplay
             if (_move == null) return;
             Move = _move.ReadValue<Vector2>();
             Look = _look.ReadValue<Vector2>();
+            LookFromGamepad = _look.activeControl?.device is Gamepad;
             SprintHeld = _sprint.IsPressed();
             LeanLeft = _leanLeft.IsPressed();
             LeanRight = _leanRight.IsPressed();

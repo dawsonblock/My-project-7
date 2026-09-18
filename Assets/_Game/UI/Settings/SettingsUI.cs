@@ -42,11 +42,29 @@ namespace Escape.UI
             t.gameObject.AddComponent<LayoutElement>().preferredHeight = 36;
         }
 
-        private void Start()
+        private bool _populated;
+
+        private void Start() => TryBind();
+
+        // Bind + populate on enable — during Create() the hierarchy isn't
+        // built yet, so populate waits for the first real open.
+        private void OnEnable()
         {
-            _services = GameRoot.Instance.Services;
-            _settings = _services.Get<ISettingsService>();
-            Populate();
+            TryBind();
+            if (_services != null && _root != null && !_populated)
+            {
+                Populate();
+                _populated = true;
+            }
+        }
+
+        private void TryBind()
+        {
+            if (_services == null && GameRoot.Instance != null)
+            {
+                _services = GameRoot.Instance.Services;
+                _settings = _services.Get<ISettingsService>();
+            }
         }
 
         private void Populate()
@@ -129,8 +147,8 @@ namespace Escape.UI
 
         public void Open()
         {
-            _services ??= GameRoot.Instance.Services;
-            _settings ??= _services.Get<ISettingsService>();
+            TryBind();
+            if (_services == null) return;
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
             UiBuilder.SelectFirst(_root.transform);
@@ -153,7 +171,7 @@ namespace Escape.UI
             UiBuilder.Deselect();
             _root.SetActive(false);
             _settings?.Persist(); // flush deferred writes when the menu closes
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
         }
     }
 }

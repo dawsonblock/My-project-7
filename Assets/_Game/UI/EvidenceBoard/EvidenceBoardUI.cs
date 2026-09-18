@@ -108,12 +108,25 @@ namespace Escape.UI
 
         private void Start()
         {
-            _services = GameRoot.Instance.Services;
+            TryBindServices();
             TryBindInput();
+        }
+
+        private void OnEnable()
+        {
+            TryBindServices();
+            if (_input.Reader == null) TryBindInput();
+        }
+
+        private void TryBindServices()
+        {
+            if (_services == null && GameRoot.Instance != null)
+                _services = GameRoot.Instance.Services;
         }
 
         private void TryBindInput()
         {
+            if (_input.Reader != null) return;
             var reader = FindAnyObjectByType<Escape.Gameplay.PlayerInputReader>();
             if (reader == null) return;
             _input = new PlayerInputReaderRef { Reader = reader };
@@ -122,7 +135,8 @@ namespace Escape.UI
 
         private void OnDestroy()
         {
-            if (_input.Reader != null) _input.Reader.EvidenceBoardPressed -= Toggle;
+            if (_input.Reader != null)
+                _input.Reader.EvidenceBoardPressed -= Toggle;
         }
 
         public void Toggle()
@@ -132,7 +146,8 @@ namespace Escape.UI
 
         private void OpenBoard()
         {
-            _services ??= GameRoot.Instance.Services;
+            TryBindServices();
+            if (_services == null) return;
             Rebuild();
             _root.SetActive(true);
             _services.Get<IInputGate>().PushUi(this);
@@ -145,7 +160,7 @@ namespace Escape.UI
         {
             UiBuilder.Deselect();
             _root.SetActive(false);
-            _services.Get<IInputGate>().PopUi(this);
+            if (_services != null) _services.Get<IInputGate>().PopUi(this);
         }
 
         private void Rebuild()

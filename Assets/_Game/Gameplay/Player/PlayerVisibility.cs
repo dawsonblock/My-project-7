@@ -29,12 +29,22 @@ namespace Escape.Gameplay
             _flashlight = GetComponentInChildren<FlashlightController>();
         }
 
-        private void Start()
+        private void OnEnable()
         {
+            _all.Add(this);
+            TryBind();
+        }
+
+        private void Start() => TryBind();
+
+        // _tuning doubles as the bound flag — Update guards on it. Start
+        // retries in case GameRoot lagged the scene load.
+        private void TryBind()
+        {
+            if (_tuning != null || GameRoot.Instance == null) return;
             _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
         }
 
-        private void OnEnable() => _all.Add(this);
         private void OnDisable() => _all.Remove(this);
 
         public void EnterZone(LightingZone zone) => _zones.Add(zone);
