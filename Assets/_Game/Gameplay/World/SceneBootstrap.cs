@@ -101,7 +101,7 @@ namespace Escape.Gameplay
             }
 
             PlayerSpawnPoint target = null;
-            var points = FindObjectsByType<PlayerSpawnPoint>(FindObjectsSortMode.None);
+            var points = FindObjectsByType<PlayerSpawnPoint>();
             foreach (var p in points)
                 if (p.SpawnId == (string.IsNullOrEmpty(spawnId) ? "default" : spawnId))
                 { target = p; break; }
