@@ -50,3 +50,11 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
   reload (`RequestScriptCompilation`) before rerunning.
 - `SaveModifiedSceneTask` fails PlayMode runs if the open scene is dirty
   or untitled — open a saved scene (e.g. Bootstrap) first.
+- **A test run reports the count of the assembly it loaded, not the files
+  on disk.** Writing a script and refreshing is not enough: if compilation
+  is still pending (or failed), the runner silently executes the previous
+  `Library/ScriptAssemblies/Escape.Tests.*.dll` and a stale pass looks
+  green. After editing test or runtime code, confirm the assembly rebuilt
+  (`stat -f %Sm Library/ScriptAssemblies/<name>.dll` vs the source mtime,
+  or grep the dll for the new type) and grep the log for `error CS` before
+  trusting a result. Compile errors do not surface through the runner.
