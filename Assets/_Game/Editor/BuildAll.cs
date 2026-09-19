@@ -18,6 +18,7 @@ namespace Escape.EditorTools
             PrefabFactory.BuildAll();
             SceneFactory.BuildAll();
             MaterialLibrary.ApplyAll();
+            VolumeProfileBuilder.Author();
             Debug.Log("[BuildAll] Done. Open Bootstrap and press Play.");
         }
     }
