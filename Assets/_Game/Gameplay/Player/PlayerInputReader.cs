@@ -4,12 +4,30 @@ using UnityEngine.InputSystem;
 namespace Escape.Gameplay
 {
     /// <summary>
+    /// The movement-relevant slice of player input. <see cref="PlayerMovement"/>
+    /// depends on this rather than on PlayerInputReader directly, so the
+    /// movement rules can be exercised without the Input System's device pump —
+    /// no keyboard device, no focused Game view, no synthetic events. Also the
+    /// seam that lets a test drive a specific movement rule (crouch speed,
+    /// exhaustion) with exact inputs instead of approximating them with key
+    /// presses.
+    /// </summary>
+    public interface IPlayerMoveInput
+    {
+        Vector2 Move { get; }
+        bool SprintHeld { get; }
+        bool CrouchHeld { get; }
+        /// <summary>Fired on the crouch press edge (toggle-mode crouch).</summary>
+        event System.Action CrouchPressed;
+    }
+
+    /// <summary>
     /// Wraps the PlayerInputActions asset. Reads the Player map for gameplay
     /// and exposes one-shot button events. Switches between Player and UI
     /// maps when the input gate reports a UI surface is open.
     /// </summary>
     [DefaultExecutionOrder(-100)]
-    public sealed class PlayerInputReader : MonoBehaviour
+    public sealed class PlayerInputReader : MonoBehaviour, IPlayerMoveInput
     {
         [SerializeField] private InputActionAsset actions;
 

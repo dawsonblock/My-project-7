@@ -16,7 +16,7 @@ namespace Escape.Core
         bool CompleteFromAction(string objectiveId, string sourceId = "");
         /// <summary>
         /// True when the objective exists, is not already complete, and its
-        /// prerequisite objectives are complete. Callers that mutate state on
+        /// full completion requirements hold. Callers that mutate state on
         /// the strength of an objective must ask this first.
         /// </summary>
         bool CanComplete(string objectiveId);
@@ -25,9 +25,19 @@ namespace Escape.Core
     }
 
     /// <summary>
-    /// Objectives activate when their required objectives are complete and
-    /// complete when their required evidence is collected (or via explicit
-    /// command for terminal/action-driven objectives).
+    /// Objectives activate when their required objectives are complete, and
+    /// complete when their full completion requirements hold — the required
+    /// objectives *and* the required evidence the content declares.
+    ///
+    /// Two predicates, deliberately not one. "What makes an objective
+    /// available" (activation) is a weaker claim than "what finishes it"
+    /// (completion), and conflating them is how a caller ends up able to
+    /// finish something the player has not earned. For an Explicit
+    /// objective the completion requirements are also the action's
+    /// authorization: the domain action that owns it (routing a broadcast,
+    /// transmitting) asks CanComplete before mutating state, so the
+    /// requirement is enforced by the authority rather than by whichever
+    /// terminal surface happened to offer the button.
     /// </summary>
     public sealed class ObjectiveService : IObjectiveService,
         IGameCommandHandler<ActivateObjectiveCommand>,
@@ -56,13 +66,11 @@ namespace Escape.Core
         }
 
         /// <summary>
-        /// RequiredObjectives gate both activation and completion — an
-        /// objective cannot finish before the objectives it depends on.
-        /// RequiredEvidence is completion criteria for Evidence-mode
-        /// objectives only; on an Explicit objective it gates the surface that
-        /// offers the action (a terminal command, a console), not completion.
+        /// Activation gate: only the prerequisite objectives. An objective
+        /// becomes available as soon as the chain that leads to it is done;
+        /// the evidence it needs is what finishes it, not what reveals it.
         /// </summary>
-        public bool RequirementsMet(ObjectiveDefinition def)
+        public bool ActivationRequirementsMet(ObjectiveDefinition def)
         {
             var s = _state.State;
             foreach (var req in def.RequiredObjectives)
@@ -70,11 +78,26 @@ namespace Escape.Core
             return true;
         }
 
+        /// <summary>
+        /// Completion gate: prerequisite objectives *and* every piece of
+        /// evidence the objective declares. This is the predicate the domain
+        /// actions and the command layer both use, so a requirement can no
+        /// longer be enforced only by the surface that offers the action.
+        /// </summary>
+        public bool CompletionRequirementsMet(ObjectiveDefinition def)
+        {
+            if (!ActivationRequirementsMet(def)) return false;
+            var s = _state.State;
+            foreach (var ev in def.RequiredEvidence)
+                if (ev != null && !s.CollectedEvidence.Contains(ev.Id)) return false;
+            return true;
+        }
+
         public bool CanComplete(string objectiveId)
         {
             if (!_content.TryGetObjective(objectiveId, out var def)) return false;
             if (_state.State.CompletedObjectives.Contains(objectiveId)) return false;
-            return RequirementsMet(def);
+            return CompletionRequirementsMet(def);
         }
 
         public bool Activate(string objectiveId)
@@ -82,7 +105,7 @@ namespace Escape.Core
             var s = _state.State;
             if (!_content.TryGetObjective(objectiveId, out var def)) return false;
             if (s.CompletedObjectives.Contains(objectiveId) || s.ActiveObjectives.Contains(objectiveId)) return false;
-            if (!RequirementsMet(def)) return false;
+            if (!ActivationRequirementsMet(def)) return false;
             s.ActiveObjectives.Add(objectiveId);
             _events.Publish(new ObjectiveActivatedEvent(objectiveId));
             _events.Publish(new ObjectiveUpdatedEvent());
@@ -114,7 +137,10 @@ namespace Escape.Core
             var s = _state.State;
             if (!_content.TryGetObjective(objectiveId, out var def)) return false;
             if (s.CompletedObjectives.Contains(objectiveId)) return false;
-            if (!RequirementsMet(def)) return false;
+            // Both completion paths — the bare command and the domain action —
+            // land here, so neither can finish an objective whose declared
+            // requirements are unmet.
+            if (!CompletionRequirementsMet(def)) return false;
             s.ActiveObjectives.Remove(objectiveId);
             s.CompletedObjectives.Add(objectiveId);
             _events.Publish(new ObjectiveCompletedEvent(objectiveId));
@@ -123,7 +149,7 @@ namespace Escape.Core
 
             // Activate any objectives that are now unblocked.
             foreach (var candidate in _content.Objectives)
-                if (RequirementsMet(candidate)) Activate(candidate.Id);
+                if (ActivationRequirementsMet(candidate)) Activate(candidate.Id);
             return true;
         }
 
@@ -144,7 +170,7 @@ namespace Escape.Core
                 foreach (var def in _content.Objectives)
                 {
                     if (s.CompletedObjectives.Contains(def.Id)) continue;
-                    if (!s.ActiveObjectives.Contains(def.Id) && RequirementsMet(def))
+                    if (!s.ActiveObjectives.Contains(def.Id) && ActivationRequirementsMet(def))
                     {
                         Activate(def.Id);
                         changed = true;
@@ -153,18 +179,12 @@ namespace Escape.Core
                 foreach (var def in _content.Objectives)
                 {
                     if (s.CompletedObjectives.Contains(def.Id) || !s.ActiveObjectives.Contains(def.Id)) continue;
-                    // Explicit objectives finish only through commands —
-                    // required evidence gates availability, not completion.
+                    // Explicit objectives finish only through their action —
+                    // required evidence authorizes that action, it never
+                    // auto-completes the objective.
                     if (def.Completion != ObjectiveCompletionMode.Evidence) continue;
                     if (def.RequiredEvidence.Length == 0) continue;
-                    bool all = true;
-                    foreach (var ev in def.RequiredEvidence)
-                        if (ev != null && !s.CollectedEvidence.Contains(ev.Id)) { all = false; break; }
-                    if (all)
-                    {
-                        CompleteInternal(def.Id, "evidence");
-                        changed = true;
-                    }
+                    if (CompleteInternal(def.Id, "evidence")) changed = true;
                 }
             }
         }

@@ -1,5 +1,17 @@
 # BuildEvidence — stabilization qualification
 
+> **Canonical evidence is generated, not written here.** The newest
+> `qualification-<utc>/` directory is the authoritative record: it holds a
+> `manifest.json` binding every claim to one source revision (source tree hash,
+> generated-content sync, determinism gate, both test suites, player artifact
+> hash, raw smoke log). Produce it with `ci/qualify.sh`.
+>
+> Everything below this line describes the **earlier baseline capture** on
+> 2026-09-18 and its hand-written tables. Its counts are historical — the
+> suites have grown since (EditMode 78 → 84, PlayMode 29 → 34) — so do not
+> read them as current. They are kept because they record the pre-repair
+> baseline, which is still useful context.
+
 Captured 2026-09-18 on Unity 6000.6.0f1 (macOS, arm64).
 
 Branch: release/stabilization-repair

@@ -17,6 +17,7 @@ MonoBehaviour:
   Description: The relay is cold. Route the signal to the tower from the office security node.
   RequiredObjectives:
   - {fileID: 11400000, guid: 02ee1e16d4ece471b8f541b098214305, type: 2}
-  RequiredEvidence: []
+  RequiredEvidence:
+  - {fileID: 11400000, guid: d0e496c3404a14e81bbf5c5dc21fd3f8, type: 2}
   Completion: 1
   Optional: 0

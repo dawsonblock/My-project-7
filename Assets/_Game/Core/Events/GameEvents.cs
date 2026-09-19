@@ -117,6 +117,19 @@ namespace Escape.Core
         public SceneTransitionFailedEvent(string sceneId) => SceneId = sceneId;
     }
 
+    /// <summary>
+    /// Published when a failed transition could not be recovered either — the
+    /// session is sitting in a scene that never initialized and there is no
+    /// trusted scene left to fall back to. Distinct from
+    /// SceneTransitionFailedEvent: that one means "this arrival failed and was
+    /// rolled back", this one means "the session has nowhere safe to be".
+    /// </summary>
+    public readonly struct SceneTransitionFatalEvent : IGameEvent
+    {
+        public readonly string SceneId;
+        public SceneTransitionFatalEvent(string sceneId) => SceneId = sceneId;
+    }
+
     public readonly struct BroadcastStartedEvent : IGameEvent { }
 
     public readonly struct BroadcastCompletedEvent : IGameEvent

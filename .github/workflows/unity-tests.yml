@@ -60,6 +60,11 @@ jobs:
       - uses: game-ci/unity-builder@v4
         with:
           targetPlatform: StandaloneOSX
+          # Pin the output path explicitly. game-ci's unity-builder defaults
+          # buildsPath to "build" (singular), so relying on the default while
+          # looking for the artifact under "builds" is a mismatch that fails
+          # the job before the player is ever launched.
+          buildsPath: Builds
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -69,7 +74,14 @@ jobs:
       # (scene transitions, progression chain, save round-trip) and exits
       # non-zero on failure — see Assets/_Game/Core/Bootstrap/GameSmokeTest.cs
       - name: Smoke test the built player
-        run: ./ci/smoke-player.sh "$(find builds -maxdepth 3 -name '*.app' | head -1)"
+        run: |
+          APP="$(find Builds builds build -maxdepth 3 -name '*.app' 2>/dev/null | head -1)"
+          if [[ -z "$APP" ]]; then
+            echo "No player artifact found under Builds/, builds/ or build/" >&2
+            exit 2
+          fi
+          echo "Found player: $APP"
+          ./ci/smoke-player.sh "$APP"
 
       - name: Upload player smoke log
         if: always()

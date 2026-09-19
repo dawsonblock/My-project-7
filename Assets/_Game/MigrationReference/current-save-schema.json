@@ -40,8 +40,13 @@
   },
   "_envelope": {
     "schemaVersion": 3,
-    "payload": "<SaveData JSON>",
-    "checksum": "<content hash>"
+    "gameVersion": "<Application.version at write time>",
+    "timestampUtc": "<ISO-8601 UTC>",
+    "slotId": "<slot the save was written to>",
+    "payload": "<SaveData JSON>"
+  },
+  "_envelopeNotes": {
+    "integrity": "There is no content checksum field. Integrity is provided by the write path, not by a stored hash: SaveFileIO.AtomicWrite flushes slot.tmp, reads it back and verifies it parses as the current schema, then File.Replace moves it into place and the previous file becomes slot.bak. A corrupt primary is recovered from slot.bak."
   },
   "_invariants": [
     "sceneId must be a known scene",

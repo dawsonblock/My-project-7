@@ -1,6 +1,6 @@
 # Escape the Elites — agent notes
 
-Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
+Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
 
 ## Build & verify
 
@@ -21,6 +21,18 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
 - Determinism gate: `ci/verify-generation.sh`, or menu
   `Tools → Escape the Elites → Verify Deterministic Generation`
   (BuildAll twice → all generated files must be byte-identical)
+- **Bound qualification run: `ci/qualify.sh [--allow-dirty]`.** One command
+  produces one evidence directory under `BuildEvidence/qualification-<utc>/`
+  that binds every claim to the exact source revision: source tree hash, the
+  generated-content sync check, the determinism gate, both test suites, the
+  player artifact hash and the raw smoke log. Any failed stage → no qualified
+  manifest, and the stage list shows where it stopped. It refuses a dirty tree
+  unless `--allow-dirty`, which records `"qualified": false` rather than
+  quietly qualifying an uncommitted revision.
+- Generated-content drift gate:
+  `Tools → Escape the Elites → Verify Generated Content Matches Source`
+  (reimports the definitions and fails if any tracked `.asset` changed — i.e.
+  if someone hand-edited a generated file). Also a stage of `ci/qualify.sh`.
 - A player build rewrites `ProjectSettings/ProjectSettings.asset`: it reorders
   (and transiently empties) `preloadedAssets`. Revert that churn. `PlayerBuild`
   now restores `preloadedAssets` and re-runs the volume-profile authoring pass,
@@ -34,6 +46,14 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
 
 ## Generated-content invariants — do not break
 
+- **Definition assets under `Assets/_Game/Resources/Definitions/` are
+  generated.** `WebDataImporter` (step 2 of `BuildAll`) rewrites them from the
+  frozen JSON in `Assets/_Game/MigrationReference/` (`objectives.json`,
+  `evidence.json`, `terminals.json`, …). Edit the JSON, never the `.asset` —
+  a hand edit survives until the next `BuildAll` and then silently reverts,
+  and the determinism gate still passes because both runs agree on the
+  JSON-derived result. Requirements the *domain* enforces (for example the
+  broadcast key on `route_broadcast`) must therefore be declared in the JSON.
 - All `.unity` scenes are YAML. NavMeshData lives in standalone
   `Assets/_Game/Scenes/NavMesh/*.asset` — never call
   `NavMeshSurface.BuildNavMesh()` without extracting to an asset, or the
@@ -52,9 +72,16 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
   (`ISceneService`, `ISaveService`, `ISaveCoordinator`, `IInputGate`, …)
 - Commands mutate `GameState`; `GameEventBus` publishes. Doors/cameras/
   terminals persist via `GameState` lists + `IWorldObject.RestoreFromState`.
-- Saves: enveloped v2 JSON, atomic `tmp → verify → replace → .bak`, recovery
+- Saves: enveloped v3 JSON, atomic `tmp → verify → replace → .bak`, recovery
   order primary→bak, `SaveMigrator` for old versions, `ISaveParticipant`
   captures volatile state (player pose incl. camera pitch, flashlight).
+  Slot ids are validated (`[A-Za-z0-9_-]+`) because they become file names.
+- Objective completion has two gates, deliberately separate:
+  `ActivationRequirementsMet` (prerequisite objectives) and
+  `CompletionRequirementsMet` (prerequisites *and* the objective's declared
+  evidence). Domain actions authorize themselves with `CanComplete`; a bare
+  `CompleteObjectiveCommand` never finishes an Explicit objective and never
+  finishes an Evidence objective whose evidence is missing.
 - Input: `PlayerInputActions` — Player/UI maps toggle with `IInputGate.UiOpen`;
   **System map (Pause/Cancel) stays enabled always**. Modal cancel routes
   through `InputGate` → `ICancelableUi`. UI components must keep their host
@@ -78,3 +105,24 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
   (`stat -f %Sm Library/ScriptAssemblies/<name>.dll` vs the source mtime,
   or grep the dll for the new type) and grep the log for `error CS` before
   trusting a result. Compile errors do not surface through the runner.
+- **`ci/run-tests.sh` invocation facts.** The platform flag is `-testPlatform`
+  (`EditMode`/`PlayMode`); there is no `-testMode` flag, and passing one is
+  silently ignored so the run defaults to EditMode and a "playMode" result
+  file ends up full of EditMode tests. Never pass `-quit` alongside
+  `-runTests`: the editor shuts down before the tests start and exits 0
+  having run nothing. The assertions that catch all of this live in
+  `ci/lib/nunit-assert.sh`; `ci/test-runner-guards.sh` proves they reject each
+  false-green mode (run it after touching either). Keep those checks.
+- **`Time.deltaTime` is ~1e-4s in headless batchmode** (the loop runs
+  thousands of frames per second), so anything that integrates over frames —
+  acceleration, a per-second detection ramp — moves ~nothing. Pin
+  `Time.captureDeltaTime` (and reset it in `TearDown`) in any PlayMode test
+  whose assertion depends on elapsed time. Note this is a *timing* trap, not
+  an input one: measured directly, synthetic keyboard input works fine under
+  `-nographics` (`PlayerInputReader.Move` reads `(0,1)` after `Press(wKey)`).
+  Getting this backwards cost a diagnosis once.
+- Movement rules should be tested through `IPlayerMoveInput`
+  (`PlayerMovement.SetInputSource`), not only through key presses: the seam
+  makes crouch/sprint/exhaustion exactly drivable without the Input System's
+  device pump. Keep at least one real keyboard-driven test as well, so the
+  end-to-end input chain stays covered.

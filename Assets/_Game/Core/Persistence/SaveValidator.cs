@@ -91,12 +91,6 @@ namespace Escape.Core
                 data.lures = 0;
                 r.WasRepaired = true;
             }
-            if (data.broadcastCompleted && !data.broadcastStarted)
-            {
-                r.Warnings.Add("BroadcastCompleted without BroadcastStarted — repaired.");
-                data.broadcastStarted = true;
-                r.WasRepaired = true;
-            }
             if (!string.IsNullOrEmpty(data.endingId) &&
                 !content.TryGetEnding(data.endingId, out _))
             {
@@ -110,22 +104,7 @@ namespace Escape.Core
             // later state must also claim everything that state implies.
             // Without this a poisoned save could re-enter the world with a
             // relay that was never routed, or an ending with no transmission.
-            if (data.broadcastStarted && content.TryGetObjective(RoutingObjectiveId, out _))
-                RequireCompleted(data, RoutingObjectiveId, "broadcastStarted", r);
-            if (data.broadcastCompleted && content.TryGetObjective(TransmissionObjectiveId, out _))
-                RequireCompleted(data, TransmissionObjectiveId, "broadcastCompleted", r);
-
-            if (data.completedObjectives != null &&
-                data.completedObjectives.Contains(TransmissionObjectiveId) &&
-                !data.broadcastCompleted)
-            {
-                // The objective is the stronger claim — the transmission
-                // happened, the flag just was not recorded.
-                r.Warnings.Add("Transmission objective complete without BroadcastCompleted — repaired.");
-                data.broadcastCompleted = true;
-                data.broadcastStarted = true;
-                r.WasRepaired = true;
-            }
+            NormalizeBroadcastState(data, content, r);
 
             if (!string.IsNullOrEmpty(data.endingId) && !data.broadcastCompleted)
             {
@@ -138,19 +117,78 @@ namespace Escape.Core
         }
 
         /// <summary>
-        /// Restores a prerequisite objective that a later-state flag implies.
-        /// Repairs upward, matching how BroadcastCompleted implies
-        /// BroadcastStarted above.
+        /// Broadcast coherence, run to a fixpoint. The flags and the
+        /// objectives imply each other in both directions — a completed
+        /// transmission implies the flags, and the flags imply the
+        /// prerequisite objectives — so a single ordered pass is not closed
+        /// under its own implications. Repairing "transmission objective is
+        /// complete" sets BroadcastCompleted, and *that* is what implies the
+        /// routing objective; if the routing rule was already evaluated, it
+        /// never runs again and the result violates the schema's own
+        /// documented invariants. Iterating until nothing changes is what
+        /// makes the output satisfy every rule at once.
         /// </summary>
-        private static void RequireCompleted(SaveData data, string objectiveId, string because,
+        private static void NormalizeBroadcastState(SaveData data, IContentDatabase content,
             SaveValidationResult r)
         {
             if (data.completedObjectives == null) data.completedObjectives = new List<string>();
-            if (data.completedObjectives.Contains(objectiveId)) return;
+            bool hasRouting = content.TryGetObjective(RoutingObjectiveId, out _);
+            bool hasTransmission = content.TryGetObjective(TransmissionObjectiveId, out _);
+
+            bool changed = true;
+            int guard = 0;
+            while (changed && guard++ < 8)
+            {
+                changed = false;
+
+                // BroadcastCompleted is the strongest flag: it implies a
+                // routed relay as well as a transmission.
+                if (data.broadcastCompleted && !data.broadcastStarted)
+                {
+                    r.Warnings.Add("BroadcastCompleted without BroadcastStarted — repaired.");
+                    data.broadcastStarted = true;
+                    r.WasRepaired = true;
+                    changed = true;
+                }
+
+                if (data.broadcastStarted && hasRouting &&
+                    RequireCompleted(data, RoutingObjectiveId, "broadcastStarted", r))
+                    changed = true;
+                if (data.broadcastCompleted && hasTransmission &&
+                    RequireCompleted(data, TransmissionObjectiveId, "broadcastCompleted", r))
+                    changed = true;
+
+                // The objective is the stronger claim in the other direction:
+                // the transmission happened, the flags just were not written.
+                if (hasTransmission &&
+                    data.completedObjectives.Contains(TransmissionObjectiveId) &&
+                    !data.broadcastCompleted)
+                {
+                    r.Warnings.Add("Transmission objective complete without BroadcastCompleted — repaired.");
+                    data.broadcastCompleted = true;
+                    data.broadcastStarted = true;
+                    r.WasRepaired = true;
+                    changed = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Restores a prerequisite objective that a later-state flag implies.
+        /// Repairs upward, matching how BroadcastCompleted implies
+        /// BroadcastStarted above. Returns true when it changed anything, so
+        /// the caller can iterate to a fixpoint.
+        /// </summary>
+        private static bool RequireCompleted(SaveData data, string objectiveId, string because,
+            SaveValidationResult r)
+        {
+            if (data.completedObjectives == null) data.completedObjectives = new List<string>();
+            if (data.completedObjectives.Contains(objectiveId)) return false;
             r.Warnings.Add($"Objective '{objectiveId}' missing though {because} is set — repaired.");
             data.completedObjectives.Add(objectiveId);
             data.activeObjectives?.Remove(objectiveId);
             r.WasRepaired = true;
+            return true;
         }
 
         private static SaveValidationResult Done(SaveValidationResult r)

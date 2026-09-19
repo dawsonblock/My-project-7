@@ -23,6 +23,10 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Transient NUnit output from ci/run-tests.sh. The curated qualification
+# evidence lives in BuildEvidence/tests/.
+/TestResults-*.xml
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
@@ -123,6 +127,10 @@ InitTestScene*.unity*
 # ...but the compile logs are the evidence the gate asks for, so keep them
 # despite the blanket *.log rule above.
 !/BuildEvidence/compile/*.log
+# Same for a generated qualification run: its raw logs ARE the evidence, and a
+# manifest pointing at logs that git silently dropped is worse than no manifest.
+!/BuildEvidence/qualification-*/*.log
+!/BuildEvidence/qualification-*/*.txt
 
 # PerformanceTesting package artifacts — rewritten by every test run
 /[Aa]ssets/Resources/PerformanceTestRun*.json*

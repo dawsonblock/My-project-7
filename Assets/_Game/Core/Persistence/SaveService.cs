@@ -55,6 +55,32 @@ namespace Escape.Core
 
         public string[] Slots { get; } = { Autosave, "slot1", "slot2", "slot3" };
 
+        /// <summary>
+        /// A slot id becomes a file name, so it is validated rather than
+        /// trusted. The shipped slots, the smoke run's slot and the test
+        /// fixtures are all covered by this alphabet; anything else — a path
+        /// separator, a parent reference, a rooted path — is refused instead of
+        /// being resolved against the saves directory.
+        /// </summary>
+        public static bool IsValidSlot(string slot)
+        {
+            if (string.IsNullOrEmpty(slot)) return false;
+            foreach (var c in slot)
+                if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+                      (c >= '0' && c <= '9') || c == '_' || c == '-'))
+                    return false;
+            return true;
+        }
+
+        /// <summary>True when the slot was refused (and why it was logged).</summary>
+        private static bool RejectSlot(string slot, string operation)
+        {
+            if (IsValidSlot(slot)) return false;
+            Debug.LogWarning($"[SaveService] Refusing to {operation} invalid slot id '{slot}' — " +
+                             "a slot is [A-Za-z0-9_-]+ and is never interpreted as a path.");
+            return true;
+        }
+
         public SaveService(IGameStateService state, IContentDatabase content,
             IGameEventBus events, IGameCommandDispatcher dispatcher,
             string directory = null, ISaveCoordinator coordinator = null)
@@ -70,7 +96,8 @@ namespace Escape.Core
         private string PathFor(string slot) => Path.Combine(_dir, slot + ".json");
 
         public bool HasSave(string slot) =>
-            File.Exists(PathFor(slot)) || File.Exists(SaveFileIO.BakPath(PathFor(slot)));
+            !RejectSlot(slot, "query") &&
+            (File.Exists(PathFor(slot)) || File.Exists(SaveFileIO.BakPath(PathFor(slot))));
 
         public string MostRecentSlot()
         {
@@ -99,6 +126,7 @@ namespace Escape.Core
         public SaveSlotInfo GetSlotInfo(string slot)
         {
             var info = new SaveSlotInfo { Slot = slot };
+            if (RejectSlot(slot, "inspect")) return info;
             var final = PathFor(slot);
             info.Exists = File.Exists(final) || File.Exists(SaveFileIO.BakPath(final));
             if (!info.Exists) return info;
@@ -133,6 +161,7 @@ namespace Escape.Core
 
         public bool Save(string slot)
         {
+            if (RejectSlot(slot, "write")) return false;
             try
             {
                 Directory.CreateDirectory(_dir);
@@ -164,6 +193,11 @@ namespace Escape.Core
         public bool LoadIntoState(string slot, out List<string> errors)
         {
             errors = new List<string>();
+            if (RejectSlot(slot, "load"))
+            {
+                errors.Add($"Invalid save slot '{slot}'.");
+                return false;
+            }
             var final = PathFor(slot);
             // Recovery order: primary, then backup.
             foreach (var path in new[] { final, SaveFileIO.BakPath(final) })
@@ -249,6 +283,7 @@ namespace Escape.Core
 
         public bool Delete(string slot)
         {
+            if (RejectSlot(slot, "delete")) return false;
             var p = PathFor(slot);
             bool any = false;
             foreach (var f in new[] { p, SaveFileIO.BakPath(p), SaveFileIO.TmpPath(p) })

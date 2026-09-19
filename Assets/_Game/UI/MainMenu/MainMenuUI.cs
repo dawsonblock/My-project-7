@@ -16,11 +16,13 @@ namespace Escape.UI
     {
         private GameServices _services;
         private ISaveService _saves;
+        private ISettingsService _settings;
         private IGameCommandDispatcher _dispatcher;
         private RectTransform _menuPanel;
         private RectTransform _loadPanel, _confirmPanel, _creditsPanel;
         private SettingsUI _settingsUi;
         private Canvas _canvas;
+        private CanvasScaler _scaler;
 
         private void Start()
         {
@@ -32,13 +34,13 @@ namespace Escape.UI
             _services = GameRoot.Instance.Services;
             _saves = _services.Get<ISaveService>();
             _dispatcher = _services.Get<IGameCommandDispatcher>();
+            _settings = _services.Get<ISettingsService>();
 
             var canvasGo = new GameObject("MainMenuCanvas");
             _canvas = canvasGo.AddComponent<Canvas>();
             _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            var scaler = canvasGo.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
+            _scaler = canvasGo.AddComponent<CanvasScaler>();
+            _scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             canvasGo.AddComponent<GraphicRaycaster>();
             if (FindAnyObjectByType<EventSystem>() == null)
             {
@@ -48,10 +50,21 @@ namespace Escape.UI
             }
             // The shared settings panel works outside the pause menu too.
             _settingsUi = SettingsUI.Create(canvasGo.transform);
-            if (_services.Get<ISettingsService>().LargeUI)
-                _canvas.scaleFactor = 1.25f;
+
+            // Large UI has to follow the setting, not be sampled once: this
+            // menu is where the player turns it on, so a one-shot read meant
+            // the change only appeared after leaving and re-entering.
+            _settings.Changed += ApplyDisplaySettings;
+            ApplyDisplaySettings();
 
             Build(canvasGo.transform);
+        }
+
+        private void ApplyDisplaySettings() => UiBuilder.ApplyLargeUi(_scaler, _settings.LargeUI);
+
+        private void OnDestroy()
+        {
+            if (_settings != null) _settings.Changed -= ApplyDisplaySettings;
         }
 
         private void Build(Transform root)
@@ -76,7 +89,9 @@ namespace Escape.UI
 
             Add(_menuPanel, "NEW GAME", OnNewGame);
             Add(_menuPanel, "LOAD GAME", ShowLoadPanel).interactable = newest != null;
-            Add(_menuPanel, "SETTINGS", () => _settingsUi.Open());
+            // Naming the menu column as the focus anchor: closing settings
+            // without one left a controller/keyboard user with no selection.
+            Add(_menuPanel, "SETTINGS", () => _settingsUi.OpenFrom(_menuPanel));
             Add(_menuPanel, "CREDITS", ShowCredits);
             Add(_menuPanel, "QUIT", () =>
             {

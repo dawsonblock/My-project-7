@@ -327,6 +327,64 @@ namespace Escape.Tests.EditMode
             Assert.IsFalse(state.State.CompletedObjectives.Contains("route_broadcast"));
         }
 
+        /// <summary>
+        /// The exact state the old gate missed. Routing used to check only the
+        /// prerequisite *objectives*, so the broadcast key was enforced solely
+        /// by the office terminal's button — a caller that skipped the terminal
+        /// could route with an empty hand. The archive being in hand satisfies
+        /// every objective prerequisite, leaving the key as the only thing
+        /// standing between a caller and a routed relay.
+        /// </summary>
+        [Test]
+        public void Routing_IsRefused_WithoutTheKey_EvenWithTheArchiveInHand()
+        {
+            var (state, dispatcher) = RealRig();
+            state.State.CompletedObjectives.Add("download_archive");
+
+            dispatcher.Dispatch(new RouteBroadcastCommand("route_broadcast", "test"));
+
+            Assert.IsFalse(state.State.BroadcastStarted,
+                "The relay routed without the broadcast key — the requirement was only on the terminal surface");
+            Assert.IsFalse(state.State.CompletedObjectives.Contains("route_broadcast"));
+        }
+
+        /// <summary>
+        /// The requirement the domain enforces is the one the objective
+        /// declares, so the declaration has to be there. Without this, the
+        /// authority silently degrades back to "surface-only" enforcement.
+        /// </summary>
+        [Test]
+        public void RoutingObjective_DeclaresTheBroadcastKey()
+        {
+            var content = ContentDatabase.Load();
+            Assert.IsTrue(content.TryGetObjective("route_broadcast", out var route));
+
+            bool needsKey = false;
+            foreach (var e in route.RequiredEvidence)
+                if (e != null && e.Id == "broadcast_key_001") needsKey = true;
+            Assert.IsTrue(needsKey,
+                "route_broadcast must declare broadcast_key_001 — the domain enforces what the " +
+                "objective declares, so the key cannot live only on the office terminal");
+        }
+
+        /// <summary>
+        /// Activation satisfied, evidence not held: the shape a caller could
+        /// previously exploit. The objective was active, so the prerequisite
+        /// chain was satisfied, and the bare command completed it without the
+        /// evidence that is supposed to finish it.
+        /// </summary>
+        [Test]
+        public void EvidenceObjective_IsRefused_ByBareCommand_WithoutItsEvidence()
+        {
+            var (state, dispatcher) = RealRig();
+            state.State.CompletedObjectives.Add("unlock_service_door");
+
+            dispatcher.Dispatch(new CompleteObjectiveCommand("search_office", "test"));
+
+            Assert.IsFalse(state.State.CompletedObjectives.Contains("search_office"),
+                "An Evidence objective was force-completed without the evidence that defines it");
+        }
+
         [Test]
         public void ObjectiveCompletion_IsRefused_BeforeItsPrerequisites()
         {
@@ -342,6 +400,7 @@ namespace Escape.Tests.EditMode
                 "An objective completed before its prerequisite objectives");
 
             state.State.CompletedObjectives.Add("download_archive");
+            state.State.CollectedEvidence.Add("broadcast_key_001");
             objectives.CompleteFromAction("route_broadcast", "test");
             Assert.IsTrue(state.State.CompletedObjectives.Contains("route_broadcast"),
                 "The objective should complete once its prerequisites hold");
@@ -446,6 +505,35 @@ namespace Escape.Tests.EditMode
             Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"));
             Assert.IsTrue(data.completedObjectives.Contains("broadcast_truth"),
                 "BroadcastCompleted implies an actual transmission");
+        }
+
+        /// <summary>
+        /// The implication chain a single ordered pass cannot close. A save
+        /// carrying only the transmission objective reaches the flag repair
+        /// *after* the routing-objective repair has already run, so the
+        /// repaired result used to keep BroadcastStarted/BroadcastCompleted
+        /// with route_broadcast still missing — contradicting the invariants
+        /// the schema documents. Normalization has to reach a fixpoint.
+        /// </summary>
+        [Test]
+        public void Validator_ReachesAFixpoint_OnTheTransmissionObjectiveImplication()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                broadcastStarted = false,
+                broadcastCompleted = false,
+                completedObjectives = new List<string> { "broadcast_truth" }
+            };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+
+            Assert.IsTrue(data.broadcastCompleted,
+                "A recorded transmission implies the broadcast completed");
+            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"),
+                "BroadcastCompleted implies the relay was routed, even when the routing objective " +
+                "only became implied partway through the repair");
+            Assert.IsTrue(data.completedObjectives.Contains("broadcast_truth"));
         }
 
         [Test]

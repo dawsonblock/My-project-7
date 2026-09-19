@@ -61,11 +61,30 @@ namespace Escape.Core
             events.Subscribe(onFailed);
             try
             {
+                // 0. Let the boot sequence finish first. GameRoot runs at
+                //    execution order -1000 and starts the Bootstrap → MainMenu
+                //    transition in its Start, which is before this component's
+                //    Start. SceneService.LoadScene drops any request made while
+                //    a transition is in flight, so starting the scene sequence
+                //    now would silently discard the first scene and then assert
+                //    against MainMenu. Waiting here is the difference between
+                //    qualifying the game and qualifying a race.
+                yield return WaitUntil(() => !scenes.IsTransitioning);
+                if (scenes.IsTransitioning)
+                {
+                    failure = "the boot transition never settled";
+                }
+                else if (transitionFailed)
+                {
+                    failure = "the boot scene never signalled SceneReady";
+                }
+
                 // 1. Every gameplay scene must load and signal readiness.
                 foreach (var id in new[] { Data.SceneId.Dock, Data.SceneId.ServiceEntrance,
                          Data.SceneId.MansionOffice, Data.SceneId.SecurityWing,
                          Data.SceneId.BunkerServerRoom, Data.SceneId.BroadcastTower })
                 {
+                    if (failure != null) break;
                     scenes.LoadScene(id, "default");
                     yield return WaitUntil(() => !scenes.IsTransitioning);
                     if (scenes.IsTransitioning) { failure = $"transition to '{id}' never completed"; break; }

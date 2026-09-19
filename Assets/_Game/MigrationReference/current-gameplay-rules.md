@@ -15,8 +15,16 @@ corroborate → unlock routes → manipulate terminals → broadcast.
 
 ## Objectives
 - Objectives activate when their required objectives are complete.
+- Objectives complete when their *full* requirements hold: the required
+  objectives and the required evidence the objective declares. Activation is
+  deliberately weaker than completion — evidence finishes an objective, it
+  does not reveal it.
 - Evidence-driven objectives auto-complete when all required evidence is
   held. Action-driven objectives complete via commands only.
+- An action-driven objective's declared requirements are also its action's
+  authorization: the domain action that owns it asks the objective service
+  whether it may complete before mutating state. A requirement that is only
+  enforced by the UI surface that offers the button is not enforced.
 
 ## Doors
 - Door requirements: none | evidence (keycard) | objective | insight.
@@ -37,6 +45,9 @@ corrected rule: ARCHIVE requires the `private_security_coverup` insight
 ## Broadcast
 - BROADCAST on the office terminal requires `broadcast_key_001` and routes
   the signal. The relay console then transmits.
+- `route_broadcast` declares `broadcast_key_001` as required evidence, so the
+  key is enforced by the routing domain, not only by the terminal that offers
+  the button. A caller that skips the terminal still cannot route without it.
 - Ending evaluation is deterministic: highest-priority ending whose
   requirements are met wins; `ending_bad` is the fallback.
 

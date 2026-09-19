@@ -19,6 +19,14 @@ namespace Escape.UI
 
         public bool IsOpen => _root != null && _root.activeSelf;
 
+        /// <summary>
+        /// Where focus should return after a modal opened from here closes.
+        /// The panel, not the host: the host GameObject deliberately stays
+        /// active while closed (so Update can keep retrying the input bind),
+        /// so handing out the host would make "pause is closed" look open.
+        /// </summary>
+        public Transform FocusReturnTarget => _root != null ? _root.transform : transform;
+
         public static PauseMenuUI Create(Transform canvasRoot, SettingsUI settings)
         {
             // The component host stays active so Update() can keep retrying
@@ -52,7 +60,7 @@ namespace Escape.UI
             Add(panel, "RESUME", () => Close());
             Add(panel, "SAVE GAME", () =>
                 _services.Get<IGameCommandDispatcher>().Dispatch(new SaveGameCommand("slot1")));
-            Add(panel, "SETTINGS", () => { if (_settings != null) _settings.OpenFrom(this); });
+            Add(panel, "SETTINGS", () => { if (_settings != null) _settings.OpenFrom(FocusReturnTarget); });
             Add(panel, "QUIT TO MENU", () =>
             {
                 Time.timeScale = 1f;

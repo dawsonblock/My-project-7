@@ -16,9 +16,11 @@ namespace Escape.UI
         {
             _canvas = gameObject.AddComponent<Canvas>();
             _canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            var scaler = gameObject.AddComponent<CanvasScaler>();
-            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = new Vector2(1920, 1080);
+            _scaler = gameObject.AddComponent<CanvasScaler>();
+            _scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            // A sane reference resolution even before settings bind, so a UI
+            // canvas built without a GameRoot still lays out correctly.
+            UiBuilder.ApplyLargeUi(_scaler, false);
             gameObject.AddComponent<GraphicRaycaster>();
 
             if (FindAnyObjectByType<EventSystem>() == null)
@@ -67,11 +69,11 @@ namespace Escape.UI
 
         private void ApplyDisplaySettings()
         {
-            if (_canvas != null && _settings != null)
-                _canvas.scaleFactor = _settings.LargeUI ? 1.25f : 1f;
+            UiBuilder.ApplyLargeUi(_scaler, _settings != null && _settings.LargeUI);
         }
 
         private Canvas _canvas;
+        private CanvasScaler _scaler;
         private ISettingsService _settings;
         private IScreenFader _fader;
         private ITerminalUI _terminal;

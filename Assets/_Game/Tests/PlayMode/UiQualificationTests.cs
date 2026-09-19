@@ -39,6 +39,7 @@ namespace Escape.Tests.PlayMode
             Time.timeScale = 1f;
             // Settings tests write real PlayerPrefs keys.
             PlayerPrefs.DeleteKey("set_mouse_sens");
+            PlayerPrefs.DeleteKey("set_large_ui");
             if (_root != null) Object.DestroyImmediate(_root);
             if (_canvasGo != null) Object.DestroyImmediate(_canvasGo);
             base.TearDown();
@@ -108,7 +109,7 @@ namespace Escape.Tests.PlayMode
 
             pause.Open();
             yield return null;
-            settings.OpenFrom(pause);
+            settings.OpenFrom(pause.FocusReturnTarget);
             yield return null;
             settings.Close();
             yield return null;
@@ -118,6 +119,82 @@ namespace Escape.Tests.PlayMode
                 "a controller user would otherwise be stranded with no selection");
             pause.Close();
             Object.DestroyImmediate(es);
+        }
+
+        /// <summary>
+        /// The focus anchor is any transform, not specifically a pause menu.
+        /// The main menu opens settings too, and it used to close back to no
+        /// selection at all because it could not name itself as the anchor.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator Settings_Close_ReturnsFocus_ToAnyNamedAnchor()
+        {
+            var es = new GameObject("EventSystem", typeof(EventSystem),
+                typeof(UnityEngine.InputSystem.UI.InputSystemUIInputModule));
+            var settings = SettingsUI.Create(_canvasGo.transform);
+            var anchor = UiBuilder.Panel(_canvasGo.transform, "Anchor",
+                new Vector2(0.3f, 0.3f), new Vector2(0.7f, 0.7f), UiBuilder.PanelBg);
+            UiBuilder.Vertical(anchor, 8, new RectOffset(0, 0, 0, 0));
+            UiBuilder.Button(anchor, "FIRST", 44);
+            yield return null;
+            yield return null;
+
+            settings.OpenFrom(anchor);
+            yield return null;
+            settings.Close();
+            yield return null;
+
+            Assert.IsNotNull(EventSystem.current.currentSelectedGameObject,
+                "Closing settings must restore focus to the anchor it was opened from");
+            Assert.AreEqual(anchor, EventSystem.current.currentSelectedGameObject.transform.parent,
+                "focus must land inside the named anchor, not on some other surface");
+            Object.DestroyImmediate(es);
+        }
+
+        /// <summary>
+        /// Large UI has to follow the setting on the surface that exposes it —
+        /// the main menu is where the player turns it on, and a one-shot read
+        /// in Start meant the change only showed after leaving and re-entering.
+        ///
+        /// It is expressed as a reference resolution rather than a directly
+        /// assigned canvas scale factor, because CanvasScaler recomputes the
+        /// scale factor from the reference resolution every frame: a value
+        /// written straight onto the canvas is discarded on the next resize,
+        /// and a hard 1.25 is only "25% larger" at the reference resolution.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator LargeUi_IsReactive_OnTheMainMenu()
+        {
+            var settings = GameRoot.Instance.Services.Get<ISettingsService>();
+            var original = settings.LargeUI;
+            // MainMenuUI builds its canvas as a root object, so a canvas left
+            // behind by another test's scene load would win GameObject.Find.
+            // Clear any stale one first — this test must look at its own menu.
+            var stale = GameObject.Find("MainMenuCanvas");
+            if (stale != null) Object.DestroyImmediate(stale);
+
+            var host = new GameObject("MainMenuHost", typeof(RectTransform), typeof(MainMenuUI));
+            yield return null;
+            yield return null;
+
+            var canvasGo = GameObject.Find("MainMenuCanvas");
+            Assert.IsNotNull(canvasGo, "MainMenuUI did not build its canvas");
+            var scaler = canvasGo.GetComponent<UnityEngine.UI.CanvasScaler>();
+            Assert.IsNotNull(scaler, "MainMenuUI's canvas has no CanvasScaler");
+
+            settings.LargeUI = false;
+            var normal = scaler.referenceResolution;
+            settings.LargeUI = true;
+            var large = scaler.referenceResolution;
+
+            Assert.Less(large.x, normal.x,
+                "Large UI was toggled on the main menu and the menu's own canvas did not follow");
+            Assert.AreEqual(1.25f, normal.x / large.x, 0.001f,
+                "Large UI must be exactly 25% larger than the normal UI at any screen size");
+
+            settings.LargeUI = original;
+            Object.DestroyImmediate(host);
+            Object.DestroyImmediate(canvasGo);
         }
 
         // ---------- evidence board ----------

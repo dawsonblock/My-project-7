@@ -13,7 +13,10 @@ mkdir -p "$(dirname "$LOG")"
 
 APP="${1:-}"
 if [[ -z "$APP" ]]; then
-    APP="$(find "$PROJECT_DIR/Builds" "$PROJECT_DIR/builds" -maxdepth 3 -name "*.app" 2>/dev/null | head -1 || true)"
+    # Search every path a builder may have written to: this project's Builds/,
+    # game-ci's default build/ (singular), and the older builds/.
+    APP="$(find "$PROJECT_DIR/Builds" "$PROJECT_DIR/builds" "$PROJECT_DIR/build" \
+        -maxdepth 3 -name "*.app" 2>/dev/null | head -1 || true)"
 fi
 if [[ -z "$APP" || ! -d "$APP" ]]; then
     echo "No player found. Build one first (ci/build-player.sh) or pass a path." >&2

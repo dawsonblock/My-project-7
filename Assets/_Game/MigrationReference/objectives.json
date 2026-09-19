@@ -84,7 +84,9 @@
       "requiredObjectives": [
         "download_archive"
       ],
-      "requiredEvidence": [],
+      "requiredEvidence": [
+        "broadcast_key_001"
+      ],
       "completion": "explicit",
       "optional": false
     },

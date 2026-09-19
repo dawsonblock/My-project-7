@@ -14,7 +14,7 @@ namespace Escape.UI
         private GameObject _root;
         private ISettingsService _settings;
         private GameServices _services;
-        private PauseMenuUI _pauseOwner;
+        private Transform _returnFocus;
 
         public bool IsOpen => _root != null && _root.activeSelf;
 
@@ -182,9 +182,17 @@ namespace Escape.UI
             });
         }
 
-        public void OpenFrom(PauseMenuUI owner)
+        /// <summary>
+        /// Opens the panel, remembering where focus should land when it closes.
+        ///
+        /// Generic on purpose. This used to take a PauseMenuUI specifically,
+        /// which meant the main menu — the other surface that opens settings —
+        /// closed back to no selection at all, stranding controller and
+        /// keyboard users. Any caller can now name its own focus anchor.
+        /// </summary>
+        public void OpenFrom(Transform returnFocus)
         {
-            _pauseOwner = owner;
+            _returnFocus = returnFocus;
             Open();
         }
 
@@ -216,10 +224,12 @@ namespace Escape.UI
             if (_services != null) _services.Get<IInputGate>().PopUi(this);
 
             // Hand focus back to whatever opened us, so a controller/keyboard
-            // user is not dropped back into the pause menu with nothing
-            // selected. Falls back to clearing the selection.
-            if (_pauseOwner != null && _pauseOwner.IsOpen)
-                UiBuilder.SelectFirst(_pauseOwner.transform);
+            // user is not dropped back into the menu with nothing selected.
+            // A target that has since been hidden is no anchor at all — fall
+            // back to clearing the selection rather than selecting something
+            // the player cannot see.
+            if (_returnFocus != null && _returnFocus.gameObject.activeInHierarchy)
+                UiBuilder.SelectFirst(_returnFocus);
             else
                 UiBuilder.Deselect();
         }

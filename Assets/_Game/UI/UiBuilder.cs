@@ -16,6 +16,26 @@ namespace Escape.UI
         public static readonly Color Warn = new Color(1f, 0.45f, 0.2f);
         public static readonly Color TextDim = new Color(0.6f, 0.75f, 0.65f);
 
+        private static readonly Vector2 NormalReferenceResolution = new Vector2(1920f, 1080f);
+        /// <summary>25% larger than the normal reference, for the Large UI setting.</summary>
+        private static readonly Vector2 LargeReferenceResolution = new Vector2(1536f, 864f);
+
+        /// <summary>
+        /// Applies the "Large UI" accessibility setting to a canvas.
+        ///
+        /// Adjusts the scaler's reference resolution rather than writing
+        /// <c>canvas.scaleFactor</c>. CanvasScaler in ScaleWithScreenSize mode
+        /// recomputes and rewrites the canvas scale factor itself, so a value
+        /// assigned directly survives only until the next resize — and it was
+        /// also resolution-dependent: a hard 1.25 is not "25% larger than this
+        /// screen's normal UI" anywhere but the reference resolution.
+        /// </summary>
+        public static void ApplyLargeUi(CanvasScaler scaler, bool large)
+        {
+            if (scaler == null) return;
+            scaler.referenceResolution = large ? LargeReferenceResolution : NormalReferenceResolution;
+        }
+
         public static RectTransform Panel(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, Color bg)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Image));

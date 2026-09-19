@@ -203,6 +203,33 @@ namespace Escape.Tests.EditMode
         }
 
         [Test]
+        public void Save_Rejects_SlotIdsThatArePaths()
+        {
+            // A slot id becomes a file name. The API must not accept a path,
+            // even though ordinary gameplay only ever passes the shipped slots.
+            foreach (var slot in new[] { "../escape", "..", "a/b", "/etc/passwd", "", "slot 1" })
+                Assert.IsFalse(SaveService.IsValidSlot(slot),
+                    $"'{slot}' must not be accepted as a slot id");
+
+            foreach (var slot in new[] { "autosave", "slot1", "slot_2", "smoke_slot", "itest-slot" })
+                Assert.IsTrue(SaveService.IsValidSlot(slot),
+                    $"'{slot}' is a legitimate slot id and must be accepted");
+        }
+
+        [Test]
+        public void Save_Refuses_AnInvalidSlot_WithoutTouchingDisk()
+        {
+            _state.State.SceneId = "dock";
+            Assert.IsFalse(_saves.Save("../escape"), "an invalid slot must not be written");
+            Assert.IsFalse(_saves.HasSave("../escape"));
+            Assert.IsFalse(_saves.Delete("../escape"));
+            Assert.IsFalse(_saves.LoadIntoState("../escape", out var errors));
+            StringAssert.Contains("Invalid save slot", string.Join(";", errors));
+            Assert.IsFalse(Directory.Exists(Path.Combine(Path.GetTempPath(), "escape")),
+                "an invalid slot must not escape the saves directory");
+        }
+
+        [Test]
         public void SaveCoordinator_Captures_Participant_State()
         {
             var coordinator = new SaveCoordinator();

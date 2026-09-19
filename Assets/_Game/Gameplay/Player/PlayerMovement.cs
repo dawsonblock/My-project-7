@@ -11,7 +11,7 @@ namespace Escape.Gameplay
     public sealed class PlayerMovement : MonoBehaviour
     {
         private CharacterController _cc;
-        private PlayerInputReader _input;
+        private IPlayerMoveInput _input;
         private PlayerState _state;
         private PlayerLook _look;
         private Data.StealthTuning _tuning;
@@ -25,6 +25,7 @@ namespace Escape.Gameplay
         private float _standHeight;
         private Vector3 _standCenter;
         private bool _bound;
+        private bool _subscribed;
 
         private void Awake()
         {
@@ -49,14 +50,36 @@ namespace Escape.Gameplay
             _tuning = services.Get<IContentDatabase>().Tuning;
             _settings = services.Get<ISettingsService>();
             _gate = services.Get<IInputGate>();
-            if (_input != null) _input.CrouchPressed += OnCrouchPressed;
+            SubscribeInput();
             _bound = true;
+        }
+
+        private void SubscribeInput()
+        {
+            if (_subscribed || _input == null) return;
+            _input.CrouchPressed += OnCrouchPressed;
+            _subscribed = true;
         }
 
         private void OnDisable()
         {
-            if (_input != null) _input.CrouchPressed -= OnCrouchPressed;
+            if (_subscribed && _input != null) _input.CrouchPressed -= OnCrouchPressed;
+            _subscribed = false;
             _bound = false;
+        }
+
+        /// <summary>
+        /// Replaces where movement input comes from. Production leaves this
+        /// alone — Awake picks up the PlayerInputReader on this object — but a
+        /// test can inject a deterministic source, which is what makes the
+        /// movement rules testable without a keyboard or a real frame rate.
+        /// </summary>
+        public void SetInputSource(IPlayerMoveInput source)
+        {
+            if (_subscribed && _input != null) _input.CrouchPressed -= OnCrouchPressed;
+            _subscribed = false;
+            _input = source;
+            SubscribeInput();
         }
 
         private void OnCrouchPressed()
