@@ -1,0 +1,59 @@
+Progression contract evidence — 2026-09-18
+
+Target chain (dock -> service entrance -> mansion office -> security wing ->
+bunker server room -> broadcast tower -> transmission -> ending).
+
+Enforced mechanically by the tests below (EditMode, part of the 51-test suite):
+
+  ExplicitObjective_DoesNotComplete_FromEvidenceAlone
+  EvidenceObjective_StillCompletes_FromEvidence
+  BroadcastTruth_RequiresTransmission_NotJustKey
+  OfficeTerminal_Broadcast_IsGated_AndCompletesRouting
+  BroadcastObjectives_AreExplicit_AndOrdered
+  DockExit_RequiresBroadcastKey
+  OfficeExit_RequiresRoutedBroadcast
+
+Persistence invariants:
+  MostRecentSlot_Finds_BackupOnly_Save
+  Validator_Repairs_ActiveCompletedOverlap
+  Validator_Repairs_BroadcastFlag_Inconsistency
+  Validator_Clamps_NegativeLures
+  Validator_Drops_UnknownEnding
+
+Live-scene coverage (PlayMode, part of the 17-test suite):
+  SceneIntegrationTests.Dock_Loads_AndBootstraps
+  SceneIntegrationTests.Save_Load_RoundTrip_RestoresLivePose
+
+Key properties now enforced:
+- broadcast_key_001 is required at the Dock exit and by the office terminal,
+  so it cannot be permanently missed before the point of no return.
+- route_broadcast completes only through the office terminal action
+  (requires broadcast_key_001 + download_archive).
+- The MansionOffice -> SecurityWing exit requires route_broadcast.
+- broadcast_truth completes only through the transmission at the broadcast
+  console, which requires BroadcastStarted.
+- Explicit-mode objectives never complete from evidence alone.
+
+NOTE: this file records the contract and the tests that assert it. It is not
+itself a machine-generated artifact.
+
+Graph-level validation (ProgressionGraphTests, added 2026-09-18):
+  Replays the whole critical path through the real services — collects what
+  each scene places, reads documents (which grant evidence), runs every
+  terminal command whose requirements are met, lets evidence-mode objectives
+  auto-complete, then takes the scene's exit gate. It reads the generated
+  scenes and definitions rather than a hand-kept model, so content drift
+  re-opening a softlock fails the suite.
+
+  Proved by the walk:
+  - broadcast_key_001 -> Dock gate -> reach_compound
+  - keycard_staff -> find_keycard -> service terminal UNLOCK SERVICE ->
+    unlock_service_door
+  - guest_log_001 / transport_manifest_001 / access_log_001 (via documents)
+    -> search_office -> corroborate_story
+  - office terminal ARCHIVE -> server_archive_001 -> download_archive
+  - office terminal BROADCAST -> StartBroadcast + route_broadcast
+  - reach_bunker -> reach_tower -> tower console -> broadcast_truth
+  - ending earned is better than the priority-0 fallback
+  - the office terminal's code (7391) is revealed by a document in the same
+    scene, so the code gate is not a dead end

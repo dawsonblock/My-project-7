@@ -1,0 +1,21 @@
+Final verification — 2026-09-19 (assemblies confirmed rebuilt)
+
+  EditMode: 61 passed / 0 failed
+  PlayMode: 26 passed / 0 failed
+
+EditMode 51 -> 61 with ProgressionGraphTests (10 graph-level tests).
+PlayMode 17 -> 26 with:
+
+  PlayerLookTests (10) — yaw/pitch ownership, mouse vs stick sensitivity,
+    frame-rate independence, pitch clamp, invert, UI gating
+  UiQualificationTests (5) — settings open/close push+pop the gate, settings
+    survive a missing GameRoot, the evidence board host stays active while
+    closed, documents are modal and Escape dismisses them
+  EvidenceBoardLateBindTests (1) — Tab still opens the board when the player
+    prefab spawns after the UI was built
+  PlayerMovementTests (3) — holding W moves the player; at yaw 90 the player
+    travels along +X, so movement follows yaw rather than world Z; movement is
+    suppressed while a UI surface owns input
+
+Before trusting a count, confirm the assembly rebuilt:
+  stat -f %Sm Library/ScriptAssemblies/<name>.dll   (vs the source mtime)

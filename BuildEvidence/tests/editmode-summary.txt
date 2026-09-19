@@ -1,0 +1,8 @@
+RESULT passed=22 failed=1 skipped=0 state=Failed
+Failed: My project (7) :: One or more child tests had errors
+Failed: Escape.Tests.PlayMode.dll :: One or more child tests had errors
+Failed: Escape :: One or more child tests had errors
+Failed: Tests :: One or more child tests had errors
+Failed: PlayMode :: One or more child tests had errors
+Failed: UiQualificationTests :: One or more child tests had errors
+Failed: EvidenceBoard_LatePlayerSpawn_TabStillOpensIt :: Unhandled log message: '[Exception] IndexOutOfRangeException: Index was outside the bounds of the array.'. Use UnityEngine.TestTools.LogAssert.Expect

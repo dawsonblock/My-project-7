@@ -116,8 +116,10 @@ InitTestScene*.unity*
 # Unity pipeline runtime artifacts
 .unity-pipeline-runtime-port
 
-# Stabilization evidence artifacts (local, not source)
-/BuildEvidence/
+# Stabilization evidence: the text record is tracked so the qualification
+# record travels with the repo; only the player binaries are excluded.
+/BuildEvidence/player-build/*.app
+/BuildEvidence/player-build/*_BackUpThisFolder_*
 
 # PerformanceTesting package artifacts — rewritten by every test run
 /[Aa]ssets/Resources/PerformanceTestRun*.json*

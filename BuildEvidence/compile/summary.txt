@@ -1,0 +1,12 @@
+Compile gate — 2026-09-18
+Unity 6000.6.0f1
+
+Result: 0 errors, 0 warnings
+
+Fixed during qualification:
+  SceneBootstrap.cs(104): CS0618 — FindObjectsByType<T>(FindObjectsSortMode) is
+  deprecated in 6000.6.0f1. Switched to the parameterless FindObjectsByType<T>()
+  overload (semantics unchanged: placement selects by SpawnId match, not order).
+
+Assemblies: editor, Escape.Tests.EditMode, Escape.Tests.PlayMode, standalone player.
+Player build: Succeeded (StandaloneOSX, 8 scenes, 0 errors, 117,289,247 bytes).

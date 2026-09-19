@@ -1,0 +1,9 @@
+Unity version: 6000.6.0f1
+Project: My project (7)
+Captured: 2026-09-18T22:45:44Z
+Git branch: stabilization/foundation
+Git HEAD: 332a2e1b0d9052a9614a75c84b5330ef43893f94
+Archive SHA-256: 4438425461c48631da107afb33330d4a07ec17fae526bf1143c4baedf193a780
+EditMode tests (at baseline): 51 passed / 0 failed
+PlayMode tests (at baseline): 17 passed / 0 failed
+Worktree modified files: 72
