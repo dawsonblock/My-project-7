@@ -10,13 +10,16 @@ Baseline tag: pre-stabilization-repair (332a2e1, pre-repair state)
 | Gate | Status | Evidence |
 |---|---|---|
 | Editor + test assembly compile | PASS — 0 errors, 0 warnings | compile/summary.txt, compile/editor.log |
-| Standalone player compile + link | PASS — Succeeded, 8 scenes, 117,289,247 bytes, 0 errors | player-build/build-summary.txt |
+| Standalone player compile + link | PASS — Succeeded, 8 scenes, 117,300,559 bytes, 0 errors | player-build/build-summary.txt |
 | Built-player qualification | PASS — SMOKE PASS: scenes, progression, save round-trip | player-build/smoke-test.txt |
 | Player build in CI | ADDED — macOS job builds the player and runs the smoke | .github/workflows/unity-tests.yml |
-| EditMode tests | PASS — 75/75 | tests/editmode-TestResults.xml |
+| EditMode tests | PASS — 78/78 | tests/editmode-TestResults.xml |
 | PlayMode tests | PASS — 29/29 | tests/playmode-TestResults.xml |
 | Deterministic generation | PASS — 26 files byte-identical over two builds | deterministic-generation/result.txt |
-| Progression contract | PASS — explicit vs evidence completion, gated routing | progression/summary.txt |
+| Progression contract | PASS — explicit vs evidence completion, gated routing, choice-aware reachability | progression/summary.txt |
+| World manifest | PASS — every authored world id is covered | tests/summary.txt |
+| Package audit | DONE — unused packages quantified, nothing removed | package-audit.txt |
+| Release identity | DONE — Escape the Elites / com.escapetheelites.game | ProjectSettings/ProjectSettings.asset |
 | Baseline capture | DONE | baseline/ |
 
 ## baseline/

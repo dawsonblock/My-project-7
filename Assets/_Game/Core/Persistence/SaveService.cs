@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Escape.Data;
 using UnityEngine;
 
 namespace Escape.Core
@@ -229,7 +230,7 @@ namespace Escape.Core
                 result.Errors.Add("Save version unsupported.");
                 return false;
             }
-            result = SaveValidator.Validate(data, _content);
+            result = SaveValidator.Validate(data, _content, WorldManifest.Load());
             return result.IsValid;
         }
 

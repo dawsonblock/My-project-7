@@ -1,0 +1,60 @@
+Package audit — 2026-09-19
+
+Scope: what the project declares, what its code uses, and what the built
+player actually ships. NOT an action list — see "why nothing was removed".
+
+DECLARED: 20 packages in Packages/manifest.json
+
+PROJECT CODE REFERENCES (grep over Assets/**/*.cs, file counts):
+  TMPro                              43 files   used
+  UnityEngine.UI                     15 files   used
+  UnityEngine.InputSystem            11 files   used
+  UnityEngine.Rendering.Universal     2 files   used
+  Unity.AI.Navigation                 1 file    used
+  Unity.Behavior                      0 files   UNUSED
+  Unity.Physics                       0 files   UNUSED
+  UnityEngine.Timeline                0 files   UNUSED
+  Unity.Services                      0 files   UNUSED
+  Unity.Pipeline                      0 files   UNUSED
+  Unity.Entities                      0 files   UNUSED
+
+WHAT THE PLAYER SHIPS (ScriptingAssemblies.json of the built app) — the part
+that makes this more than manifest clutter:
+
+  Unity.Behavior.dll, Unity.Behavior.Serialization.dll,
+  Unity.Behavior.SerializableGUID.dll, Unity.Muse.Behavior.dll
+  Unity.Physics.dll, Unity.Physics.Hybrid.dll
+  Unity.Entities.dll, Unity.Entities.Hybrid.dll, Unity.Entities.UI.dll,
+  Unity.Entities.Hybrid.HybridComponents.dll
+  Unity.Timeline.dll, Unity.Splines.dll, Unity.Cinemachine.dll
+  Unity.VisualScripting.Core.dll, .Flow.dll, .State.dll, .Antlr3.Runtime.dll
+  Unity.Services.Core.dll plus 14 more Unity.Services.Core.* / Authentication
+  Unity.ScriptableBuildPipeline.dll, Unity.Pipeline.Attributes.dll
+
+So a stealth game that uses none of these ships all of them. The likely origin
+is the template's feature packs (com.unity.feature.characters-animation,
+.gameplay-storytelling, .worldbuilding, .development), which are aggregate
+packages that pull the rest in.
+
+WHY NOTHING WAS REMOVED
+  - The review's own guidance is "do not blindly remove packages", and the
+    feature packs are aggregates whose removal can break template content that
+    is still referenced (materials, shaders, sample assets).
+  - Removal cannot be validated from here: it needs a full cycle —
+    BuildAll, EditMode + PlayMode, deterministic generation, and a player
+    build + smoke — to prove nothing regressed.
+  - Two packages ARE load-bearing for the qualification work and must stay:
+    com.unity.test-framework (all 78 EditMode / 29 PlayMode tests) and
+    com.unity.ui.test-framework / Input System's test framework (the input
+    fixtures in PlayerLookTests and friends).
+
+RECOMMENDED ORDER FOR A CONTROLLED PASS
+  1. Drop the unused *feature packs* first (characters-animation,
+     gameplay-storytelling, worldbuilding) — they are the source of most of
+     the transitive bloat — then re-run the full cycle above.
+  2. Then the standalone service/tooling packages: com.unity.services.tooling,
+     com.unity.services.cloud-build, com.unity.asset-manager-for-unity,
+     com.unity.ai.assistant, com.unity.pipeline, com.unity.physics,
+     com.unity.behavior, com.unity.timeline.
+  3. Re-check the shipped assembly list after each step: the measure of
+     success is a smaller ScriptingAssemblies.json, not a smaller manifest.

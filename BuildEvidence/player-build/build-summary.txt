@@ -1,11 +1,9 @@
 result=Succeeded
 platform=StandaloneOSX
-totalSize=117289247
-totalTime=00:04:22.9091340
+totalSize=117300559
 scenes=8
 errors=0
 warnings=4
-outputPath=/Users/dawsonblock/unity/My project (7)/BuildEvidence/player-build/EscapeTheElites.app
-built=2026-09-18T21:17:39
-note=includes the graphics pass (PBR gloss maps, MAT_Paving) and all fixes
-preloadedAssets=restored by PlayerBuild (no ProjectSettings churn)
+outputPath=/Users/dawsonblock/unity/My project (7)/Builds/StandaloneOSX/EscapeTheElites.app
+identity=company 'Escape the Elites', product 'Escape the Elites', id com.escapetheelites.game
+built=2026-09-19

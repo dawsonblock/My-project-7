@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Escape.Data;
 using UnityEngine;
 
 namespace Escape.Core
@@ -18,7 +19,8 @@ namespace Escape.Core
         private const string RoutingObjectiveId = "route_broadcast";
         private const string TransmissionObjectiveId = "broadcast_truth";
 
-        public static SaveValidationResult Validate(SaveData data, IContentDatabase content)
+        public static SaveValidationResult Validate(SaveData data, IContentDatabase content,
+            WorldManifest manifest = null)
         {
             var r = new SaveValidationResult();
             if (data == null) { r.Errors.Add("Save is null."); return Done(r); }
@@ -50,12 +52,26 @@ namespace Escape.Core
             FilterUnknown(data.activeObjectives, id => content.TryGetObjective(id, out _), "objective", r);
             FilterUnknown(data.gainedInsights, id => content.TryGetInsight(id, out _), "insight", r);
             FilterUnknown(data.unlockedTerminals, id => content.TryGetTerminal(id, out _), "terminal", r);
-            // Doors/cameras/lures/terminal-commands are scene-authored ids;
-            // only null/empty entries and duplicates are invalid.
-            CleanSet(data.unlockedDoors, "door", r);
-            CleanSet(data.disabledCameras, "camera", r);
-            CleanSet(data.usedTerminalCommands, "terminal command", r);
-            CleanSet(data.collectedLures, "lure", r);
+            // Doors/cameras/lures/terminal-commands are scene-authored ids. With
+            // a generated manifest we can tell a real id from a fabricated one;
+            // without one (a project that has never generated) only nulls and
+            // duplicates are detectable, so the checks degrade rather than
+            // reject everything.
+            if (manifest != null)
+            {
+                FilterUnknown(data.unlockedDoors, manifest.IsKnownDoor, "door", r);
+                FilterUnknown(data.disabledCameras, manifest.IsKnownCamera, "camera", r);
+                FilterUnknown(data.collectedLures, manifest.IsKnownLure, "lure", r);
+                FilterUnknown(data.usedTerminalCommands, manifest.IsKnownTerminalCommand,
+                    "terminal command", r);
+            }
+            else
+            {
+                CleanSet(data.unlockedDoors, "door", r);
+                CleanSet(data.disabledCameras, "camera", r);
+                CleanSet(data.usedTerminalCommands, "terminal command", r);
+                CleanSet(data.collectedLures, "lure", r);
+            }
 
             // Cross-field invariants — repairable contradictions in the
             // relationship between fields, not inside any single one.

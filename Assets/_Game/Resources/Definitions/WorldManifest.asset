@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ced8302ef23d44eadb148289a2710e83, type: 3}
+  m_Name: WorldManifest
+  m_EditorClassIdentifier: Escape.Data::Escape.Data.WorldManifest
+  doors:
+  - service_security_door
+  - wing_bunker_door
+  cameras:
+  - bunker_cam_01
+  - dock_cam_01
+  - service_cam_01
+  - tower_cam_01
+  - wing_cam_01
+  - wing_cam_02
+  lures:
+  - lure_broadcast_tower_0
+  - lure_bunker_server_room_0
+  - lure_bunker_server_room_1
+  - lure_dock_0
+  - lure_dock_1
+  - lure_mansion_office_0
+  - lure_security_wing_0
+  - lure_service_entrance_0
+  - lure_service_entrance_1
+  terminalCommands:
+  - bunker_terminal:DISABLE B-01
+  - bunker_terminal:RECOVER LOGS
+  - bunker_terminal:STATUS
+  - office_terminal:ARCHIVE
+  - office_terminal:BROADCAST
+  - office_terminal:STATUS
+  - security_hub_terminal:CAMERAS
+  - security_hub_terminal:DISABLE T-01
+  - security_hub_terminal:DISABLE W-01
+  - security_hub_terminal:DISABLE W-02
+  - security_hub_terminal:STATUS
+  - security_hub_terminal:UNLOCK BUNKER
+  - service_terminal:CAMERAS
+  - service_terminal:DISABLE S-01
+  - service_terminal:STATUS
+  - service_terminal:UNLOCK SERVICE

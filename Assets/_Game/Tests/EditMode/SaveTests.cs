@@ -35,7 +35,10 @@ namespace Escape.Tests.EditMode
         public void SaveLoad_RoundTrips()
         {
             _state.State.CollectedEvidence.Add("ev_a");
-            _state.State.UnlockedDoors.Add("door_x");
+            // A real shipped door id: the validator now checks scene-authored
+            // ids against the generated world manifest, so a fabricated one is
+            // dropped (covered by ProgressionTests).
+            _state.State.UnlockedDoors.Add("service_security_door");
             _state.State.SceneId = "dock";
             _state.State.Player.Position = new Vector3(1, 2, 3);
             Assert.IsTrue(_saves.Save("slot1"));
@@ -43,7 +46,7 @@ namespace Escape.Tests.EditMode
             _state.NewGame();
             Assert.IsTrue(_saves.LoadIntoState("slot1", out var errors), string.Join(";", errors));
             Assert.IsTrue(_state.State.CollectedEvidence.Contains("ev_a"));
-            Assert.IsTrue(_state.State.UnlockedDoors.Contains("door_x"));
+            Assert.IsTrue(_state.State.UnlockedDoors.Contains("service_security_door"));
             Assert.AreEqual(new Vector3(1, 2, 3), _state.State.Player.Position);
         }
 

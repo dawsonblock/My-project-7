@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Escape.AI;
 using Escape.Core;
 using Escape.Gameplay;
@@ -89,6 +90,15 @@ namespace Escape.EditorTools
         private static int _lureSeq;
         private static string _sceneKey = "scene";
 
+        /// <summary>
+        /// Ids recorded as scenes are generated, for the world manifest. Read
+        /// by WorldManifestBuilder rather than reverse-engineered from scene
+        /// YAML, where a door and a camera both serialize a plain `id`.
+        /// </summary>
+        internal static readonly SortedSet<string> DoorIds = new SortedSet<string>();
+        internal static readonly SortedSet<string> CameraIds = new SortedSet<string>();
+        internal static readonly SortedSet<string> LureIds = new SortedSet<string>();
+
         private static Scene NewScene()
         {
             _lureSeq = 0;
@@ -168,6 +178,7 @@ namespace Escape.EditorTools
             go.transform.SetParent(parent, true);
             Blockout.Set(go.GetComponent<SecurityCamera>(), "id", camId);
             Blockout.Set(go.GetComponent<CameraSensor>(), "sourceId", camId);
+            CameraIds.Add(camId);
         }
 
         private static void AddDoor(Transform parent, string doorId, Vector3 pos, float yaw,
@@ -177,6 +188,7 @@ namespace Escape.EditorTools
             go.transform.SetParent(parent, true);
             var d = go.GetComponent<DoorController>();
             Blockout.Set(d, "id", doorId);
+            DoorIds.Add(doorId);
             Blockout.Set(d, "requirement", req);
             Blockout.Set(d, "requirementId", reqId);
             Blockout.Set(d, "lockedText", lockedText);
@@ -205,8 +217,9 @@ namespace Escape.EditorTools
         {
             var go = Spawn("Lure", pos);
             go.transform.SetParent(parent, true);
-            Blockout.Set(go.GetComponent<ThrowableLure>(), "lureId",
-                $"lure_{_sceneKey}_{_lureSeq++}");
+            var lureId = $"lure_{_sceneKey}_{_lureSeq++}";
+            Blockout.Set(go.GetComponent<ThrowableLure>(), "lureId", lureId);
+            LureIds.Add(lureId);
         }
 
         private static void AddLocker(Transform parent, Vector3 pos, float yaw)

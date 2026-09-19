@@ -473,6 +473,80 @@ namespace Escape.Tests.EditMode
             Assert.AreEqual("ending_bad", data.endingId);
         }
 
+        // ---------- world manifest: scene-authored ids are verifiable ----------
+
+        [Test]
+        public void Manifest_CoversEveryAuthoredWorldId()
+        {
+            var manifest = WorldManifest.Load();
+            Assert.IsNotNull(manifest,
+                "No world manifest — run Tools > Escape the Elites > Build All");
+
+            var known = new HashSet<string>(manifest.doors ?? new string[0]);
+            known.UnionWith(manifest.cameras ?? new string[0]);
+            known.UnionWith(manifest.lures ?? new string[0]);
+
+            int found = 0;
+            foreach (var sceneId in new[] { SceneId.Dock, SceneId.ServiceEntrance,
+                     SceneId.MansionOffice, SceneId.SecurityWing,
+                     SceneId.BunkerServerRoom, SceneId.BroadcastTower })
+            {
+                var path = Path.Combine(Application.dataPath, "_Game/Scenes",
+                    SceneName(sceneId) + ".unity");
+                if (!File.Exists(path)) continue;
+                var text = File.ReadAllText(path);
+                foreach (System.Text.RegularExpressions.Match m in
+                         System.Text.RegularExpressions.Regex.Matches(text,
+                             @"propertyPath: (?:id|lureId)\r?\n\s*value: (\S+)"))
+                {
+                    var id = m.Groups[1].Value.Trim();
+                    found++;
+                    Assert.IsTrue(known.Contains(id),
+                        $"'{id}' is authored in {SceneName(sceneId)} but missing from the world " +
+                        "manifest — a save carrying it would be rejected as unknown");
+                }
+            }
+            Assert.Greater(found, 0, "no authored world ids were found to check");
+        }
+
+        [Test]
+        public void Validator_DropsUnknownDoorId_WhenManifestIsPresent()
+        {
+            var manifest = WorldManifest.Load();
+            Assert.IsNotNull(manifest, "No world manifest — run Build All");
+
+            var data = new SaveData { sceneId = "dock", unlockedDoors = new List<string> { "door_fabricated" } };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load(), manifest);
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsFalse(data.unlockedDoors.Contains("door_fabricated"),
+                "A door id that exists in no shipped scene must be dropped when a manifest is available");
+        }
+
+        [Test]
+        public void Validator_KeepsSceneIds_WhenNoManifestIsAvailable()
+        {
+            // Degrade, don't reject: a project that has never generated has no
+            // manifest, and the validator must not throw away every id.
+            var data = new SaveData { sceneId = "dock", unlockedDoors = new List<string> { "door_fabricated" } };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load(), null);
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(data.unlockedDoors.Contains("door_fabricated"));
+        }
+
+        private static string SceneName(string sceneId)
+        {
+            switch (sceneId)
+            {
+                case SceneId.Dock: return "Dock";
+                case SceneId.ServiceEntrance: return "ServiceEntrance";
+                case SceneId.MansionOffice: return "MansionOffice";
+                case SceneId.SecurityWing: return "SecurityWing";
+                case SceneId.BunkerServerRoom: return "BunkerServerRoom";
+                case SceneId.BroadcastTower: return "BroadcastTower";
+                default: return sceneId;
+            }
+        }
+
         // ---------- in-memory content ----------
 
         private sealed class TestContent : IContentDatabase

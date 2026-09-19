@@ -1,34 +1,44 @@
 Canonical final verification — 2026-09-19
 
-  EditMode: 75 passed / 0 failed   (editmode-TestResults.xml)
+  EditMode: 78 passed / 0 failed   (editmode-TestResults.xml)
   PlayMode: 29 passed / 0 failed   (playmode-TestResults.xml)
 
 One machine artifact per gate. Anything from an earlier run — including a
 failed one that was previously mislabelled as an EditMode summary — is under
 history/ and is not evidence of the current state.
 
-Coverage added during the contract pass:
+Coverage added across the contract and qualification passes:
+
   Domain invariants (EditMode)
-    - transmission refused from an unrouted relay
-    - routing refused until the routing objective's prerequisites hold
-    - objective completion refused before its prerequisite objectives
-    - the domain completes the transmission objective itself, with no
-      outside CompleteObjectiveCommand
-  Save schema v3 (EditMode)
-    - a pose at the world origin is a recorded pose
-    - v2 -> v3 migration records pose validity
-    - a position without HasPose is repaired
-  Save coherence (EditMode)
-    - BroadcastStarted implies route_broadcast
-    - BroadcastCompleted implies route_broadcast + broadcast_truth
-    - an ending without a completed broadcast is dropped, and kept when it
-      completed
-    - a missing primary with a valid backup is Recoverable
-  Scene lifecycle (PlayMode)
-    - a scene that never signals SceneReady fails the transition and does
-      not publish SceneChanged
-  Input (PlayMode)
-    - a reader disabled while UI mode is active leaves no map enabled
+    transmission refused from an unrouted relay; routing refused until its
+    prerequisites hold; objective completion refused before its prerequisites;
+    Explicit objectives refused on the bare command path (only their owning
+    action completes them); the domain completes the transmission objective
+    itself
+
+  Progression (EditMode)
+    graph connectivity, gate satisfiability, terminal code discoverability,
+    every required objective completable, non-fallback ending; plus
+    choice-aware reachability — no irreversible edge can be passed while
+    missing something the critical path needs later
+
+  Save schema v3 and coherence (EditMode)
+    a pose at the world origin is a recorded pose; v2 -> v3 migration records
+    pose validity; a position without HasPose is repaired; broadcast flags
+    imply their objectives; an ending without a completed broadcast is dropped;
+    a missing primary with a valid backup is Recoverable
+
+  World manifest (EditMode)
+    every authored world id is in the generated manifest; an unknown door id is
+    dropped when the manifest is available and kept when it is not
+
+  Scene lifecycle and input (PlayMode)
+    a scene that never signals SceneReady fails the transition and withholds
+    SceneChanged; a reader disabled in UI mode leaves no map enabled
+
+  Built player (ci/smoke-player.sh)
+    scene transitions, the progression chain and a save round-trip inside the
+    built player, ending in SMOKE PASS / exit 0
 
 Before trusting a count, confirm the assembly rebuilt:
   stat -f %Sm Library/ScriptAssemblies/<name>.dll   (vs the source mtime)

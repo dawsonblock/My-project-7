@@ -33,6 +33,7 @@ namespace Escape.EditorTools
             AudioLibraryBuilder.Build();
             PrefabFactory.BuildAll();
             SceneFactory.BuildAll();
+            WorldManifestBuilder.Build();
             MaterialLibrary.ApplyAll();
             VolumeProfileBuilder.Author();
             Debug.Log("[BuildAll] Done. Open Bootstrap and press Play.");
