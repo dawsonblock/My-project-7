@@ -22,7 +22,11 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
   `Tools → Escape the Elites → Verify Deterministic Generation`
   (BuildAll twice → all generated files must be byte-identical)
 - A player build rewrites `ProjectSettings/ProjectSettings.asset`: it reorders
-  (and transiently empties) `preloadedAssets`. Revert that churn.
+  (and transiently empties) `preloadedAssets`. Revert that churn. `PlayerBuild`
+  now restores `preloadedAssets` and re-runs the volume-profile authoring pass,
+  but it also adds a shader-stripping `rid` to
+  `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` — revert that
+  one by hand if you don't mean to commit it.
 
 ## Generated-content invariants — do not break
 

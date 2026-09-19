@@ -55,9 +55,18 @@ namespace Escape.EditorTools
                 Debug.Log("[PlayerBuild] Restored the authored preloadedAssets order.");
             }
 
+            // Building also re-serializes the URP settings assets: it flips the
+            // volume profile's disabled components back on and re-adds ones the
+            // authoring pass removed. Re-run the authoring pass so the build
+            // leaves the repo in the state the pipeline defines.
+            VolumeProfileBuilder.Author();
+
             var s = report.summary;
             Debug.Log($"[PlayerBuild] {s.result} — {s.totalSize} bytes, {s.totalTime}, " +
                       $"{scenes.Length} scenes, {s.totalErrors} errors, {s.totalWarnings} warnings");
+            // Log the resolved path: ETE_PLAYER_OUTPUT can redirect this, and
+            // "where did the build go" should never be a guess.
+            Debug.Log($"[PlayerBuild] output: {output}");
 
             if (s.result != BuildResult.Succeeded)
             {
