@@ -8,9 +8,14 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
   (layers → content import → prefabs → scenes → audio → materials)
 - Tests: `ci/run-tests.sh [editmode|playmode|all]` (batchmode, writes
   `TestResults-<mode>.xml`), or Test Runner window
+- Standalone player: `ci/build-player.sh [output]` (batchmode; refuses to run
+  while the editor holds `Temp/UnityLockfile`), or the menu
+  `Tools → Escape the Elites → Build Standalone Player`
 - Determinism gate: `ci/verify-generation.sh`, or menu
   `Tools → Escape the Elites → Verify Deterministic Generation`
   (BuildAll twice → all generated files must be byte-identical)
+- A player build rewrites `ProjectSettings/ProjectSettings.asset`: it reorders
+  (and transiently empties) `preloadedAssets`. Revert that churn.
 
 ## Generated-content invariants — do not break
 
