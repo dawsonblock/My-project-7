@@ -11,9 +11,9 @@ Baseline tag: pre-stabilization-repair (332a2e1, pre-repair state)
 |---|---|---|
 | Editor + test assembly compile | PASS — 0 errors, 0 warnings | compile/summary.txt, compile/editor.log |
 | Standalone player compile + link | PASS — Succeeded, 8 scenes, 117,289,247 bytes, 0 errors | player-build/build-summary.txt |
-| Standalone player boot smoke | PASS — boots clean, 0 exceptions | player-build/smoke-test.txt |
-| Player-build CI script | PARTIAL — lockfile guard verified; batchmode wrapper unexercised | player-build/smoke-test.txt |
-| EditMode tests | PASS — 73/73 | tests/editmode-TestResults.xml |
+| Built-player qualification | PASS — SMOKE PASS: scenes, progression, save round-trip | player-build/smoke-test.txt |
+| Player build in CI | ADDED — macOS job builds the player and runs the smoke | .github/workflows/unity-tests.yml |
+| EditMode tests | PASS — 75/75 | tests/editmode-TestResults.xml |
 | PlayMode tests | PASS — 29/29 | tests/playmode-TestResults.xml |
 | Deterministic generation | PASS — 26 files byte-identical over two builds | deterministic-generation/result.txt |
 | Progression contract | PASS — explicit vs evidence completion, gated routing | progression/summary.txt |

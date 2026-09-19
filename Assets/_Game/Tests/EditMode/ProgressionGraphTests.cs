@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Escape.Core;
 using Escape.Data;
@@ -137,6 +138,165 @@ namespace Escape.Tests.EditMode
                         "but no document at or before that scene reveals it — unpassable gate");
                 }
             }
+        }
+
+        /// <summary>
+        /// Choice-aware reachability, restricted to the failure that actually
+        /// strands a player: an item the critical path needs *later* that is
+        /// only obtainable up to some scene, where no gate forces the player to
+        /// have taken it. The maximal-path walk cannot see this, because it
+        /// collects everything by construction.
+        ///
+        /// For each gate: every required item whose last obtainable scene is at
+        /// or before the gate must already be enforced by that point — either
+        /// required by a gate the player passed, or completed by a scene entry.
+        /// Otherwise the player can walk through and be stuck.
+        ///
+        /// Optional objectives and endings are deliberately excluded: a secret
+        /// ending and a missable collectible are allowed to be missable.
+        ///
+        /// LIMITATION — this model reads transition requirements, not physical
+        /// gating. A scene whose progress is blocked by a locked interior door
+        /// (e.g. ServiceEntrance, where the exit sits behind
+        /// service_security_door) can be passed in the model but not in the
+        /// game, so asserting reachability there would be unsound. Those
+        /// scenes are skipped and counted rather than silently mis-asserted.
+        /// </summary>
+        [Test]
+        public void NoIrreversibleEdge_StrandsARequirementNeededLater()
+        {
+            var required = RequiredByCriticalContent();
+            var lastObtainable = new Dictionary<string, int>();
+            for (int i = 0; i < CriticalPath.Length; i++)
+                foreach (var item in ObtainableAt(i))
+                    lastObtainable[item] = i;
+
+            int skipped = 0, checkedGates = 0;
+            var enforced = new HashSet<string>();
+            for (int i = 0; i < CriticalPath.Length; i++)
+            {
+                var scene = _scenes[CriticalPath[i]];
+                // What the player is forced to hold by the time they stand at
+                // this scene's exits.
+                foreach (var gate in scene.Gates)
+                {
+                    if (!string.IsNullOrEmpty(gate.RequiredEvidence)) enforced.Add(gate.RequiredEvidence);
+                    if (!string.IsNullOrEmpty(gate.RequiredObjective))
+                        AddClosure(gate.RequiredObjective, enforced);
+                    if (!string.IsNullOrEmpty(gate.CompletesObjective))
+                        AddClosure(gate.CompletesObjective, enforced);
+                }
+                foreach (var done in scene.BootstrapCompletes)
+                    AddClosure(done, enforced);
+
+                if (scene.Gates.Count == 0) continue; // no exit: nothing to pass
+                if (scene.HasDoor) { skipped++; continue; } // physically gated: model unsound here
+                checkedGates++;
+
+                foreach (var item in required)
+                {
+                    if (!lastObtainable.TryGetValue(item, out var last) || last > i) continue;
+                    Assert.IsTrue(enforced.Contains(item),
+                        $"{scene.Id} can be left without '{item}': it is required by the critical " +
+                        $"path, last obtainable at {CriticalPath[last]}, and no gate enforces it — " +
+                        "a player who skipped it is stranded");
+                }
+            }
+
+            Assert.Greater(checkedGates, 0, "no scene was reachable to check");
+            // Surfaced rather than hidden: if this grows, the model is covering
+            // less of the path than the gate list suggests.
+            Assert.Less(skipped, CriticalPath.Length,
+                "every scene has a door, so this check asserts nothing");
+        }
+
+        /// <summary>
+        /// Authored persistent ids must be unique across the shipped scenes.
+        /// The runtime registry keys by id, so a duplicate would make one
+        /// object's state unreachable — and the id sets a save carries are
+        /// only meaningful if the ids are.
+        /// </summary>
+        [Test]
+        public void AuthoredWorldObjectIds_AreUniqueAcrossScenes()
+        {
+            var seen = new Dictionary<string, string>(); // id -> scene
+            foreach (var sceneId in CriticalPath)
+            {
+                var path = Path.Combine(Application.dataPath, "_Game/Scenes", FileName(sceneId) + ".unity");
+                var text = File.ReadAllText(path);
+                foreach (var id in AuthoredIds(text))
+                {
+                    Assert.IsFalse(seen.TryGetValue(id, out var other),
+                        $"'{id}' is authored in both {other} and {sceneId} — the runtime registry " +
+                        "keys by id and would silently drop one");
+                    seen[id] = sceneId;
+                }
+            }
+            Assert.Greater(seen.Count, 0, "no authored world ids were found to check");
+        }
+
+        /// <summary>
+        /// Ids of scene-authored persistent objects. Only the fields that
+        /// define identity count: DoorController/SecurityCamera `id` and
+        /// ThrowableLure `lureId`. `sourceId` is a cross-reference on a sibling
+        /// component carrying the same string, not a second identity.
+        /// </summary>
+        private static IEnumerable<string> AuthoredIds(string sceneText)
+        {
+            foreach (Match m in Regex.Matches(sceneText,
+                         @"propertyPath: (?:id|lureId)\r?\n\s*value: (\S+)"))
+            {
+                var id = m.Groups[1].Value.Trim();
+                if (!string.IsNullOrEmpty(id)) yield return id;
+            }
+        }
+
+        /// <summary>Items the non-optional critical path depends on, transitively.</summary>
+        private HashSet<string> RequiredByCriticalContent()
+        {
+            var required = new HashSet<string>();
+            foreach (var obj in _content.Objectives)
+                if (!obj.Optional) AddClosure(obj.Id, required);
+            foreach (var gate in _scenes.Values.SelectMany(s => s.Gates))
+            {
+                if (!string.IsNullOrEmpty(gate.RequiredEvidence)) required.Add(gate.RequiredEvidence);
+                if (!string.IsNullOrEmpty(gate.RequiredObjective)) AddClosure(gate.RequiredObjective, required);
+            }
+            return required;
+        }
+
+        /// <summary>Objective plus everything it depends on, transitively.</summary>
+        private void AddClosure(string objectiveId, HashSet<string> into)
+        {
+            if (!into.Add(objectiveId)) return;
+            if (!_content.TryGetObjective(objectiveId, out var def)) return;
+            foreach (var e in def.RequiredEvidence)
+                if (e != null) into.Add(e.Id);
+            foreach (var o in def.RequiredObjectives)
+                if (o != null) AddClosure(o.Id, into);
+        }
+
+        /// <summary>Everything a player could pick up or finish in one scene.</summary>
+        private HashSet<string> ObtainableAt(int sceneIndex)
+        {
+            var facts = _scenes[CriticalPath[sceneIndex]];
+            var items = new HashSet<string>();
+            foreach (var ev in facts.Evidence) items.Add(ev);
+            foreach (var docId in facts.Documents)
+                if (_content.TryGetDocument(docId, out var doc) && doc.GrantsEvidence != null)
+                    items.Add(doc.GrantsEvidence.Id);
+            foreach (var termId in facts.Terminals)
+            {
+                if (!_content.TryGetTerminal(termId, out var term)) continue;
+                foreach (var cmd in term.Commands)
+                {
+                    if (cmd.Action == TerminalActionType.CollectEvidence && !string.IsNullOrEmpty(cmd.TargetId))
+                        items.Add(cmd.TargetId);
+                    if (cmd.CompletesObjective != null) items.Add(cmd.CompletesObjective.Id);
+                }
+            }
+            foreach (var done in facts.BootstrapCompletes) items.Add(done);
+            return items;
         }
 
         // ---------- the end-to-end walk ----------
@@ -384,6 +544,12 @@ namespace Escape.Tests.EditMode
             public readonly List<string> Documents = new List<string>();
             public readonly List<string> BootstrapCompletes = new List<string>();
             public readonly List<Gate> Gates = new List<Gate>();
+            /// <summary>
+            /// The scene contains a DoorController, so progress may be blocked
+            /// physically rather than by a transition requirement — the static
+            /// model cannot reason about reachability there.
+            /// </summary>
+            public bool HasDoor;
 
             public sealed class Gate
             {
@@ -395,6 +561,10 @@ namespace Escape.Tests.EditMode
                 var f = new SceneFacts { Id = sceneId };
                 var path = Path.Combine(Application.dataPath, "_Game/Scenes", FileName(sceneId) + ".unity");
                 var text = File.ReadAllText(path);
+
+                // Doors are scene-authored and block progress physically;
+                // DoorController is the only component setting `requirement`.
+                f.HasDoor = text.Contains("propertyPath: requirement");
 
                 // Interactables are prefab instances — their definition
                 // references live in m_Modifications as objectReference guids.

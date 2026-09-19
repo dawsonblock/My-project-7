@@ -8,6 +8,13 @@ namespace Escape.Core
         bool Activate(string objectiveId);
         bool Complete(string objectiveId, string sourceId = "");
         /// <summary>
+        /// Completes an objective on behalf of the domain action that owns it
+        /// (routing a broadcast, transmitting). Explicit objectives are only
+        /// completable this way — a bare command is refused, so "an action,
+        /// not a pickup" is enforced rather than conventional.
+        /// </summary>
+        bool CompleteFromAction(string objectiveId, string sourceId = "");
+        /// <summary>
         /// True when the objective exists, is not already complete, and its
         /// prerequisite objectives are complete. Callers that mutate state on
         /// the strength of an objective must ask this first.
@@ -83,6 +90,16 @@ namespace Escape.Core
         }
 
         public bool Complete(string objectiveId, string sourceId = "")
+        {
+            if (!_content.TryGetObjective(objectiveId, out var def)) return false;
+            // An Explicit objective belongs to a domain action. Letting a bare
+            // CompleteObjectiveCommand finish it would make the "action, not a
+            // pickup" contract a convention that any caller could ignore.
+            if (def.Completion == ObjectiveCompletionMode.Explicit) return false;
+            return CompleteFromAction(objectiveId, sourceId);
+        }
+
+        public bool CompleteFromAction(string objectiveId, string sourceId = "")
         {
             if (!CompleteInternal(objectiveId, sourceId)) return false;
             // Completing one objective can make an Evidence-mode objective

@@ -65,6 +65,15 @@ namespace Escape.Core
         public void Register(IWorldObject obj)
         {
             if (obj == null || string.IsNullOrEmpty(obj.Id)) return;
+            // Two authored objects sharing an id would silently fight over the
+            // same persisted state, and one would be unreachable. Re-registering
+            // the same instance (a disable/enable cycle) is legitimate.
+            if (_objects.TryGetValue(obj.Id, out var existing) && !ReferenceEquals(existing, obj))
+            {
+                Debug.LogError($"[WorldService] Duplicate world object id '{obj.Id}' — " +
+                               "refusing to overwrite the registered object.");
+                return;
+            }
             _objects[obj.Id] = obj;
             obj.RestoreFromState(_state.State);
         }
@@ -140,7 +149,7 @@ namespace Escape.Core
                     "RELAY REFUSED — routing requirements not met", 4f));
                 return;
             }
-            _objectives.Complete(command.ObjectiveId, command.SourceId);
+            _objectives.CompleteFromAction(command.ObjectiveId, command.SourceId);
             _state.State.BroadcastStarted = true;
             _events.Publish(new BroadcastStartedEvent());
         }
@@ -166,7 +175,7 @@ namespace Escape.Core
                     "TRANSMISSION REFUSED — prerequisites unmet", 4f));
                 return;
             }
-            _objectives.Complete(command.ObjectiveId, "broadcast");
+            _objectives.CompleteFromAction(command.ObjectiveId, "broadcast");
             s.BroadcastCompleted = true;
             var result = _endings.Evaluate();
             s.EndingId = result.Ending != null ? result.Ending.Id : "";

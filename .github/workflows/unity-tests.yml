@@ -46,3 +46,35 @@ jobs:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+  # Standalone qualification: a macOS runner, because the shipping target is
+  # StandaloneOSX. The Linux jobs above cannot produce or launch that player.
+  player-build-and-smoke:
+    name: Standalone player build + gameplay smoke
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - uses: game-ci/unity-builder@v4
+        with:
+          targetPlatform: StandaloneOSX
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+
+      # The built player runs a deterministic qualification pass
+      # (scene transitions, progression chain, save round-trip) and exits
+      # non-zero on failure — see Assets/_Game/Core/Bootstrap/GameSmokeTest.cs
+      - name: Smoke test the built player
+        run: ./ci/smoke-player.sh "$(find builds -maxdepth 3 -name '*.app' | head -1)"
+
+      - name: Upload player smoke log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: player-smoke-log
+          path: Logs/ci-smoke.log
+          if-no-files-found: ignore

@@ -24,9 +24,13 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
 - A player build rewrites `ProjectSettings/ProjectSettings.asset`: it reorders
   (and transiently empties) `preloadedAssets`. Revert that churn. `PlayerBuild`
   now restores `preloadedAssets` and re-runs the volume-profile authoring pass,
-  but it also adds a shader-stripping `rid` to
-  `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` — revert that
-  one by hand if you don't mean to commit it.
+  but two things still need a hand-revert after a build:
+  - `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` gains a
+    shader-stripping `rid`.
+  - `Assets/Settings/DefaultVolumeProfile.asset` gains `PaniniProjection` and
+    `ProbeVolumesOptions` as documents Unity does not load. They are inert
+    (panini distance 0, no probe volumes) and cannot be removed or disabled
+    from code, because the loaded component list does not contain them.
 
 ## Generated-content invariants — do not break
 

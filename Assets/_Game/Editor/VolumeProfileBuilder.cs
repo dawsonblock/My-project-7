@@ -79,6 +79,12 @@ namespace Escape.EditorTools
             Disable<ChannelMixer>(profile);
             Disable<ScreenSpaceLensFlare>(profile);
 
+            // NOTE: a player build also re-adds PaniniProjection and
+            // ProbeVolumesOptions to this asset as documents Unity does not
+            // load, so they cannot be removed or disabled from here. They are
+            // inert (panini distance 0, no probe volumes) — revert them by hand
+            // if you don't mean to commit them. See AGENTS.md.
+
             // The per-asset profile is stacked above the global one, so its
             // template values (bloom 0.25, tonemapping None) would win over
             // everything above. Empty it and keep one source of truth.

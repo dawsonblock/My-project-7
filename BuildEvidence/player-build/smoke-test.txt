@@ -1,36 +1,42 @@
-Standalone player smoke test — final artifact (2026-09-18T21:17:39)
+Built-player qualification — 2026-09-19
 
-Artifact: BuildEvidence/player-build/EscapeTheElites.app
-  result=Succeeded, 8 scenes, 0 errors, 4 warnings, 117,289,247 bytes
-  (up from 106,946,789 before the graphics pass — the packed
-  metallic-smoothness maps and MAT_Paving are now in the build)
+Artifact: Builds/StandaloneOSX/EscapeTheElites.app
+  result=Succeeded, 8 scenes, 0 errors, 117,297,745 bytes
 
-STATIC (verified):
-  - 8 scene levels present (level0..level7)
-  - all five game assemblies linked: Escape.Core, Escape.Data, Escape.AI,
-    Escape.Gameplay, Escape.UI
-  - 31.9 MB of packed asset data
+WHAT CHANGED SINCE THE BOOT SOAK
+The player now carries a real qualification pass, enabled only by the
+-gameSmokeTest switch (Assets/_Game/Core/Bootstrap/GameSmokeTest.cs). It is
+inert in a normal build: without the switch the hook returns immediately and
+creates nothing. With it, the player:
 
-DYNAMIC (verified):
-    "<app>/Contents/MacOS/My project (7)" -batchmode -nographics \
-        -logFile /tmp/player-smoke2.log
-  for 30s, then terminated.
-  Mono domain reloaded, Null Device renderer (expected with -nographics),
-  Input System initialised and shut down cleanly on kill.
-  0 exceptions, 0 NullReferenceException, 0 script errors.
+  1. loads every gameplay scene through the SceneReady handshake and fails if
+     any transition times out or never signals readiness
+  2. collects all evidence, completes the critical-path objectives to a
+     fixpoint through the domain commands, routes the broadcast and transmits
+     — asserting the ending is produced
+  3. saves and reloads through the real storage layer, asserting the loaded
+     state kept the completed broadcast
+  then prints SMOKE PASS / SMOKE FAIL and exits 0 / 1.
 
-CI PATH (partially verified):
-  ci/build-player.sh refuses to run while the editor holds Temp/UnityLockfile
-  (exit 2, clear message) — confirmed. The build itself was invoked through
-  Escape.EditorTools.PlayerBuild.Build, the same entry point the script calls,
-  so only the batchmode wrapper is unexercised. A true batchmode run needs the
-  editor closed.
+RUN (ci/smoke-player.sh resolves the executable from the bundle, so the
+product name can change without breaking it):
 
-NOT VERIFIED — do not read this as control qualification:
-  - No input was driven into the player. Mouse/stick look, movement, UI
-    open/close and the progression chain were NOT exercised in the built
-    player; a windowless player accepts no synthetic input.
-  - Controls are covered by PlayerLookTests and PlayerMovementTests against
-    the real Input System in the editor, not by this smoke test.
-  - Nothing here verifies that the game LOOKS better. That is a visual
-    judgement and needs a human at the window.
+  ./ci/smoke-player.sh
+  OK: SMOKE PASS — scenes, progression and save round-trip verified.
+
+The first run FAILED — "the archive pull did not settle behind search_office"
+— because the harness completed objectives in content order. Fixing it exposed
+a real hole: CompleteObjectiveCommand could complete an Explicit objective
+without its owning action, so "an action, not a pickup" was only a convention.
+ObjectiveService now refuses Explicit objectives on the command path; only the
+domain action (RouteBroadcastCommand / CompleteBroadcastCommand) completes
+them. The harness also now iterates to a fixpoint, matching how the chain
+actually settles.
+
+WHAT THIS STILL DOES NOT COVER
+  - No input is driven: mouse/stick look, movement and UI open/close are not
+    exercised in the player. Those rest on PlayerLookTests / PlayerMovementTests
+    / UiQualificationTests against the real Input System in the editor.
+  - The pass walks the critical path; it does not explore alternative player
+    choices (that is what the EditMode reachability check is for).
+  - Nothing here verifies that the game LOOKS right.

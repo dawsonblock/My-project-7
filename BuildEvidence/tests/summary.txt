@@ -1,6 +1,6 @@
 Canonical final verification — 2026-09-19
 
-  EditMode: 73 passed / 0 failed   (editmode-TestResults.xml)
+  EditMode: 75 passed / 0 failed   (editmode-TestResults.xml)
   PlayMode: 29 passed / 0 failed   (playmode-TestResults.xml)
 
 One machine artifact per gate. Anything from an earlier run — including a

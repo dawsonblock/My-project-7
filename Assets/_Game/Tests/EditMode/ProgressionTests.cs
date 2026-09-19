@@ -38,7 +38,12 @@ namespace Escape.Tests.EditMode
             Assert.IsFalse(s.CompletedObjectives.Contains("obj_transmit"),
                 "Explicit objective completed from evidence alone — semantic regression");
 
+            // A bare command must not finish it either: it belongs to an action.
             dispatcher.Dispatch(new CompleteObjectiveCommand("obj_transmit", "test"));
+            Assert.IsFalse(s.CompletedObjectives.Contains("obj_transmit"),
+                "An Explicit objective was completed by a bare command, not its action");
+
+            objectives.CompleteFromAction("obj_transmit", "test");
             Assert.IsTrue(s.CompletedObjectives.Contains("obj_transmit"));
         }
 
@@ -325,14 +330,19 @@ namespace Escape.Tests.EditMode
         [Test]
         public void ObjectiveCompletion_IsRefused_BeforeItsPrerequisites()
         {
-            var (state, dispatcher) = RealRig();
+            var content = ContentDatabase.Load();
+            var state = new GameStateService();
+            var events = new GameEventBus();
+            var objectives = new ObjectiveService(state, content, events);
 
-            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "test"));
+            // route_broadcast is Explicit, so this also has to go through the
+            // action path — the point here is the prerequisite gate.
+            objectives.CompleteFromAction("route_broadcast", "test");
             Assert.IsFalse(state.State.CompletedObjectives.Contains("route_broadcast"),
                 "An objective completed before its prerequisite objectives");
 
             state.State.CompletedObjectives.Add("download_archive");
-            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "test"));
+            objectives.CompleteFromAction("route_broadcast", "test");
             Assert.IsTrue(state.State.CompletedObjectives.Contains("route_broadcast"),
                 "The objective should complete once its prerequisites hold");
         }
