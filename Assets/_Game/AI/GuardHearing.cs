@@ -16,9 +16,15 @@ namespace Escape.AI
 
         private void Awake() => _brain = GetComponent<GuardBrain>();
 
-        private void OnEnable()
+        // Bind on enable, unwind on disable — symmetric. Start retries in
+        // case GameRoot lagged the scene load, otherwise hearing would be
+        // dead for this guard's whole lifetime.
+        private void OnEnable() => TryBind();
+        private void Start() => TryBind();
+
+        private void TryBind()
         {
-            if (GameRoot.Instance == null) return;
+            if (_noise != null || GameRoot.Instance == null) return;
             _noise = GameRoot.Instance.Services.Get<INoiseService>();
             _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
             _noise.OnNoise += OnNoise;
@@ -27,6 +33,7 @@ namespace Escape.AI
         private void OnDisable()
         {
             if (_noise != null) _noise.OnNoise -= OnNoise;
+            _noise = null;
         }
 
         private void OnNoise(NoiseEvent n)

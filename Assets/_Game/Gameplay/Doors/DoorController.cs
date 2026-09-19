@@ -28,6 +28,7 @@ namespace Escape.Gameplay
         private IGameCommandDispatcher _dispatcher;
         private INoiseService _noise;
         private Data.StealthTuning _tuning;
+        private IGameEventBus _events;
         private IWorldService _world;
         private Vector3 _closedPos;
         private Coroutine _anim;
@@ -79,6 +80,7 @@ namespace Escape.Gameplay
             _dispatcher = services.Get<IGameCommandDispatcher>();
             _noise = services.Get<INoiseService>();
             _tuning = services.Get<IContentDatabase>().Tuning;
+            _events = services.Get<IGameEventBus>();
             _world = services.Get<IWorldService>();
             _world.Register(this);
         }
@@ -154,8 +156,7 @@ namespace Escape.Gameplay
             panel.localPosition = to;
             State = opening ? DoorState.Open : (RequirementMet || Unlocked ? DoorState.Closed : DoorState.Locked);
             SetObstacle(!opening);
-            GameRoot.Instance.Services.Get<IGameEventBus>().Publish(new DoorStateChangedEvent(id));
-        }
+            _events?.Publish(new DoorStateChangedEvent(id));        }
 
         private void SetObstacle(bool blocking)
         {

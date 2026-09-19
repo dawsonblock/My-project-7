@@ -118,3 +118,6 @@ InitTestScene*.unity*
 
 # Stabilization evidence artifacts (local, not source)
 /BuildEvidence/
+
+# PerformanceTesting package artifacts — rewritten by every test run
+/[Aa]ssets/Resources/PerformanceTestRun*.json*

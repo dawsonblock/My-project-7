@@ -92,12 +92,18 @@ namespace Escape.Gameplay
             _cancel.performed += OnCancel;
             _throw.performed += OnThrow;
             _whistle.performed += OnWhistle;
-            if (Escape.Core.GameRoot.Instance != null)
-            {
-                _gate = Escape.Core.GameRoot.Instance.Services.Get<Escape.Core.IInputGate>();
-                _gate.OnUiModeChanged += OnUiModeChanged;
-                OnUiModeChanged(_gate.UiOpen);
-            }
+            TryBindGate();
+        }
+
+        // The gate may not exist yet when the reader enables (a scene opened
+        // directly in the editor, or GameRoot lagging the scene load). Update
+        // retries so the Player/UI map switch is never permanently unwired.
+        private void TryBindGate()
+        {
+            if (_gate != null || Escape.Core.GameRoot.Instance == null) return;
+            _gate = Escape.Core.GameRoot.Instance.Services.Get<Escape.Core.IInputGate>();
+            _gate.OnUiModeChanged += OnUiModeChanged;
+            OnUiModeChanged(_gate.UiOpen);
         }
 
         private void OnDisable()
@@ -113,7 +119,11 @@ namespace Escape.Gameplay
             _cancel.performed -= OnCancel;
             _throw.performed -= OnThrow;
             _whistle.performed -= OnWhistle;
-            if (_gate != null) _gate.OnUiModeChanged -= OnUiModeChanged;
+            if (_gate != null)
+            {
+                _gate.OnUiModeChanged -= OnUiModeChanged;
+                _gate = null; // re-bind on the next enable/Update
+            }
         }
 
         private void OnUiModeChanged(bool uiOpen)
@@ -135,6 +145,7 @@ namespace Escape.Gameplay
         private void Update()
         {
             if (_move == null) return;
+            TryBindGate();
             Move = _move.ReadValue<Vector2>();
             Look = _look.ReadValue<Vector2>();
             LookFromGamepad = _look.activeControl?.device is Gamepad;
