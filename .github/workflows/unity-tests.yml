@@ -81,7 +81,10 @@ jobs:
             exit 2
           fi
           echo "Found player: $APP"
-          ./ci/smoke-player.sh "$APP"
+          # bash, not ./, because this repo has core.fileMode=false: the
+          # executable bit is not tracked, so a fresh checkout has 644 here and
+          # ./ci/smoke-player.sh would die with "Permission denied".
+          bash ci/smoke-player.sh "$APP"
 
       - name: Upload player smoke log
         if: always()

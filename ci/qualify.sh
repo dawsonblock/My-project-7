@@ -170,7 +170,10 @@ stage_deterministic_generation() {
 # ---------------------------------------------------------------- tests
 
 stage_tests() {
-    if ! ./ci/run-tests.sh all >"$EVIDENCE/tests-console.log" 2>&1; then
+    # Invoked through bash, not ./, because this repo has core.fileMode=false:
+    # the executable bit is not tracked, so a fresh clone gets 644 and ./ci/…
+    # dies with "Permission denied" before anything runs.
+    if ! bash "$PROJECT_DIR/ci/run-tests.sh" all >"$EVIDENCE/tests-console.log" 2>&1; then
         warn "  ci/run-tests.sh failed:"
         tail -20 "$EVIDENCE/tests-console.log" >&2 || true
         return 1
@@ -187,7 +190,7 @@ stage_tests() {
 
 stage_player_build() {
     rm -rf "$APP"
-    if ! ./ci/build-player.sh "$APP" >"$EVIDENCE/player-build-console.log" 2>&1; then
+    if ! bash "$PROJECT_DIR/ci/build-player.sh" "$APP" >"$EVIDENCE/player-build-console.log" 2>&1; then
         warn "  ci/build-player.sh failed:"
         tail -20 "$EVIDENCE/player-build-console.log" >&2 || true
         return 1
@@ -201,7 +204,7 @@ stage_player_build() {
 }
 
 stage_smoke() {
-    if ! ./ci/smoke-player.sh "$APP" >"$EVIDENCE/smoke-console.log" 2>&1; then
+    if ! bash "$PROJECT_DIR/ci/smoke-player.sh" "$APP" >"$EVIDENCE/smoke-console.log" 2>&1; then
         warn "  smoke failed:"
         tail -20 "$EVIDENCE/smoke-console.log" >&2 || true
         cp -f Logs/ci-smoke.log "$EVIDENCE/smoke.log" 2>/dev/null || true
