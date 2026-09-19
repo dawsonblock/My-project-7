@@ -1,0 +1,27 @@
+{
+  "runId": "2026-09-19T075134Z",
+  "qualified": true,
+  "qualifiedReason": "all stages passed on a clean tree",
+  "sourceCommit": "27ed61c51cd8f81ebfcca57d4c17d53a6653a8ed",
+  "sourceBranch": "release/stabilization-repair",
+  "sourceTreeClean": true,
+  "sourceTreeSha256": "8c19dfacb25da411eb6be2848b10bfeed9b9a63a015c7f064d552e8f42ebf6a0",
+  "unityVersion": "6000.6.0f1",
+  "saveSchemaVersion": 3,
+  "generatedContent": { "inSyncWithSource": true },
+  "deterministicGeneration": { "passed": true },
+  "tests": {
+    "editMode": { "total": 84, "failed": 0 },
+    "playMode": { "total": 34, "failed": 0 }
+  },
+  "player": {
+    "platform": "StandaloneOSX",
+    "path": "Builds/StandaloneOSX/EscapeTheElites.app",
+    "sha256": "737237bb2ad48bf1be0b41a13a03aca9360b61034c7b00aeb8388d3e018c33d7"
+  },
+  "smoke": {
+    "passed": true,
+    "rawLog": "smoke.log"
+  },
+  "stages": "source: PASS; generated-content: PASS; deterministic-generation: PASS; tests: PASS; player-build: PASS; smoke: PASS"
+}
