@@ -6,6 +6,7 @@ using Escape.UI;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.TestTools;
 
@@ -93,6 +94,30 @@ namespace Escape.Tests.PlayMode
             Assert.IsFalse(ui.IsOpen, "Open must no-op without services rather than throw");
             ui.Close();
             Assert.IsFalse(ui.IsOpen);
+        }
+
+        [UnityTest]
+        public IEnumerator Settings_Close_ReturnsFocusToItsOpener()
+        {
+            var es = new GameObject("EventSystem", typeof(EventSystem),
+                typeof(UnityEngine.InputSystem.UI.InputSystemUIInputModule));
+            var settings = SettingsUI.Create(_canvasGo.transform);
+            var pause = PauseMenuUI.Create(_canvasGo.transform, settings);
+            yield return null;
+            yield return null;
+
+            pause.Open();
+            yield return null;
+            settings.OpenFrom(pause);
+            yield return null;
+            settings.Close();
+            yield return null;
+
+            Assert.IsNotNull(EventSystem.current.currentSelectedGameObject,
+                "Closing settings must return focus to the menu that opened it, not clear it — " +
+                "a controller user would otherwise be stranded with no selection");
+            pause.Close();
+            Object.DestroyImmediate(es);
         }
 
         // ---------- evidence board ----------

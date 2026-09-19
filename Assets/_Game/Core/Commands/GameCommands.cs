@@ -102,16 +102,33 @@ namespace Escape.Core
         public override string ToString() => $"SET_LOCKDOWN {Lockdown}";
     }
 
-    public readonly struct StartBroadcastCommand : IGameCommand
+    /// <summary>
+    /// Routes the broadcast signal through a node. Carries the routing
+    /// objective so the domain validates the route against content instead of
+    /// trusting whichever surface raised it.
+    /// </summary>
+    public readonly struct RouteBroadcastCommand : IGameCommand
     {
+        public readonly string ObjectiveId;
         public readonly string SourceId;
-        public StartBroadcastCommand(string sourceId) => SourceId = sourceId;
-        public override string ToString() => "START_BROADCAST";
+        public RouteBroadcastCommand(string objectiveId, string sourceId)
+        {
+            ObjectiveId = objectiveId;
+            SourceId = sourceId;
+        }
+        public override string ToString() => $"ROUTE_BROADCAST {ObjectiveId}";
     }
 
+    /// <summary>
+    /// Transmits the evidence. Carries the transmission objective: the domain
+    /// refuses an unrouted relay and completes the objective itself, so a
+    /// caller cannot manufacture a broadcast state by sequencing commands.
+    /// </summary>
     public readonly struct CompleteBroadcastCommand : IGameCommand
     {
-        public override string ToString() => "COMPLETE_BROADCAST";
+        public readonly string ObjectiveId;
+        public CompleteBroadcastCommand(string objectiveId) => ObjectiveId = objectiveId;
+        public override string ToString() => $"COMPLETE_BROADCAST {ObjectiveId}";
     }
 
     public readonly struct SaveGameCommand : IGameCommand

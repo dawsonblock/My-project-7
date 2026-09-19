@@ -5,15 +5,6 @@ using UnityEngine.SceneManagement;
 namespace Escape.Core
 {
     /// <summary>
-    /// Implemented in each gameplay scene (by SceneBootstrap) to place the
-    /// player at a named spawn point after a load.
-    /// </summary>
-    public interface IPlayerPlacement
-    {
-        void PlacePlayer(string spawnId, PlayerSaveState savedPose);
-    }
-
-    /// <summary>
     /// Implemented by UI to provide fade transitions. Optional — scene loads
     /// still work without it.
     /// </summary>
@@ -54,6 +45,13 @@ namespace Escape.Core
 
         public bool IsTransitioning { get; private set; }
         public string PendingSpawnId { get; private set; } = "";
+
+        /// <summary>
+        /// How long to wait for a scene's SceneReady before declaring the
+        /// transition failed. Settable so tests can exercise the failure path
+        /// without waiting the full window.
+        /// </summary>
+        public float ReadyTimeoutSeconds { get; set; } = 5f;
 
         public string ConsumePendingSpawnId()
         {
@@ -108,16 +106,26 @@ namespace Escape.Core
 
                 _state.State.SceneId = sceneId;
 
-                // Bounded wait: a scene without a bootstrap (or a broken one)
-                // logs and continues rather than wedging behind a black fade.
                 float t = 0f;
-                while (!ready && t < 5f)
+                while (!ready && t < ReadyTimeoutSeconds)
                 {
                     t += Time.unscaledDeltaTime;
                     yield return null;
                 }
+
                 if (!ready)
-                    Debug.LogWarning($"[SceneService] '{sceneName}' signalled no SceneReady — continuing.");
+                {
+                    // Fail closed: a readiness contract that silently degrades
+                    // into "continue anyway" exposes half-initialized gameplay.
+                    // The scene did load, so the only honest recovery is to
+                    // report the failure and not claim a successful arrival.
+                    Debug.LogError($"[SceneService] '{sceneName}' never signalled " +
+                                   "SceneReady — transition failed, SceneChanged withheld.");
+                    _events.Publish(new SceneTransitionFailedEvent(sceneId));
+                    if (_services.TryGet<IScreenFader>(out var failFader) && failFader != null)
+                        yield return failFader.FadeIn();
+                    yield break;
+                }
 
                 _events.Publish(new SceneChangedEvent(sceneId));
                 _events.Publish(new ObjectiveUpdatedEvent());

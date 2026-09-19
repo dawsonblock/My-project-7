@@ -42,6 +42,7 @@ namespace Escape.Gameplay
         public void CaptureSaveState(GameState state)
         {
             var p = state.Player;
+            p.HasPose = true;
             p.Position = transform.position;
             p.Yaw = transform.eulerAngles.y;
             p.Pitch = _look != null ? _look.Pitch : 0f;
@@ -50,6 +51,7 @@ namespace Escape.Gameplay
         public void RestoreSaveState(GameState state)
         {
             var p = state.Player;
+            if (!p.HasPose) return;
             if (_movement != null) _movement.Teleport(p.Position, p.Yaw, p.Pitch);
         }
     }

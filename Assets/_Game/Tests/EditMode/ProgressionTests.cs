@@ -196,6 +196,34 @@ namespace Escape.Tests.EditMode
         }
 
         [Test]
+        public void SlotInfo_Marks_MissingPrimary_AsRecoverable()
+        {
+            var dir = Path.Combine(Path.GetTempPath(), "ete_slotinfo_" + System.Guid.NewGuid().ToString("N"));
+            try
+            {
+                var state = new GameStateService();
+                state.State.SceneId = "dock";
+                var saves = new SaveService(state, new TestContent(), new GameEventBus(),
+                    new GameCommandDispatcher(new CommandJournal(false)), dir);
+                Assert.IsTrue(saves.Save("slot1"));
+
+                var primary = Path.Combine(dir, "slot1.json");
+                File.Copy(primary, primary + ".bak");
+                File.Delete(primary); // primary missing, backup valid
+
+                var info = saves.GetSlotInfo("slot1");
+                Assert.IsTrue(info.Exists);
+                Assert.IsTrue(info.Valid, "A valid backup should make the slot loadable");
+                Assert.IsTrue(info.Recoverable,
+                    "A missing primary with a valid backup is recoverable — the menu must not hide it");
+            }
+            finally
+            {
+                if (Directory.Exists(dir)) Directory.Delete(dir, true);
+            }
+        }
+
+        [Test]
         public void Validator_Repairs_ActiveCompletedOverlap()
         {
             var data = new SaveData
@@ -243,6 +271,196 @@ namespace Escape.Tests.EditMode
             var r = SaveValidator.Validate(data, new TestContent());
             Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
             Assert.AreEqual("", data.endingId);
+        }
+
+        // ---------- domain invariants: the command layer enforces its own contract ----------
+
+        /// <summary>Real content, wired the way GameRoot wires it.</summary>
+        private static (GameStateService state, GameCommandDispatcher dispatcher) RealRig()
+        {
+            var content = ContentDatabase.Load();
+            var state = new GameStateService();
+            var events = new GameEventBus();
+            var objectives = new ObjectiveService(state, content, events);
+            var insights = new InsightService(state, content, events, objectives);
+            var evidence = new EvidenceService(state, content, events, insights, objectives);
+            var endings = new EndingService(state, content);
+            var world = new WorldService(state, events, endings, objectives);
+            var dispatcher = new GameCommandDispatcher(new CommandJournal(false));
+            dispatcher.Register<CollectEvidenceCommand>(evidence);
+            dispatcher.Register<CompleteObjectiveCommand>(objectives);
+            dispatcher.Register<RouteBroadcastCommand>(world);
+            dispatcher.Register<CompleteBroadcastCommand>(world);
+            return (state, dispatcher);
+        }
+
+        [Test]
+        public void Transmission_IsRefused_UntilTheRelayIsRouted()
+        {
+            var (state, dispatcher) = RealRig();
+            // A corrupted save or a future caller could present this state:
+            // the routing objective recorded complete, but no routed relay.
+            state.State.CompletedObjectives.Add("download_archive");
+            state.State.CompletedObjectives.Add("route_broadcast");
+
+            dispatcher.Dispatch(new CompleteBroadcastCommand("broadcast_truth"));
+
+            Assert.IsFalse(state.State.BroadcastCompleted,
+                "The domain transmitted from an unrouted relay");
+            Assert.IsFalse(state.State.CompletedObjectives.Contains("broadcast_truth"));
+        }
+
+        [Test]
+        public void Routing_IsRefused_UntilItsPrerequisitesAreMet()
+        {
+            var (state, dispatcher) = RealRig();
+
+            dispatcher.Dispatch(new RouteBroadcastCommand("route_broadcast", "test"));
+
+            Assert.IsFalse(state.State.BroadcastStarted,
+                "Routing must validate the routing objective's prerequisites, not trust the caller");
+            Assert.IsFalse(state.State.CompletedObjectives.Contains("route_broadcast"));
+        }
+
+        [Test]
+        public void ObjectiveCompletion_IsRefused_BeforeItsPrerequisites()
+        {
+            var (state, dispatcher) = RealRig();
+
+            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "test"));
+            Assert.IsFalse(state.State.CompletedObjectives.Contains("route_broadcast"),
+                "An objective completed before its prerequisite objectives");
+
+            state.State.CompletedObjectives.Add("download_archive");
+            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "test"));
+            Assert.IsTrue(state.State.CompletedObjectives.Contains("route_broadcast"),
+                "The objective should complete once its prerequisites hold");
+        }
+
+        [Test]
+        public void Domain_CompletesTheTransmissionObjective_WithoutOutsideSequencing()
+        {
+            var (state, dispatcher) = RealRig();
+            var s = state.State;
+            s.CollectedEvidence.Add("broadcast_key_001");
+            s.CompletedObjectives.Add("download_archive");
+
+            dispatcher.Dispatch(new RouteBroadcastCommand("route_broadcast", "office_terminal"));
+            Assert.IsTrue(s.BroadcastStarted, "Routing should start the relay");
+
+            // Only the transmission command — nothing dispatches
+            // CompleteObjectiveCommand for broadcast_truth.
+            dispatcher.Dispatch(new CompleteBroadcastCommand("broadcast_truth"));
+
+            Assert.IsTrue(s.CompletedObjectives.Contains("broadcast_truth"),
+                "The domain must complete the transmission objective itself");
+            Assert.IsTrue(s.BroadcastCompleted);
+            Assert.IsNotEmpty(s.EndingId, "The transmission must evaluate an ending");
+        }
+
+        // ---------- save schema v3: pose validity is explicit ----------
+
+        [Test]
+        public void PoseAtWorldOrigin_IsARecordedPose()
+        {
+            // The v2 rule inferred "no pose" from a zero position, so a player
+            // saved at the origin was dropped on a spawn point instead.
+            var atOrigin = new PlayerSaveState { HasPose = true, Position = Vector3.zero };
+            Assert.IsTrue(Escape.Gameplay.SceneBootstrap.ShouldRestorePose("", atOrigin),
+                "A save at the world origin must be restored, not replaced by a spawn point");
+
+            Assert.IsFalse(Escape.Gameplay.SceneBootstrap.ShouldRestorePose("", new PlayerSaveState()),
+                "A save that never recorded a pose must take the spawn point");
+
+            Assert.IsFalse(Escape.Gameplay.SceneBootstrap.ShouldRestorePose("default", atOrigin),
+                "A named spawn always wins over the saved pose");
+        }
+
+        [Test]
+        public void Migration_V2ToV3_RecordsPoseValidity()
+        {
+            var withPose = SaveMigrator.MigrateToCurrent(new SaveData
+            {
+                version = 2,
+                sceneId = "dock",
+                player = new PlayerSaveState { Position = new Vector3(2f, 0f, 3f) }
+            });
+            Assert.IsNotNull(withPose);
+            Assert.AreEqual(SaveData.CurrentVersion, withPose.version);
+            Assert.IsTrue(withPose.player.HasPose,
+                "A v2 save with a position should migrate to a recorded pose");
+
+            var withoutPose = SaveMigrator.MigrateToCurrent(new SaveData
+            {
+                version = 2,
+                sceneId = "dock",
+                player = new PlayerSaveState()
+            });
+            Assert.IsNotNull(withoutPose);
+            Assert.IsFalse(withoutPose.player.HasPose,
+                "A v2 save with no position stays 'no pose' under the old inference");
+        }
+
+        [Test]
+        public void Validator_Repairs_PoseWithoutTheFlag()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                player = new PlayerSaveState { HasPose = false, Position = new Vector3(1f, 0f, 1f) }
+            };
+            var r = SaveValidator.Validate(data, new TestContent());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(data.player.HasPose,
+                "A position without HasPose should be repaired to a recorded pose");
+        }
+
+        // ---------- save invariants: broadcast coherence ----------
+
+        [Test]
+        public void Validator_Repairs_RoutingObjective_MissingBehindBroadcastFlag()
+        {
+            var data = new SaveData { sceneId = "dock", broadcastStarted = true };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"),
+                "BroadcastStarted implies the signal was routed — the objective should be restored");
+        }
+
+        [Test]
+        public void Validator_Repairs_TransmissionObjective_MissingBehindCompletedFlag()
+        {
+            var data = new SaveData { sceneId = "dock", broadcastCompleted = true };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"));
+            Assert.IsTrue(data.completedObjectives.Contains("broadcast_truth"),
+                "BroadcastCompleted implies an actual transmission");
+        }
+
+        [Test]
+        public void Validator_DropsEnding_WithoutACompletedBroadcast()
+        {
+            var data = new SaveData { sceneId = "dock", endingId = "ending_bad" };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.AreEqual("", data.endingId,
+                "An ending without a transmission is not reachable and must be dropped");
+        }
+
+        [Test]
+        public void Validator_KeepsEnding_WhenTheBroadcastCompleted()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                broadcastStarted = true,
+                broadcastCompleted = true,
+                endingId = "ending_bad"
+            };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.AreEqual("ending_bad", data.endingId);
         }
 
         // ---------- in-memory content ----------

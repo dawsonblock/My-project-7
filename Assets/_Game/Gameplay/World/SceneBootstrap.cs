@@ -10,7 +10,7 @@ namespace Escape.Gameplay
     /// entry autosave / first objective activation.
     /// </summary>
     [DefaultExecutionOrder(-50)]
-    public sealed class SceneBootstrap : MonoBehaviour, IPlayerPlacement
+    public sealed class SceneBootstrap : MonoBehaviour
     {
         [SerializeField] private string sceneId;
         [SerializeField] private string firstObjectiveId = "";
@@ -33,7 +33,6 @@ namespace Escape.Gameplay
                 yield break;
             }
             _services = GameRoot.Instance.Services;
-            _services.Register<IPlayerPlacement>(this);
 
             var state = _services.Get<IGameStateService>();
             state.State.SceneId = sceneId;
@@ -66,29 +65,22 @@ namespace Escape.Gameplay
                 events.Publish(new SceneReadyEvent(sceneId));
         }
 
-        // Start registers on the first run; a later disable/enable cycle must
-        // restore the registration without re-running Start.
-        private void OnEnable()
-        {
-            if (_services != null)
-                _services.Register<IPlayerPlacement>(this);
-        }
+        /// <summary>
+        /// Whether an arrival should restore the saved pose rather than take a
+        /// spawn point. A named spawn always wins; an empty spawn id means a
+        /// save load, and only a save that actually recorded a pose counts.
+        /// HasPose is authoritative — a save at the world origin is a real
+        /// pose, not an absent one.
+        /// </summary>
+        public static bool ShouldRestorePose(string spawnId, PlayerSaveState savedPose) =>
+            string.IsNullOrEmpty(spawnId) && savedPose != null && savedPose.HasPose;
 
-        private void OnDisable()
-        {
-            if (_services != null)
-                _services.Unregister<IPlayerPlacement>(this);
-        }
-
-        public void PlacePlayer(string spawnId, PlayerSaveState savedPose)
+        private void PlacePlayer(string spawnId, PlayerSaveState savedPose)
         {
             if (playerRoot == null) return;
             var movement = playerRoot.GetComponent<PlayerMovement>();
 
-            // A load (empty spawn id) restores the saved pose; scene
-            // transitions always land on a named spawn point.
-            if (string.IsNullOrEmpty(spawnId) && savedPose != null &&
-                savedPose.Position != Vector3.zero)
+            if (ShouldRestorePose(spawnId, savedPose))
             {
                 // Load path — save participants restore volatile state
                 // (pose, flashlight). Spawn-point entries skip this.
@@ -116,6 +108,7 @@ namespace Escape.Gameplay
         {
             if (_services == null || playerRoot == null) return;
             var pose = _services.Get<IGameStateService>().State.Player;
+            pose.HasPose = true;
             pose.Position = playerRoot.position;
             pose.Yaw = playerRoot.eulerAngles.y;
             var look = playerRoot.GetComponentInChildren<PlayerLook>();

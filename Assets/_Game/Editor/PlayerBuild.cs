@@ -3,7 +3,6 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
-
 namespace Escape.EditorTools
 {
     /// <summary>
@@ -35,31 +34,37 @@ namespace Escape.EditorTools
             }
 
             // Building rewrites ProjectSettings.asset and reorders (or
-            // transiently empties) preloadedAssets, which dirties the repo for
-            // no reason. Snapshot the authored order and put it back.
+            // transiently empties) preloadedAssets, and re-serializes the URP
+            // settings assets (it flips the volume profile's disabled
+            // components back on and re-adds ones the authoring pass removed).
+            // Snapshot the authored order, and restore in a finally so an
+            // unusual build failure can never leave the tree mutated.
             var preloaded = PlayerSettings.GetPreloadedAssets();
 
-            var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+            BuildReport report;
+            try
             {
-                scenes = scenes,
-                locationPathName = output,
-                target = BuildTarget.StandaloneOSX,
-                options = BuildOptions.None
-            });
-
-            if (PlayerSettings.GetPreloadedAssets().Length != preloaded.Length ||
-                !PlayerSettings.GetPreloadedAssets().SequenceEqual(preloaded))
-            {
-                PlayerSettings.SetPreloadedAssets(preloaded);
-                AssetDatabase.SaveAssets();
-                Debug.Log("[PlayerBuild] Restored the authored preloadedAssets order.");
+                report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
+                {
+                    scenes = scenes,
+                    locationPathName = output,
+                    target = BuildTarget.StandaloneOSX,
+                    options = BuildOptions.None
+                });
             }
-
-            // Building also re-serializes the URP settings assets: it flips the
-            // volume profile's disabled components back on and re-adds ones the
-            // authoring pass removed. Re-run the authoring pass so the build
-            // leaves the repo in the state the pipeline defines.
-            VolumeProfileBuilder.Author();
+            finally
+            {
+                if (PlayerSettings.GetPreloadedAssets().Length != preloaded.Length ||
+                    !PlayerSettings.GetPreloadedAssets().SequenceEqual(preloaded))
+                {
+                    PlayerSettings.SetPreloadedAssets(preloaded);
+                    AssetDatabase.SaveAssets();
+                    Debug.Log("[PlayerBuild] Restored the authored preloadedAssets order.");
+                }
+                // Re-run the authoring pass so the repo is left in the state
+                // the pipeline defines, whatever the build did.
+                VolumeProfileBuilder.Author();
+            }
 
             var s = report.summary;
             Debug.Log($"[PlayerBuild] {s.result} — {s.totalSize} bytes, {s.totalTime}, " +

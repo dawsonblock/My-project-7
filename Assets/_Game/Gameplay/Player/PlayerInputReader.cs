@@ -109,8 +109,10 @@ namespace Escape.Gameplay
         private void OnDisable()
         {
             if (_playerMap == null) return; // Awake bailed — nothing subscribed
-            _playerMap.Disable();
-            _systemMap.Disable();
+            // Disable at the asset level, mirroring OnEnable — a reader that
+            // dies while UI mode is active must not leave the UI map live on
+            // the shared asset.
+            actions.Disable();
             _interact.performed -= OnInteract;
             _crouch.performed -= OnCrouch;
             _flashlight.performed -= OnFlashlight;

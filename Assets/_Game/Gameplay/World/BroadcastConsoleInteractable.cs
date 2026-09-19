@@ -28,11 +28,10 @@ namespace Escape.Gameplay
         public void Interact(PlayerContext player)
         {
             player.Dispatcher.Dispatch(new SetAlertCommand(true, "broadcast"));
-            player.Dispatcher.Dispatch(new CompleteBroadcastCommand());
-            // The broadcast objective is Explicit — holding the key never
-            // finishes it; only an actual transmission does.
-            if (!string.IsNullOrEmpty(completesObjectiveId))
-                player.Dispatcher.Dispatch(new CompleteObjectiveCommand(completesObjectiveId, name));
+            // The domain validates the routed state and completes the
+            // transmission objective itself — holding the key never finishes
+            // it, and a caller cannot complete it out of order.
+            player.Dispatcher.Dispatch(new CompleteBroadcastCommand(completesObjectiveId));
         }
     }
 }

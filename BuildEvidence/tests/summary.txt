@@ -1,21 +1,34 @@
-Final verification — 2026-09-19 (assemblies confirmed rebuilt)
+Canonical final verification — 2026-09-19
 
-  EditMode: 61 passed / 0 failed
-  PlayMode: 26 passed / 0 failed
+  EditMode: 73 passed / 0 failed   (editmode-TestResults.xml)
+  PlayMode: 29 passed / 0 failed   (playmode-TestResults.xml)
 
-EditMode 51 -> 61 with ProgressionGraphTests (10 graph-level tests).
-PlayMode 17 -> 26 with:
+One machine artifact per gate. Anything from an earlier run — including a
+failed one that was previously mislabelled as an EditMode summary — is under
+history/ and is not evidence of the current state.
 
-  PlayerLookTests (10) — yaw/pitch ownership, mouse vs stick sensitivity,
-    frame-rate independence, pitch clamp, invert, UI gating
-  UiQualificationTests (5) — settings open/close push+pop the gate, settings
-    survive a missing GameRoot, the evidence board host stays active while
-    closed, documents are modal and Escape dismisses them
-  EvidenceBoardLateBindTests (1) — Tab still opens the board when the player
-    prefab spawns after the UI was built
-  PlayerMovementTests (3) — holding W moves the player; at yaw 90 the player
-    travels along +X, so movement follows yaw rather than world Z; movement is
-    suppressed while a UI surface owns input
+Coverage added during the contract pass:
+  Domain invariants (EditMode)
+    - transmission refused from an unrouted relay
+    - routing refused until the routing objective's prerequisites hold
+    - objective completion refused before its prerequisite objectives
+    - the domain completes the transmission objective itself, with no
+      outside CompleteObjectiveCommand
+  Save schema v3 (EditMode)
+    - a pose at the world origin is a recorded pose
+    - v2 -> v3 migration records pose validity
+    - a position without HasPose is repaired
+  Save coherence (EditMode)
+    - BroadcastStarted implies route_broadcast
+    - BroadcastCompleted implies route_broadcast + broadcast_truth
+    - an ending without a completed broadcast is dropped, and kept when it
+      completed
+    - a missing primary with a valid backup is Recoverable
+  Scene lifecycle (PlayMode)
+    - a scene that never signals SceneReady fails the transition and does
+      not publish SceneChanged
+  Input (PlayMode)
+    - a reader disabled while UI mode is active leaves no map enabled
 
 Before trusting a count, confirm the assembly rebuilt:
   stat -f %Sm Library/ScriptAssemblies/<name>.dll   (vs the source mtime)

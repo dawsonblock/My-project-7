@@ -7,6 +7,12 @@ namespace Escape.Core
     {
         bool Activate(string objectiveId);
         bool Complete(string objectiveId, string sourceId = "");
+        /// <summary>
+        /// True when the objective exists, is not already complete, and its
+        /// prerequisite objectives are complete. Callers that mutate state on
+        /// the strength of an objective must ask this first.
+        /// </summary>
+        bool CanComplete(string objectiveId);
         void EvaluateProgress();
         string CurrentObjectiveTitle { get; }
     }
@@ -42,12 +48,26 @@ namespace Escape.Core
             }
         }
 
+        /// <summary>
+        /// RequiredObjectives gate both activation and completion — an
+        /// objective cannot finish before the objectives it depends on.
+        /// RequiredEvidence is completion criteria for Evidence-mode
+        /// objectives only; on an Explicit objective it gates the surface that
+        /// offers the action (a terminal command, a console), not completion.
+        /// </summary>
         public bool RequirementsMet(ObjectiveDefinition def)
         {
             var s = _state.State;
             foreach (var req in def.RequiredObjectives)
                 if (req != null && !s.CompletedObjectives.Contains(req.Id)) return false;
             return true;
+        }
+
+        public bool CanComplete(string objectiveId)
+        {
+            if (!_content.TryGetObjective(objectiveId, out var def)) return false;
+            if (_state.State.CompletedObjectives.Contains(objectiveId)) return false;
+            return RequirementsMet(def);
         }
 
         public bool Activate(string objectiveId)
@@ -64,9 +84,20 @@ namespace Escape.Core
 
         public bool Complete(string objectiveId, string sourceId = "")
         {
+            if (!CompleteInternal(objectiveId, sourceId)) return false;
+            // Completing one objective can make an Evidence-mode objective
+            // eligible, so settle the whole graph before returning — otherwise
+            // a completion-driven unlock would stall until the next pickup.
+            EvaluateProgress();
+            return true;
+        }
+
+        private bool CompleteInternal(string objectiveId, string sourceId)
+        {
             var s = _state.State;
             if (!_content.TryGetObjective(objectiveId, out var def)) return false;
             if (s.CompletedObjectives.Contains(objectiveId)) return false;
+            if (!RequirementsMet(def)) return false;
             s.ActiveObjectives.Remove(objectiveId);
             s.CompletedObjectives.Add(objectiveId);
             _events.Publish(new ObjectiveCompletedEvent(objectiveId));
@@ -114,7 +145,7 @@ namespace Escape.Core
                         if (ev != null && !s.CollectedEvidence.Contains(ev.Id)) { all = false; break; }
                     if (all)
                     {
-                        Complete(def.Id, "evidence");
+                        CompleteInternal(def.Id, "evidence");
                         changed = true;
                     }
                 }

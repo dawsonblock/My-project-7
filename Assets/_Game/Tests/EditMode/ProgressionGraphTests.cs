@@ -238,7 +238,7 @@ namespace Escape.Tests.EditMode
                 _objectives = new ObjectiveService(_state, content, events);
                 var insights = new InsightService(_state, content, events, _objectives);
                 var evidence = new EvidenceService(_state, content, events, insights, _objectives);
-                var world = new WorldService(_state, events, new EndingService(_state, content));
+                var world = new WorldService(_state, events, new EndingService(_state, content), _objectives);
 
                 _dispatcher = new GameCommandDispatcher(new CommandJournal(false));
                 _dispatcher.Register<CollectEvidenceCommand>(evidence);
@@ -246,7 +246,7 @@ namespace Escape.Tests.EditMode
                 _dispatcher.Register<UnlockDoorCommand>(world);
                 _dispatcher.Register<DisableCameraCommand>(world);
                 _dispatcher.Register<SetLockdownCommand>(world);
-                _dispatcher.Register<StartBroadcastCommand>(world);
+                _dispatcher.Register<RouteBroadcastCommand>(world);
                 _dispatcher.Register<CompleteBroadcastCommand>(world);
             }
 
@@ -271,12 +271,9 @@ namespace Escape.Tests.EditMode
                 }
 
                 // The relay console: transmitting needs the routed signal, and
-                // completing it is what sets the ending.
+                // the domain completes the transmission objective itself.
                 if (State.BroadcastStarted && !State.BroadcastCompleted)
-                {
-                    _dispatcher.Dispatch(new CompleteBroadcastCommand());
-                    Complete(_consoleObjective);
-                }
+                    _dispatcher.Dispatch(new CompleteBroadcastCommand(_consoleObjective));
             }
 
             private void RunTerminals(SceneFacts facts)
@@ -330,7 +327,9 @@ namespace Escape.Tests.EditMode
                     case TerminalActionType.SetLockdown:
                         _dispatcher.Dispatch(new SetLockdownCommand(true, term.Id)); break;
                     case TerminalActionType.StartBroadcast:
-                        _dispatcher.Dispatch(new StartBroadcastCommand(term.Id)); break;
+                        _dispatcher.Dispatch(new RouteBroadcastCommand(
+                            cmd.CompletesObjective != null ? cmd.CompletesObjective.Id : "",
+                            term.Id)); break;
                 }
                 if (cmd.CompletesObjective != null) Complete(cmd.CompletesObjective.Id);
             }

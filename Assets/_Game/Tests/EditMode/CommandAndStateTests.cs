@@ -34,7 +34,7 @@ namespace Escape.Tests.EditMode
             _insights = new InsightService(_state, _content, _events, _objectives);
             _evidence = new EvidenceService(_state, _content, _events, _insights, _objectives);
             _endings = new EndingService(_state, _content);
-            _world = new WorldService(_state, _events, _endings);
+            _world = new WorldService(_state, _events, _endings, _objectives);
 
             _dispatcher.Register<CollectEvidenceCommand>(_evidence);
             _dispatcher.Register<ActivateObjectiveCommand>(_objectives);
@@ -43,7 +43,7 @@ namespace Escape.Tests.EditMode
             _dispatcher.Register<UnlockDoorCommand>(_world);
             _dispatcher.Register<SetAlertCommand>(_world);
             _dispatcher.Register<SetLockdownCommand>(_world);
-            _dispatcher.Register<StartBroadcastCommand>(_world);
+            _dispatcher.Register<RouteBroadcastCommand>(_world);
             _dispatcher.Register<CompleteBroadcastCommand>(_world);
         }
 

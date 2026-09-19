@@ -38,7 +38,7 @@ namespace Escape.Core
             var insights = new InsightService(state, content, events, objectives);
             var evidence = new EvidenceService(state, content, events, insights, objectives);
             var endings = new EndingService(state, content);
-            var world = new WorldService(state, events, endings);
+            var world = new WorldService(state, events, endings, objectives);
             _detection = new DetectionService(state, content.Tuning, events, dispatcher);
             var noise = new NoiseService();
             var settings = new SettingsService();
@@ -80,7 +80,7 @@ namespace Escape.Core
             dispatcher.Register<UnlockTerminalCommand>(world);
             dispatcher.Register<SetAlertCommand>(world);
             dispatcher.Register<SetLockdownCommand>(world);
-            dispatcher.Register<StartBroadcastCommand>(world);
+            dispatcher.Register<RouteBroadcastCommand>(world);
             dispatcher.Register<CompleteBroadcastCommand>(world);
             dispatcher.Register<RecordTerminalUseCommand>(world);
             dispatcher.Register<ShowSystemMessageCommand>(world);

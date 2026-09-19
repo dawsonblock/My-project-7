@@ -42,7 +42,7 @@ namespace Escape.Core
         IGameCommandHandler<UnlockTerminalCommand>,
         IGameCommandHandler<SetAlertCommand>,
         IGameCommandHandler<SetLockdownCommand>,
-        IGameCommandHandler<StartBroadcastCommand>,
+        IGameCommandHandler<RouteBroadcastCommand>,
         IGameCommandHandler<CompleteBroadcastCommand>,
         IGameCommandHandler<RecordTerminalUseCommand>,
         IGameCommandHandler<ShowSystemMessageCommand>
@@ -50,13 +50,16 @@ namespace Escape.Core
         private readonly IGameStateService _state;
         private readonly IGameEventBus _events;
         private readonly EndingService _endings;
+        private readonly IObjectiveService _objectives;
         private readonly Dictionary<string, IWorldObject> _objects = new Dictionary<string, IWorldObject>();
 
-        public WorldService(IGameStateService state, IGameEventBus events, EndingService endings)
+        public WorldService(IGameStateService state, IGameEventBus events, EndingService endings,
+            IObjectiveService objectives)
         {
             _state = state;
             _events = events;
             _endings = endings;
+            _objectives = objectives;
         }
 
         public void Register(IWorldObject obj)
@@ -123,18 +126,47 @@ namespace Escape.Core
             _events.Publish(new SystemMessageEvent(command.Lockdown ? "LOCKDOWN INITIATED" : "LOCKDOWN LIFTED", 4f));
         }
 
-        public void Handle(StartBroadcastCommand command)
+        /// <summary>
+        /// Routes the signal. Refuses unless the routing objective's own
+        /// prerequisites are satisfied, so a caller cannot start a broadcast
+        /// the content says is not yet legal.
+        /// </summary>
+        public void Handle(RouteBroadcastCommand command)
         {
             if (_state.State.BroadcastStarted) return;
+            if (!_objectives.CanComplete(command.ObjectiveId))
+            {
+                _events.Publish(new SystemMessageEvent(
+                    "RELAY REFUSED — routing requirements not met", 4f));
+                return;
+            }
+            _objectives.Complete(command.ObjectiveId, command.SourceId);
             _state.State.BroadcastStarted = true;
             _events.Publish(new BroadcastStartedEvent());
         }
 
+        /// <summary>
+        /// Transmits. A transmission is only legal from a routed relay, and
+        /// only once the transmission objective's prerequisites hold — the
+        /// domain completes that objective itself, so the ending can never be
+        /// reached by sequencing commands from outside.
+        /// </summary>
         public void Handle(CompleteBroadcastCommand command)
         {
             var s = _state.State;
             if (s.BroadcastCompleted) return;
-            s.BroadcastStarted = true;
+            if (!s.BroadcastStarted)
+            {
+                _events.Publish(new SystemMessageEvent("RELAY COLD — route the signal first", 4f));
+                return;
+            }
+            if (!_objectives.CanComplete(command.ObjectiveId))
+            {
+                _events.Publish(new SystemMessageEvent(
+                    "TRANSMISSION REFUSED — prerequisites unmet", 4f));
+                return;
+            }
+            _objectives.Complete(command.ObjectiveId, "broadcast");
             s.BroadcastCompleted = true;
             var result = _endings.Evaluate();
             s.EndingId = result.Ending != null ? result.Ending.Id : "";

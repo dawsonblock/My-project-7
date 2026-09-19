@@ -106,6 +106,17 @@ namespace Escape.Core
         public SceneReadyEvent(string sceneId) => SceneId = sceneId;
     }
 
+    /// <summary>
+    /// Published instead of SceneChanged when a loaded scene never signalled
+    /// SceneReady. The scene is loaded but not trustworthy, so the transition
+    /// is reported as failed rather than as a successful arrival.
+    /// </summary>
+    public readonly struct SceneTransitionFailedEvent : IGameEvent
+    {
+        public readonly string SceneId;
+        public SceneTransitionFailedEvent(string sceneId) => SceneId = sceneId;
+    }
+
     public readonly struct BroadcastStartedEvent : IGameEvent { }
 
     public readonly struct BroadcastCompletedEvent : IGameEvent

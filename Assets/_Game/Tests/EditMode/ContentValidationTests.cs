@@ -191,18 +191,19 @@ namespace Escape.Tests.EditMode
             var insights = new InsightService(state, content, events, objectives);
             var evidence = new EvidenceService(state, content, events, insights, objectives);
             var endings = new EndingService(state, content);
-            var world = new WorldService(state, events, endings);
+            var world = new WorldService(state, events, endings, objectives);
             var dispatcher = new GameCommandDispatcher(new CommandJournal(echoToConsole: false));
             dispatcher.Register<CollectEvidenceCommand>(evidence);
             dispatcher.Register<ActivateObjectiveCommand>(objectives);
             dispatcher.Register<CompleteObjectiveCommand>(objectives);
             dispatcher.Register<GainInsightCommand>(insights);
-            dispatcher.Register<StartBroadcastCommand>(world);
+            dispatcher.Register<RouteBroadcastCommand>(world);
             dispatcher.Register<CompleteBroadcastCommand>(world);
 
-            foreach (var id in new[] { "reach_compound", "infiltrate_service",
-                     "unlock_service_door", "reach_bunker", "reach_tower" })
-                dispatcher.Dispatch(new CompleteObjectiveCommand(id, "test"));
+            // Scene-entry objectives, in dependency order — completion now
+            // enforces that an objective's prerequisites are already complete.
+            dispatcher.Dispatch(new CompleteObjectiveCommand("reach_compound", "test"));
+            dispatcher.Dispatch(new CompleteObjectiveCommand("infiltrate_service", "test"));
 
             foreach (var ev in content.Evidence)
                 dispatcher.Dispatch(new CollectEvidenceCommand(ev.Id, "test"));
@@ -216,16 +217,26 @@ namespace Escape.Tests.EditMode
             Assert.IsFalse(s.CompletedObjectives.Contains("broadcast_truth"),
                 "broadcast_truth completed without an actual broadcast");
 
-            // Office terminal BROADCAST: routes the signal (CompletesObjective
-            // on the command def fires CompleteObjectiveCommand like TerminalUI does).
-            dispatcher.Dispatch(new StartBroadcastCommand("office_terminal"));
-            dispatcher.Dispatch(new CompleteObjectiveCommand("route_broadcast", "office_terminal"));
+            // The interior door is released by the service terminal; completing
+            // it settles the rest of the evidence chain behind it.
+            dispatcher.Dispatch(new CompleteObjectiveCommand("unlock_service_door", "service_terminal"));
+            Assert.IsTrue(s.CompletedObjectives.Contains("search_office"),
+                "unlocking the door did not settle search_office");
+            Assert.IsTrue(s.CompletedObjectives.Contains("download_archive"),
+                "the archive pull did not settle behind search_office");
+
+            // Office terminal BROADCAST routes the signal: the domain validates
+            // the routing objective's prerequisites and completes it itself.
+            dispatcher.Dispatch(new RouteBroadcastCommand("route_broadcast", "office_terminal"));
             Assert.IsTrue(s.BroadcastStarted, "Terminal BROADCAST did not set BroadcastStarted");
             Assert.IsTrue(s.CompletedObjectives.Contains("route_broadcast"));
 
-            // Tower relay console: the actual transmission completes the objective.
-            dispatcher.Dispatch(new CompleteBroadcastCommand());
-            dispatcher.Dispatch(new CompleteObjectiveCommand("broadcast_truth", "broadcast_console"));
+            // Scene entries that depend on the archive pull.
+            dispatcher.Dispatch(new CompleteObjectiveCommand("reach_bunker", "test"));
+            dispatcher.Dispatch(new CompleteObjectiveCommand("reach_tower", "test"));
+
+            // Tower relay console: the transmission completes its own objective.
+            dispatcher.Dispatch(new CompleteBroadcastCommand("broadcast_truth"));
 
             foreach (var id in new[] { "reach_compound", "infiltrate_service",
                      "find_keycard", "unlock_service_door", "search_office",

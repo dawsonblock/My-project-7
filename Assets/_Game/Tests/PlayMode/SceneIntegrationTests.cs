@@ -99,6 +99,51 @@ namespace Escape.Tests.PlayMode
             Assert.AreEqual(posA, state.State.Player.Position);
         }
 
+        /// <summary>
+        /// SceneReady is a commit barrier, not a best-effort wait. If a scene
+        /// never signals readiness inside the window, the transition must be
+        /// reported as failed rather than published as a successful arrival.
+        /// A zero-length window makes that deterministic: the readiness signal
+        /// arrives from the bootstrap coroutine on a later frame, so it can
+        /// never land inside the window.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator SceneWithoutReady_FailsClosed_AndWithholdsSceneChanged()
+        {
+            yield return null;
+            var services = GameRoot.Instance.Services;
+            var scenes = services.Get<ISceneService>() as SceneService;
+            var events = services.Get<IGameEventBus>();
+            Assert.IsNotNull(scenes, "ISceneService is not a SceneService");
+
+            bool failed = false, changed = false;
+            System.Action<SceneTransitionFailedEvent> onFail = _ => failed = true;
+            System.Action<SceneChangedEvent> onChange = _ => changed = true;
+            events.Subscribe(onFail);
+            events.Subscribe(onChange);
+            try
+            {
+                // The failure path logs an error by design; declare it so the
+                // test framework does not treat it as an unhandled error.
+                LogAssert.Expect(LogType.Error, new System.Text.RegularExpressions.Regex(
+                    "never signalled SceneReady"));
+                scenes.ReadyTimeoutSeconds = 0f;
+                scenes.LoadScene(SceneId.Dock, "default");
+                yield return WaitUntil(() => !scenes.IsTransitioning, 10f);
+            }
+            finally
+            {
+                events.Unsubscribe(onFail);
+                events.Unsubscribe(onChange);
+                scenes.ReadyTimeoutSeconds = 5f;
+            }
+
+            Assert.IsTrue(failed,
+                "A scene that never signalled SceneReady must report a failed transition");
+            Assert.IsFalse(changed,
+                "A failed transition must not publish SceneChanged as if it succeeded");
+        }
+
         private static IEnumerator WaitUntil(System.Func<bool> pred, float timeout)
         {
             var t = 0f;

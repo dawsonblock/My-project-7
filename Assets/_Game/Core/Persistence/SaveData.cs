@@ -9,11 +9,13 @@ namespace Escape.Core
     /// SaveData is the serialized form that migrations evolve over time.
     /// v1 → v2: wrapped in SaveEnvelope; player pose became explicit
     /// yaw/pitch instead of root eulerAngles.
+    /// v2 → v3: player pose carries an explicit HasPose flag instead of
+    /// inferring validity from a non-zero position.
     /// </summary>
     [Serializable]
     public sealed class SaveData
     {
-        public const int CurrentVersion = 2;
+        public const int CurrentVersion = 3;
 
         public int version = CurrentVersion;
         public string sceneId = "dock";
@@ -139,7 +141,8 @@ namespace Escape.Core
     {
         private static readonly List<ISaveMigration> Migrations = new List<ISaveMigration>
         {
-            new SaveMigrationV1ToV2()
+            new SaveMigrationV1ToV2(),
+            new SaveMigrationV2ToV3()
         };
 
         public static SaveData MigrateToCurrent(SaveData data)

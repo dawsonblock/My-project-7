@@ -1,10 +1,14 @@
 {
-  "version": 1,
+  "_comment": "Reference ABI for the CURRENT save schema. Mirrors SaveData (Escape.Core) and the SaveEnvelope wrapper. v1 and v2 documents are migrated on load — never edit a released schema, add a migration instead (SaveMigrations.cs).",
+  "version": 3,
   "sceneId": "service_entrance",
   "player": {
-    "position": { "x": 0, "y": 1, "z": 0 },
-    "eulerRotation": { "x": 0, "y": 0, "z": 0 },
-    "flashlightOn": false
+    "HasPose": false,
+    "Position": { "x": 0, "y": 1, "z": 0 },
+    "Yaw": 0,
+    "Pitch": 0,
+    "FlashlightOn": false,
+    "EulerRotation": { "x": 0, "y": 0, "z": 0 }
   },
   "collectedEvidence": [],
   "readDocuments": [],
@@ -21,5 +25,31 @@
   "broadcastCompleted": false,
   "endingId": "",
   "detection": 0,
-  "savedAtUtc": ""
+  "lures": 3,
+  "collectedLures": [],
+  "savedAtUtc": "",
+
+  "_fieldNotes": {
+    "player.HasPose": "v3. Authoritative: a pose is restored only when this is true, so a save at the world origin is a real pose rather than an absent one. MigrationV2ToV3 sets it from the old 'position is not zero' inference.",
+    "player.Yaw": "v2. Player ROOT yaw in degrees.",
+    "player.Pitch": "v2. Camera pitch in degrees. Lives on PlayerLook, not the root.",
+    "player.EulerRotation": "v1 legacy. Read only by SaveMigrationV1ToV2; not written by the current schema.",
+    "lures": "v2. Thrown-lure count, clamped to >= 0 by SaveValidator.",
+    "collectedLures": "v2. Ids of lures picked up in the world.",
+    "endingId": "Empty until a broadcast completes; SaveValidator drops it when broadcastCompleted is false."
+  },
+  "_envelope": {
+    "schemaVersion": 3,
+    "payload": "<SaveData JSON>",
+    "checksum": "<content hash>"
+  },
+  "_invariants": [
+    "sceneId must be a known scene",
+    "player pose must be finite",
+    "detection within 0..100",
+    "lures >= 0",
+    "broadcastStarted implies completedObjectives contains route_broadcast",
+    "broadcastCompleted implies broadcastStarted and completedObjectives contains broadcast_truth",
+    "endingId requires broadcastCompleted"
+  ]
 }

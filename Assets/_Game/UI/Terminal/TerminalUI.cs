@@ -245,7 +245,11 @@ namespace Escape.UI
                     dispatcher.Dispatch(new SetLockdownCommand(true, _terminal.Id));
                     break;
                 case TerminalActionType.StartBroadcast:
-                    dispatcher.Dispatch(new StartBroadcastCommand(_terminal.Id));
+                    // Routing is a domain operation: it validates the routing
+                    // objective's prerequisites and completes it itself.
+                    dispatcher.Dispatch(new RouteBroadcastCommand(
+                        cmd.CompletesObjective != null ? cmd.CompletesObjective.Id : "",
+                        _terminal.Id));
                     break;
                 case TerminalActionType.ListStatus:
                     AppendLine(StatusText());

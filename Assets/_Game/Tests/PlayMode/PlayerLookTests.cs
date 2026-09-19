@@ -23,6 +23,7 @@ namespace Escape.Tests.PlayMode
         private Transform _pivot;
         private PlayerLook _look;
         private PlayerInputReader _reader;
+        private InputActionAsset _actions;
         private Mouse _mouse;
         private Gamepad _pad;
 
@@ -48,6 +49,7 @@ namespace Escape.Tests.PlayMode
             _reader = _player.AddComponent<PlayerInputReader>();
             var asset = AssetDatabase.LoadAssetAtPath<InputActionAsset>(
                 "Assets/_Game/Gameplay/Player/PlayerInputActions.inputactions");
+            _actions = asset;
             var so = new SerializedObject(_reader);
             so.FindProperty("actions").objectReferenceValue = asset;
             so.ApplyModifiedPropertiesWithoutUndo();
@@ -215,6 +217,34 @@ namespace Escape.Tests.PlayMode
             Set(_mouse.delta, new Vector2(5f, 0f));
             yield return null;
             Assert.IsFalse(_reader.LookFromGamepad);
+        }
+
+        [UnityTest]
+        public IEnumerator DisablingTheReader_LeavesNoMapEnabled()
+        {
+            yield return null;
+            var gate = GameRoot.Instance.Services.Get<IInputGate>();
+            var owner = new object();
+            gate.PushUi(owner); // UI mode: the UI map is live, the Player map is not
+            yield return null;
+            yield return null;
+            Assert.IsTrue(_actions.FindActionMap("UI").enabled,
+                "Precondition: the UI map is enabled in UI mode");
+
+            _player.SetActive(false); // reader OnDisable
+            yield return null;
+
+            Assert.IsFalse(_actions.FindActionMap("UI").enabled,
+                "The UI map was left enabled after the reader was disabled in UI mode");
+            Assert.IsFalse(_actions.FindActionMap("Player").enabled);
+            Assert.IsFalse(_actions.FindActionMap("System").enabled);
+
+            gate.PopUi(owner);
+            // Restore the lifecycle the rest of the fixture leaves behind —
+            // a reader torn down while inactive trips an Input System internal
+            // fault (InputManagerStateMonitors) in a later test.
+            _player.SetActive(true);
+            yield return null;
         }
 
         [UnityTest]

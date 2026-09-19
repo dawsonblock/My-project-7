@@ -7,6 +7,12 @@ namespace Escape.Core
     [Serializable]
     public sealed class PlayerSaveState
     {
+        /// <summary>
+        /// True once a pose has actually been captured. Without it, a player
+        /// legitimately saved at the world origin is indistinguishable from a
+        /// save that never recorded a pose.
+        /// </summary>
+        public bool HasPose;
         public Vector3 Position;
         /// <summary>Player root yaw, degrees.</summary>
         public float Yaw;

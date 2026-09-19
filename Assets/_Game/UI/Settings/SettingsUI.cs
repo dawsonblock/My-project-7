@@ -71,6 +71,7 @@ namespace Escape.UI
         {
             var content = _root.GetComponentInChildren<ScrollRect>().content;
             Slider(content, "Mouse Sensitivity", 0.2f, 3f, () => _settings.MouseSensitivity, v => _settings.MouseSensitivity = v);
+            Slider(content, "Controller Sensitivity", 0.2f, 3f, () => _settings.ControllerSensitivity, v => _settings.ControllerSensitivity = v);
             Slider(content, "Field of View", 50f, 100f, () => _settings.Fov, v =>
             {
                 _settings.Fov = v;
@@ -81,13 +82,16 @@ namespace Escape.UI
             Toggle(content, "Reduce Motion", () => _settings.ReduceMotion, v => _settings.ReduceMotion = v);
             Toggle(content, "Toggle Sprint", () => _settings.ToggleSprint, v => _settings.ToggleSprint = v);
             Toggle(content, "Toggle Crouch", () => _settings.ToggleCrouch, v => _settings.ToggleCrouch = v);
-            Toggle(content, "Subtitles", () => _settings.Subtitles, v => _settings.Subtitles = v);
+            Toggle(content, "Toggle Flashlight", () => _settings.ToggleFlashlight, v => _settings.ToggleFlashlight = v);
             Toggle(content, "Large UI", () => _settings.LargeUI, v => _settings.LargeUI = v);
-            Toggle(content, "High Contrast", () => _settings.HighContrast, v => _settings.HighContrast = v);
             Slider(content, "Master Volume", 0f, 1f, () => _settings.MasterVolume, v => _settings.MasterVolume = v);
-            Slider(content, "Music Volume", 0f, 1f, () => _settings.MusicVolume, v => _settings.MusicVolume = v);
-            Slider(content, "Ambience Volume", 0f, 1f, () => _settings.AmbienceVolume, v => _settings.AmbienceVolume = v);
-            Slider(content, "SFX Volume", 0f, 1f, () => _settings.SfxVolume, v => _settings.SfxVolume = v);
+
+            // Deliberately not exposed yet, because nothing reads them:
+            // Subtitles, High Contrast and the per-bus volume sliders. The
+            // model still carries them (persisted, and the audio pass will
+            // consume Music/Ambience/SFX once AudioService has mixer
+            // snapshots) — showing a control that does nothing is worse than
+            // showing none.
 
             var back = UiBuilder.Button(content, "BACK", 44);
             back.onClick.AddListener(Close);
@@ -110,11 +114,50 @@ namespace Escape.UI
             s.minValue = min;
             s.maxValue = max;
             s.value = get();
+
+            // Conventional slider structure: a background, a fill area whose
+            // fill the Slider drives by anchors, and a handle. Without
+            // fillRect/handleRect the widget changes value but shows nothing.
+            var bg = sGo.AddComponent<Image>();
+            bg.color = new Color(0.1f, 0.1f, 0.12f);
+
+            var fillArea = new GameObject("Fill Area", typeof(RectTransform));
+            fillArea.transform.SetParent(sGo.transform, false);
+            var fa = (RectTransform)fillArea.transform;
+            fa.anchorMin = new Vector2(0f, 0.35f);
+            fa.anchorMax = new Vector2(1f, 0.65f);
+            fa.offsetMin = new Vector2(6f, 0f);
+            fa.offsetMax = new Vector2(-6f, 0f);
+
             var fillGo = new GameObject("Fill", typeof(RectTransform), typeof(Image));
-            fillGo.transform.SetParent(sGo.transform, false);
-            UiBuilder.Stretch((RectTransform)fillGo.transform);
+            fillGo.transform.SetParent(fillArea.transform, false);
+            var fr = (RectTransform)fillGo.transform;
+            fr.anchorMin = Vector2.zero;
+            fr.anchorMax = Vector2.one;
+            fr.pivot = new Vector2(0f, 0.5f);
+            fr.offsetMin = fr.offsetMax = Vector2.zero;
             fillGo.GetComponent<Image>().color = UiBuilder.Accent;
-            s.targetGraphic = fillGo.GetComponent<Image>();
+            s.fillRect = fr;
+
+            var handleArea = new GameObject("Handle Slide Area", typeof(RectTransform));
+            handleArea.transform.SetParent(sGo.transform, false);
+            var ha = (RectTransform)handleArea.transform;
+            ha.anchorMin = Vector2.zero;
+            ha.anchorMax = Vector2.one;
+            ha.offsetMin = new Vector2(6f, 0f);
+            ha.offsetMax = new Vector2(-6f, 0f);
+
+            var handleGo = new GameObject("Handle", typeof(RectTransform), typeof(Image));
+            handleGo.transform.SetParent(handleArea.transform, false);
+            var hr = (RectTransform)handleGo.transform;
+            hr.anchorMin = new Vector2(0f, 0f);
+            hr.anchorMax = new Vector2(0f, 1f);
+            hr.sizeDelta = new Vector2(12f, 0f);
+            var handleImg = handleGo.GetComponent<Image>();
+            handleImg.color = Color.white;
+            s.handleRect = hr;
+            s.targetGraphic = handleImg;
+
             s.onValueChanged.AddListener(v => set(v));
         }
 
@@ -168,10 +211,17 @@ namespace Escape.UI
 
         public void Close()
         {
-            UiBuilder.Deselect();
             _root.SetActive(false);
             _settings?.Persist(); // flush deferred writes when the menu closes
             if (_services != null) _services.Get<IInputGate>().PopUi(this);
+
+            // Hand focus back to whatever opened us, so a controller/keyboard
+            // user is not dropped back into the pause menu with nothing
+            // selected. Falls back to clearing the selection.
+            if (_pauseOwner != null && _pauseOwner.IsOpen)
+                UiBuilder.SelectFirst(_pauseOwner.transform);
+            else
+                UiBuilder.Deselect();
         }
     }
 }

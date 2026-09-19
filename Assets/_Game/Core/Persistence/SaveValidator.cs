@@ -11,6 +11,13 @@ namespace Escape.Core
     /// </summary>
     public static class SaveValidator
     {
+        // Broadcast contract ids. These live in content, but the broadcast
+        // state machine is domain knowledge; the checks below are skipped when
+        // the objective is absent from content, so a content rename degrades
+        // to "no check" instead of corrupting a save.
+        private const string RoutingObjectiveId = "route_broadcast";
+        private const string TransmissionObjectiveId = "broadcast_truth";
+
         public static SaveValidationResult Validate(SaveData data, IContentDatabase content)
         {
             var r = new SaveValidationResult();
@@ -24,6 +31,15 @@ namespace Escape.Core
                 if (!IsFinite(data.player.Position) ||
                     !float.IsFinite(data.player.Yaw) || !float.IsFinite(data.player.Pitch))
                     r.Errors.Add("Player pose contains non-finite values.");
+                // HasPose is authoritative from v3. A file that carries a
+                // position without the flag is repaired with the same
+                // inference the v2→v3 migration used.
+                if (!data.player.HasPose && data.player.Position != Vector3.zero)
+                {
+                    r.Warnings.Add("Pose recorded without HasPose — repaired.");
+                    data.player.HasPose = true;
+                    r.WasRepaired = true;
+                }
             }
             if (!float.IsFinite(data.detection) || data.detection < 0f || data.detection > 100f)
                 r.Errors.Add($"Detection value invalid: {data.detection}.");
@@ -72,7 +88,53 @@ namespace Escape.Core
                 data.endingId = "";
                 r.WasRepaired = true;
             }
+
+            // Progression coherence. The broadcast flags describe a state
+            // machine the command layer now enforces, so a save claiming a
+            // later state must also claim everything that state implies.
+            // Without this a poisoned save could re-enter the world with a
+            // relay that was never routed, or an ending with no transmission.
+            if (data.broadcastStarted && content.TryGetObjective(RoutingObjectiveId, out _))
+                RequireCompleted(data, RoutingObjectiveId, "broadcastStarted", r);
+            if (data.broadcastCompleted && content.TryGetObjective(TransmissionObjectiveId, out _))
+                RequireCompleted(data, TransmissionObjectiveId, "broadcastCompleted", r);
+
+            if (data.completedObjectives != null &&
+                data.completedObjectives.Contains(TransmissionObjectiveId) &&
+                !data.broadcastCompleted)
+            {
+                // The objective is the stronger claim — the transmission
+                // happened, the flag just was not recorded.
+                r.Warnings.Add("Transmission objective complete without BroadcastCompleted — repaired.");
+                data.broadcastCompleted = true;
+                data.broadcastStarted = true;
+                r.WasRepaired = true;
+            }
+
+            if (!string.IsNullOrEmpty(data.endingId) && !data.broadcastCompleted)
+            {
+                r.Warnings.Add("Ending recorded without a completed broadcast — dropped.");
+                data.endingId = "";
+                r.WasRepaired = true;
+            }
+
             return Done(r);
+        }
+
+        /// <summary>
+        /// Restores a prerequisite objective that a later-state flag implies.
+        /// Repairs upward, matching how BroadcastCompleted implies
+        /// BroadcastStarted above.
+        /// </summary>
+        private static void RequireCompleted(SaveData data, string objectiveId, string because,
+            SaveValidationResult r)
+        {
+            if (data.completedObjectives == null) data.completedObjectives = new List<string>();
+            if (data.completedObjectives.Contains(objectiveId)) return;
+            r.Warnings.Add($"Objective '{objectiveId}' missing though {because} is set — repaired.");
+            data.completedObjectives.Add(objectiveId);
+            data.activeObjectives?.Remove(objectiveId);
+            r.WasRepaired = true;
         }
 
         private static SaveValidationResult Done(SaveValidationResult r)

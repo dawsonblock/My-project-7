@@ -13,8 +13,8 @@ Baseline tag: pre-stabilization-repair (332a2e1, pre-repair state)
 | Standalone player compile + link | PASS — Succeeded, 8 scenes, 117,289,247 bytes, 0 errors | player-build/build-summary.txt |
 | Standalone player boot smoke | PASS — boots clean, 0 exceptions | player-build/smoke-test.txt |
 | Player-build CI script | PARTIAL — lockfile guard verified; batchmode wrapper unexercised | player-build/smoke-test.txt |
-| EditMode tests | PASS — 61/61 | tests/summary.txt |
-| PlayMode tests | PASS — 26/26 | tests/playmode-TestResults.xml |
+| EditMode tests | PASS — 73/73 | tests/editmode-TestResults.xml |
+| PlayMode tests | PASS — 29/29 | tests/playmode-TestResults.xml |
 | Deterministic generation | PASS — 26 files byte-identical over two builds | deterministic-generation/result.txt |
 | Progression contract | PASS — explicit vs evidence completion, gated routing | progression/summary.txt |
 | Baseline capture | DONE | baseline/ |

@@ -102,7 +102,7 @@ namespace Escape.Core
             info.Exists = File.Exists(final) || File.Exists(SaveFileIO.BakPath(final));
             if (!info.Exists) return info;
 
-            bool primaryBad = false;
+            bool primaryUsable = false;
             foreach (var path in new[] { final, SaveFileIO.BakPath(final) })
             {
                 string json;
@@ -120,12 +120,13 @@ namespace Escape.Core
                     info.TimestampUtc = data.savedAtUtc;
                     info.EvidenceCount = data.collectedEvidence?.Count ?? 0;
                     info.ObjectivesCompleted = data.completedObjectives?.Count ?? 0;
+                    if (path == final) primaryUsable = true;
                     break;
                 }
-                if (path == final) primaryBad = true;
             }
-            // Loadable from backup even though the primary file is corrupt.
-            info.Recoverable = primaryBad && info.Valid;
+            // Loadable from the backup because the primary is missing *or*
+            // corrupt — the menu should still offer recovery.
+            info.Recoverable = info.Valid && !primaryUsable;
             return info;
         }
 
