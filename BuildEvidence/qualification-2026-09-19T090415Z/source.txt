@@ -1,0 +1,5 @@
+commit: 9b9c9083e6308faa23c5e483544c195b036d685e
+branch: release/stabilization-repair
+dirty: 0
+unity: 6000.6.0f1
+capturedUtc: 2026-09-19T09:04:15Z
