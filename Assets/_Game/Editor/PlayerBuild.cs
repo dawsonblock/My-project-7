@@ -34,6 +34,11 @@ namespace Escape.EditorTools
                 return;
             }
 
+            // Building rewrites ProjectSettings.asset and reorders (or
+            // transiently empties) preloadedAssets, which dirties the repo for
+            // no reason. Snapshot the authored order and put it back.
+            var preloaded = PlayerSettings.GetPreloadedAssets();
+
             var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
             {
                 scenes = scenes,
@@ -41,6 +46,14 @@ namespace Escape.EditorTools
                 target = BuildTarget.StandaloneOSX,
                 options = BuildOptions.None
             });
+
+            if (PlayerSettings.GetPreloadedAssets().Length != preloaded.Length ||
+                !PlayerSettings.GetPreloadedAssets().SequenceEqual(preloaded))
+            {
+                PlayerSettings.SetPreloadedAssets(preloaded);
+                AssetDatabase.SaveAssets();
+                Debug.Log("[PlayerBuild] Restored the authored preloadedAssets order.");
+            }
 
             var s = report.summary;
             Debug.Log($"[PlayerBuild] {s.result} — {s.totalSize} bytes, {s.totalTime}, " +

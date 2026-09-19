@@ -23,8 +23,8 @@ namespace Escape.EditorTools
         private const string SceneDir = "Assets/_Game/Scenes";
         private const string PrefabDir = "Assets/_Game/Prefabs";
 
-        private static Material Concrete => Blockout.Mat("MAT_Concrete", new Color(0.22f, 0.23f, 0.26f));
-        private static Material ConcreteDark => Blockout.Mat("MAT_Concrete_Dark", new Color(0.1f, 0.11f, 0.13f));
+        private static Material Concrete => Blockout.Mat("MAT_Concrete", new Color(0.22f, 0.23f, 0.26f));        private static Material ConcreteDark => Blockout.Mat("MAT_Concrete_Dark", new Color(0.1f, 0.11f, 0.13f));
+        private static Material Paving => Blockout.Mat("MAT_Paving", new Color(0.3f, 0.31f, 0.34f), 0f, 0.3f);
         private static Material Metal => Blockout.Mat("MAT_Metal_Dark", new Color(0.16f, 0.18f, 0.22f), 0.6f, 0.5f);
         private static Material Wood => Blockout.Mat("MAT_Wood", new Color(0.25f, 0.17f, 0.1f));
         private static Material Crate => Blockout.Mat("MAT_Crate", new Color(0.3f, 0.22f, 0.12f));
@@ -68,6 +68,7 @@ namespace Escape.EditorTools
         [MenuItem("Tools/Escape the Elites/Build Scenes")]
         public static void BuildAll()
         {
+            if (Escape.EditorTools.BuildAll.RefuseIfPlaying("SceneFactory")) return;
             Blockout.EnsureFolder(SceneDir);
             Bootstrap();
             MainMenu();
@@ -424,8 +425,9 @@ namespace Escape.EditorTools
             moon.transform.rotation = Quaternion.Euler(40f, -30f, 0);
             NightSky(dl);
 
-            // Pier + water
-            Blockout.Box(env, "Pier", new Vector3(0, -0.5f, 0), new Vector3(36, 1, 18), Concrete, geo);
+            // Pier + water. Paving stones rather than poured concrete — this is
+            // the one large outdoor surface, and the set was going unused.
+            Blockout.Box(env, "Pier", new Vector3(0, -0.5f, 0), new Vector3(36, 1, 18), Paving, geo);
             var water = Blockout.Box(env, "Water", new Vector3(0, -1.3f, 0), new Vector3(200, 0.4f, 200), Water, geo, false);
             var waterBob = water.AddComponent<AmbientMotion>();
             waterBob.BobAmplitude = 0.05f;

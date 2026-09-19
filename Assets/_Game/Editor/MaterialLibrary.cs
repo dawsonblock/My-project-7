@@ -29,6 +29,7 @@ namespace Escape.EditorTools
             Wire("MAT_Crate", "WoodFloor043", 1f, new Color(0.8f, 0.66f, 0.48f));
             Wire("MAT_DeskTop", "WoodFloor043", 1f, new Color(0.6f, 0.45f, 0.32f));
             Wire("MAT_Carpet", "Carpet016", 4f, new Color(0.5f, 0.33f, 0.28f));
+            Wire("MAT_Paving", "PavingStones128", 6f, new Color(0.62f, 0.63f, 0.66f));
 
             // Structural materials that were still flat colour.
             Wire("MAT_Metal_Pipe", "CorrugatedSteel009", 2f, new Color(0.5f, 0.53f, 0.57f));

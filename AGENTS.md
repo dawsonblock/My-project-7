@@ -5,7 +5,14 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.19.0, AI Navigation 2.0.12.
 ## Build & verify
 
 - Regenerate everything: `Tools → Escape the Elites → Build All`
-  (layers → content import → prefabs → scenes → audio → materials)
+  (layers → content import → prefabs → scenes → materials → volume profile)
+- **Never generate while the editor is in play mode.** `SceneFactory` opens
+  scenes with `EditorSceneManager.NewScene`, which throws in play mode — a run
+  that fails there has already recreated prefabs with fresh fileIDs, so the
+  next successful run renumbers every scene that references them and you get a
+  huge meaningless diff. `BuildAll.RefuseIfPlaying` guards the entry points;
+  if you ever see a mass fileID diff, revert the prefabs and scenes together
+  and regenerate once from a clean tree.
 - Tests: `ci/run-tests.sh [editmode|playmode|all]` (batchmode, writes
   `TestResults-<mode>.xml`), or Test Runner window
 - Standalone player: `ci/build-player.sh [output]` (batchmode; refuses to run
