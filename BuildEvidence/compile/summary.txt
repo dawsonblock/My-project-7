@@ -1,4 +1,4 @@
-Compile gate — 2026-09-18
+Compile gate — 2026-09-18/19
 Unity 6000.6.0f1
 
 Result: 0 errors, 0 warnings
@@ -10,3 +10,6 @@ Fixed during qualification:
 
 Assemblies: editor, Escape.Tests.EditMode, Escape.Tests.PlayMode, standalone player.
 Player build: Succeeded (StandaloneOSX, 8 scenes, 0 errors, 117,289,247 bytes).
+
+editor.log          — the most recent script compilation region
+player-build.log    — the final player build region (BuildPlayer start to summary)

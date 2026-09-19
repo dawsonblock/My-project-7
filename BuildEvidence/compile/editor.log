@@ -1,0 +1,811 @@
+	ApplyChangesToAssetFolders: 0.286ms
+	Scan: 449.863ms
+	Collect global state as custom dependencies: 0.887ms
+	GatherAllCurrentPrimaryImportResultRevisions: 9.733ms
+	UnloadStreamsEnd: 0.285ms
+	Untracked: 3.278ms
+
+[ScriptCompilation] Requested script compilation because: Requested through public api
+[McpToolRegistry] Tool 'Unity_RunCommand' completed successfully
+tool=Unity_RunCommand result={
+  "success": true,
+  "message": "Command executed successfully.",
+  "data": {
+    "isCompilationSu...
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/ToolRegistry/McpToolRegistry.cs:254)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<object>:Start<Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14> (Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14&)
+Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry:ExecuteToolAsync (string,Newtonsoft.Json.Linq.JObject)
+Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1783)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>:Start<Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75> (Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75&)
+Unity.AI.MCP.Editor.Bridge:ExecuteCommandAsync (Unity.AI.MCP.Editor.Models.Command,Unity.AI.MCP.Editor.Connection.IConnectionTransport,System.Threading.CancellationToken)
+Unity.AI.MCP.Editor.Bridge:ProcessCommands () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1537)
+Unity.AI.MCP.Editor.Bridge:<RequestDrainOnMainThread>b__69_0 (object) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1468)
+UnityEngine.UnitySynchronizationContext/WorkRequest:Invoke () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:156)
+UnityEngine.UnitySynchronizationContext:Exec () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:84)
+UnityEngine.UnitySynchronizationContext:ExecuteTasks () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:110)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Unity(15963) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Client connected: UnixSocket-1
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x00129] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:635 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[TStateMachine] (TStateMachine& stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x00000] in <9f471310d406435eb45616458b6d1433>:0 
+  at Unity.AI.MCP.Editor.Bridge+<>c__DisplayClass60_1.<ListenerLoopAsync>b__0 () [0x00000] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:505 
+  at System.Threading.Tasks.Task`1[TResult].InnerInvoke () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Execute () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecutionContextCallback (System.Object obj) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Client connected: UnixSocket-2
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x00129] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:635 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.Start[TStateMachine] (TStateMachine& stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x00000] in <9f471310d406435eb45616458b6d1433>:0 
+  at Unity.AI.MCP.Editor.Bridge+<>c__DisplayClass60_1.<ListenerLoopAsync>b__0 () [0x00000] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:505 
+  at System.Threading.Tasks.Task`1[TResult].InnerInvoke () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Execute () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecutionContextCallback (System.Object obj) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Sent handshake (unity-mcp protocol v2.0, tools=38)
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x006db] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:802 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task`1[TResult].TrySetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (System.Threading.Tasks.Task`1[TResult] completedTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Connection.MessageProtocol.SendHandshakeAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Object[] tools, System.String toolsHash, System.Int32 timeoutMs) [0x000e8] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/MessageProtocol.cs:93 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task`1[TResult].TrySetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (System.Threading.Tasks.Task`1[TResult] completedTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Connection.UnixSocketTransport.WriteAsync (System.Byte[] data, System.Threading.CancellationToken cancellationToken) [0x001ff] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/UnixSocketTransport.cs:121 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Sent handshake (unity-mcp protocol v2.0, tools=38)
+  at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x006db] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:802 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task`1[TResult].TrySetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (System.Threading.Tasks.Task`1[TResult] completedTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Connection.MessageProtocol.SendHandshakeAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Object[] tools, System.String toolsHash, System.Int32 timeoutMs) [0x000e8] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/MessageProtocol.cs:93 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task`1[TResult].TrySetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (TResult result) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1[TResult].SetResult (System.Threading.Tasks.Task`1[TResult] completedTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncTaskMethodBuilder.SetResult () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at Unity.AI.MCP.Editor.Connection.UnixSocketTransport.WriteAsync (System.Byte[] data, System.Threading.CancellationToken cancellationToken) [0x001ff] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/UnixSocketTransport.cs:121 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+[TIMING] Validation took 304ms
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0014d] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1052 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+[TIMING] Validation took 304ms
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0014d] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1052 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+=== Connection Info ===
+MCP Server:
+  PID: 6389
+  Name: relay_mac_arm64
+  Executable: /Users/dawsonblock/.unity/relay/relay_mac_arm64.app/Contents/MacOS/relay_mac_arm64
+  Hash: 012f781827049e94...
+  Signed: Yes
+  Publisher: 9QW8UQUTAA
+  Signature Valid: Yes
+  Validation: Pending
+  Reason: Awaiting user approval
+MCP Client:
+  Name: devin
+  PID: 5763
+  Executable: /Applications/Devin.app/Contents/Resources/app/extensions/windsurf/devin/bin/devin
+  Chain depth: 1 (walked up 1 level)
+======================
+  at Unity.AI.MCP.Editor.Bridge.LogConnectionDecision (Unity.AI.MCP.Editor.Security.ValidationDecision decision) [0x002aa] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:2039 
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0019b] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1058 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+=== Connection Info ===
+MCP Server:
+  PID: 6376
+  Name: relay_mac_arm64
+  Executable: /Users/dawsonblock/.unity/relay/relay_mac_arm64.app/Contents/MacOS/relay_mac_arm64
+  Hash: 012f781827049e94...
+  Signed: Yes
+  Publisher: 9QW8UQUTAA
+  Signature Valid: Yes
+  Validation: Pending
+  Reason: Awaiting user approval
+MCP Client:
+  Name: devin
+  PID: 5742
+  Executable: /Applications/Devin.app/Contents/Resources/app/extensions/windsurf/devin/bin/devin
+  Chain depth: 1 (walked up 1 level)
+======================
+  at Unity.AI.MCP.Editor.Bridge.LogConnectionDecision (Unity.AI.MCP.Editor.Security.ValidationDecision decision) [0x002aa] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:2039 
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0019b] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1058 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Connection auto-approved: previously accepted by user
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0066c] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1230 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Connection auto-approved: previously accepted by user
+  at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0066c] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1230 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ExecutionContext.Run (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.Run () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.AwaitTaskContinuation.RunOrScheduleAction (System.Action action, System.Boolean allowInlining, System.Threading.Tasks.Task& currentTask) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishContinuations () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageThree () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.FinishStageTwo () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.Finish (System.Boolean bUserDelegateExecuted) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteWithThreadLocal (System.Threading.Tasks.Task& currentTaskSlot) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.ExecuteEntry (System.Boolean bPreventDoubleExecution) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.Tasks.Task.System.Threading.IThreadPoolWorkItem.ExecuteWorkItem () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading.ThreadPoolWorkQueue.Dispatch () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+  at System.Threading._ThreadPoolWaitCallback.PerformWaitCallback () [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog/<>c__DisplayClass8_0:<LogDelayed>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:74)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+2026-09-18 21:21:23.034 Unity[86948:436400] [Warning] TouchGestureResponder was not found in the responder chain during removal.
+Unity(16002) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Starting: /Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/BuildPipeline/bee_backend --ipc --defer-dag-verification --dagfile="Library/Bee/200b0aE.dag" --continue-on-failure --profile="Library/Bee/backend1.traceevents" ScriptAssemblies
+WorkingDir: /Users/dawsonblock/unity/My project (7)
+2026-09-18 21:21:27.441 Unity[86948:436400] [Warning] TouchGestureResponder was not found in the responder chain during removal.
+Account API did not become accessible within 30 seconds. This may be due to network issues or editor focus.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+Unity.AI.Toolkit.Accounts.Services.States.ApiAccessibleState/<WaitForCloudProjectSettings>d__4:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Accounts/Services/States/ApiAccessibleState.cs:46)
+System.Runtime.CompilerServices.AsyncMethodBuilderCore/MoveNextRunner:InvokeMoveNext (object)
+System.Threading.ExecutionContext:RunInternal (System.Threading.ExecutionContext,System.Threading.ContextCallback,object,bool)
+System.Threading.ExecutionContext:Run (System.Threading.ExecutionContext,System.Threading.ContextCallback,object,bool)
+System.Runtime.CompilerServices.AsyncMethodBuilderCore/MoveNextRunner:Run ()
+System.Threading.Tasks.AwaitTaskContinuation:InvokeAction (object)
+System.Threading.Tasks.AwaitTaskContinuation:RunCallback (System.Threading.ContextCallback,object,System.Threading.Tasks.Task&)
+System.Threading.Tasks.SynchronizationContextAwaitTaskContinuation:Run (System.Threading.Tasks.Task,bool)
+System.Threading.Tasks.Task:FinishContinuations ()
+System.Threading.Tasks.Task:FinishStageThree ()
+System.Threading.Tasks.Task`1<bool>:TrySetResult (bool)
+System.Threading.Tasks.TaskCompletionSource`1<bool>:TrySetResult (bool)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass22_0:<WaitForCondition>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:420)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Accounts/Services/States/ApiAccessibleState.cs Line: 46)
+
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+ExitCode: 0 Duration: 2s936ms
+[1898/2631  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (2.80 seconds), 1 items updated, 2631 evaluated
+Total cache size 268375992
+Total cache size after purge 268375992, took 00:00:00.2046971
+Reloading assemblies after finishing script compilation.
+Reloading assemblies after forced synchronous recompile.
+Begin MonoManager ReloadAssembly
+[INFO ] [relay] log Domain reload signal received from client editor-86948-7q564t
+Deleted discovery files
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Helpers.ServerDiscovery:DeleteDiscoveryFiles () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/ServerDiscovery.cs:156)
+Unity.AI.MCP.Editor.Bridge:Stop () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:351)
+Unity.AI.MCP.Editor.Bridge:OnBeforeAssemblyReload () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1893)
+UnityEditor.AssemblyReloadEvents:OnBeforeAssemblyReload () (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssemblyReloadEvents.cs:31)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Deleted socket file: /tmp/unity-mcp-57915bc5-86948
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Connection.UnixSocketListener:Stop () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/UnixSocketListener.cs:251)
+Unity.AI.MCP.Editor.Bridge:Stop () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:361)
+Unity.AI.MCP.Editor.Bridge:OnBeforeAssemblyReload () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1893)
+UnityEditor.AssemblyReloadEvents:OnBeforeAssemblyReload () (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssemblyReloadEvents.cs:31)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+UnityMCPBridge stopped.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Bridge:Stop () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:407)
+Unity.AI.MCP.Editor.Bridge:OnBeforeAssemblyReload () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1893)
+UnityEditor.AssemblyReloadEvents:OnBeforeAssemblyReload () (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssemblyReloadEvents.cs:31)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+GPU Resident Drawer disposed.
+Thread 0x431503000 may have been prematurely finalized
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.IOProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.ApplicationProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetOperationManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.DownloadManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.ImportedAssetsTracker is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetsSdkProvider is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseSdkService is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseSdkService or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetDataManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Upload.Editor Unity.AssetManager.Upload.Editor.UploadManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.CachePathHelper is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetManagerSettingsManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.CacheEvictionManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.ThumbnailDownloader is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.UnityConnectProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.MessageManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetDataCacheManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetDataCacheSyncService is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.ProjectIconDownloader is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetDatabaseProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.PersistenceManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.FileUtility is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.EditorUtilityProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetImportResolver is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.AssetImporter is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.UIPreferences is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.DragAndDropProjectBrowserProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.SavedAssetSearchFilterManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.PackageVersionService is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.InlineEditService is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.StateManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.PageManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.LinksProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.PopupManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.DialogManager is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.ContextMenuBuilder is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.ProjectWindowProxy is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+The type Unity.AssetManager.UI.Editor Unity.AssetManager.UI.Editor.ProjectWindowIconOverlay is being serialized by [SerializeReference], but its parent type Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 is missing the [Serializable] attribute. To suppress this warning add [Serializable] to Unity.AssetManager.Core.Editor Unity.AssetManager.Core.Editor.BaseService`1 or use [MakeSerializable].
+[INFO ] [relay] log Client disconnected - blocking and caching for recovery
+[WARN ] [relay] connection.lost clientId=null
+[WARN ] [relay] log Client disconnected - sessions will persist until auto-shutdown, reason: Client disconnected
+[INFO ] [relay] log Auto-shutdown timer started due to client disconnection
+Symbol file LoadedFromMemory is not a mono symbol file
+Assembly reference Packages/com.unity.cinemachine/Editor/Samples/ExposeHDRPInternals/HDRP-Editor-ref.asmref has no target assembly definition
+Assembly reference Packages/com.unity.entities/Unity.Scenes.Editor/Internals/Properties/Unity.Properties.Internals.asmref has no target assembly definition
+Refreshing native plugins compatible for Editor in 9.64 ms, found 5 plugins.
+Native extension for OSXStandalone target not found
+[MODES] ModeService[none].Initialize
+[MODES] ModeService[none].LoadModes
+2026-09-18 21:21:39.418 Unity[86948:436400] NSEventModifierFlagFunction specified to -setKeyEquivalentModifierMask: for item <NSMenuItem: 0x8035a0500 SDF, ke='Command-F12'>, but is only supported for system-provided menu items; will not be used
+Refreshing native plugins compatible for Editor in 2.83 ms, found 5 plugins.
+TypeManager.Initialize took: 85ms
+Start HTTP server: port:7800
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+ScheduleIndexationOnStartup MainProcess:True IndexOnStartup:True
+Scripting: successfully reloaded assembly
+[Idle]
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Bridge:LogBreadcrumb (string) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:2055)
+Unity.AI.MCP.Editor.Bridge:OnAfterAssemblyReload () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1899)
+UnityEditor.AssemblyReloadEvents:OnAfterAssemblyReload () (at /Users/bokken/build/output/unity/unity/Editor/Mono/AssemblyReloadEvents.cs:43)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+- Finished resetting the current domain, in  8.319 seconds
+Domain Reload Profiling: 13506ms
+	BeginReloadAssembly (3560ms)
+		DisableScriptedObjects (458ms)
+		ReleaseScriptingObjects (10ms)
+		CreateAndSetChildDomain (1914ms)
+	RebuildCommonClasses (8ms)
+	RebuildNativeTypeToScriptingClass (14ms)
+	initialDomainReloadingComplete (221ms)
+	LoadAllAssembliesAndSetupDomain (1383ms)
+		LoadAssemblies (1108ms)
+		TypeCache.Refresh (70ms)
+		AnalyzeDomain (53ms)
+			ResolveRequiredComponents (13ms)
+	FinalizeReload (8320ms)
+		SetupLoadedEditorAssemblies (0ms)
+			LogAssemblyErrors (26ms)
+			InitializePlatformSupportModulesInManaged (3ms)
+			BeforeProcessingInitializeOnLoad (1175ms)
+			ProcessInitializeOnLoadAttributes (2601ms)
+			ProcessInitializeOnLoadMethodAttributes (612ms)
+			EditorAssembliesLoaded (9ms)
+		AwakeInstancesAfterBackupRestoration (2491ms)
+
+Asset Pipeline Refresh (id=eef4c6e1e9bf64a8583efabc9f153681): Total: 16.683 seconds - Initiated by StopAssetImportingV2(ForceSynchronousImport | ForceDomainReload)
+	(Values over 0.05ms)
+	Summary:
+		Imports: total=0 (actual=0, local cache=0, cache server=0)
+		Asset DB Process Time: managed=0 ms, native=10761 ms
+		Asset DB Callback time: managed=270 ms, native=1 ms
+		Scripting: domain reloads=1, domain reload time=5647 ms, compile time=1 ms, other=0 ms
+		Project Asset Count: scripts=3633, non-scripts=7903
+		Asset File Changes: new=0, changed=0, moved=0, deleted=0
+		Scan Filter Count: 0
+	InvokePackagesCallback: 3.073ms
+	ApplyChangesToAssetFolders: 3.137ms
+	Collect global state as custom dependencies: 34.787ms
+	ProcessAssetsWithTransientArtifactChanges: 13.339ms
+	CategorizeAssets: 1510.322ms
+	CompileScripts: 1.243ms
+	ImportOutOfDateAssets: 8368.237ms (8354.550ms without children)
+		CollectScriptTypesHashes: 7.275ms
+		ReloadNativeAssets: 1.879ms
+		UnloadImportedAssets: 0.757ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 2.489ms
+		ImportSchedulerStart: 8.020ms
+	PostProcessAllAssets: 270.022ms
+		MonoPostProcessAllAssets: 270.014ms
+			AssetReferenceReimportMonitor.OnPostprocessAllAssets 57.922ms
+			AssetPostprocessorProxy.OnPostprocessAllAssets 52.921ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 26.849ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 16.859ms
+			AssetPostprocessor.OnPostprocessAllAssets 12.091ms
+			SyncVS.PostprocessSyncProject 11.983ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 9.611ms
+			BehaviorAssetPostProcessor.OnPostprocessAllAssets 8.198ms
+			SceneAssetPostProcessor.OnPostprocessAllAssets 6.769ms
+			AssetChangedListener.OnPostprocessAllAssets 6.401ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 6.245ms
+			SamplePostprocessor.OnPostprocessAllAssets 5.979ms
+			SpriteSlicePostprocessor.OnPostprocessAllAssets 5.850ms
+			UVCSAssetPostprocessor.OnPostprocessAllAssets 4.424ms
+			SpriteEditorTexturePostprocessor.OnPostprocessAllAssets 3.727ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 3.419ms
+			PostProcessor.OnPostprocessAllAssets 2.973ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 2.509ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 2.266ms
+			GraphRefreshPostprocessor.OnPostprocessAllAssets 2.041ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.930ms
+			MaterialPostprocessor.OnPostprocessAllAssets 1.716ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 1.537ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 1.516ms
+			UploadAssetPostprocessor.OnPostprocessAllAssets 1.201ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 1.024ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 0.970ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.957ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.891ms
+			TrackSelectedAssetsProcessor.OnPostprocessAllAssets 0.858ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.833ms
+			AssetChangeDetector.OnPostprocessAllAssets 0.822ms
+			SkillsProjectAssetPostprocessor.OnPostprocessAllAssets 0.705ms
+			CinemachineSettings.OnPostprocessAllAssets 0.655ms
+			AssetEvents.OnPostprocessAllAssets 0.583ms
+			AudioContainerPostProcessor.OnPostprocessAllAssets 0.549ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.455ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.434ms
+			AssetReloadNotifier.OnPostprocessAllAssets 0.419ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.377ms
+			TerrainToolsPostprocessor.OnPostprocessAllAssets 0.361ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.302ms
+			DomainReloadProcessor.OnPostprocessAllAssets 0.290ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.237ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 0.228ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.188ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.169ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.148ms
+	GatherAllCurrentPrimaryImportResultRevisions: 2.720ms
+	UnloadStreamsBegin: 0.391ms
+	PersistCurrentRevisions: 0.284ms
+	GenerateScriptTypeHashes: 6.415ms
+	GenerateScriptTypeSerializationHashes: 9.891ms
+	Untracked: 6462.853ms
+
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unity(16310) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Unity(16311) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Unity(16316) MallocStackLogging: can't turn off malloc stack logging because it was not enabled.
+Restored 2 identity cache entries from SessionState
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Security.ExecutableIdentityCollector:RestoreCacheFromSessionState () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Security/ExecutableIdentityCollector.cs:214)
+Unity.AI.Toolkit.EditorTask/<>c__DisplayClass21_0:<DelayCall>b__0 () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Toolkit.Async/EditorTask.cs:375)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+[Start]
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Bridge:LogBreadcrumb (string) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:2055)
+Unity.AI.MCP.Editor.Bridge:Start () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:279)
+Unity.AI.MCP.Editor.Bridge:EnsureStartedOnEditorIdle () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:454)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Set umask to 077 for secure socket creation
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Connection.UnixSocketListener:Start (string) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Connection/UnixSocketListener.cs:154)
+Unity.AI.MCP.Editor.Bridge:Start () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:282)
+Unity.AI.MCP.Editor.Bridge:EnsureStartedOnEditorIdle () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:454)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
