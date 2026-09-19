@@ -193,6 +193,15 @@ namespace Escape.Core
             }
 
             bool recovered = false;
+            // Clear the spawn request before rolling back. LoadScene stored the
+            // FAILED scene's spawn id, and SceneBootstrap treats any non-empty
+            // spawn id as "arrive at this named point" — so without this the
+            // recovery scene would consume the failed scene's spawn and
+            // teleport the player to an arbitrary point in it, instead of
+            // restoring where they actually were. Empty means "restore the
+            // saved pose", which is what returning to a known-good scene means.
+            // Removing this line fails SceneWithoutReady_RollsBackToTheLastReadyScene.
+            PendingSpawnId = "";
             yield return LoadAndAwaitReady(target, targetName, r => recovered = r);
 
             if (!recovered)

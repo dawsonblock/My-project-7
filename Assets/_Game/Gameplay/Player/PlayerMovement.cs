@@ -91,7 +91,10 @@ namespace Escape.Gameplay
 
         private void Update()
         {
-            if (_gate == null || _tuning == null || _settings == null) return;
+            // _input can legitimately be absent (a prefab without a reader, or
+            // before SetInputSource installs one): no source means no movement,
+            // not an NRE every frame.
+            if (_gate == null || _tuning == null || _settings == null || _input == null) return;
             if (_state.Caught || _gate.UiOpen)
             {
                 _velocity = Vector3.zero;

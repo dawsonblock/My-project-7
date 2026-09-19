@@ -13,14 +13,20 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
   huge meaningless diff. `BuildAll.RefuseIfPlaying` guards the entry points;
   if you ever see a mass fileID diff, revert the prefabs and scenes together
   and regenerate once from a clean tree.
-- Tests: `ci/run-tests.sh [editmode|playmode|all]` (batchmode, writes
+- Tests: `./ci/run-tests.sh [editmode|playmode|all]` (batchmode, writes
   `TestResults-<mode>.xml`), or Test Runner window
-- Standalone player: `ci/build-player.sh [output]` (batchmode; refuses to run
+- Standalone player: `./ci/build-player.sh [output]` (batchmode; refuses to run
   while the editor holds `Temp/UnityLockfile`), or the menu
   `Tools → Escape the Elites → Build Standalone Player`
-- Determinism gate: `ci/verify-generation.sh`, or menu
+- Determinism gate: `./ci/verify-generation.sh`, or menu
   `Tools → Escape the Elites → Verify Deterministic Generation`
   (BuildAll twice → all generated files must be byte-identical)
+- **This repo has `core.fileMode=false`**, so git does not track the
+  executable bit. A new script under `ci/` will be committed as `100644`
+  unless you set it explicitly — and then `./ci/new-script.sh` dies with
+  "Permission denied" on a fresh clone and in CI while working fine locally:
+  `git update-index --chmod=+x ci/new-script.sh`. Callers inside other
+  scripts should use `bash ci/x.sh` so they don't depend on the bit at all.
 - **Bound qualification run: `ci/qualify.sh [--allow-dirty]`.** One command
   produces one evidence directory under `BuildEvidence/qualification-<utc>/`
   that binds every claim to the exact source revision: source tree hash, the
@@ -90,9 +96,11 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
 ## Editor/testing gotchas
 
 - `InputSystem.settings.editorInputBehaviorInPlayMode =
-  PointersAndKeyboardsRespectGameViewFocus` — synthetic keyboard input is
-  suppressed when the Game view is unfocused. Use `InputTestFixture`
-  PlayMode tests, not `QueueStateEvent`.
+  PointersAndKeyboardsRespectGameViewFocus` means *device* input is ignored
+  while the Game view is unfocused, so don't drive tests with real device
+  events (`QueueStateEvent`). `InputTestFixture`'s `Press`/`Set` write control
+  values directly and do work in batchmode — measured, see the
+  `Time.deltaTime` note below before blaming input for a failing PlayMode test.
 - TestRunnerApi runs can wedge after an aborted run — force a domain
   reload (`RequestScriptCompilation`) before rerunning.
 - `SaveModifiedSceneTask` fails PlayMode runs if the open scene is dirty

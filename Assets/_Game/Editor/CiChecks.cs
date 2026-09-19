@@ -66,10 +66,14 @@ namespace Escape.EditorTools
             var diffs = DescribeDiffs(before, after, "reimport");
             if (diffs.Count > 0)
                 throw new Exception(
-                    "Generated definitions do not match MigrationReference — a .asset under " +
-                    "Resources/Definitions was edited by hand, or the importer changed. " +
-                    "Edit the JSON in MigrationReference/ instead; it has now been reimported:\n  " +
-                    string.Join("\n  ", diffs));
+                    "Generated definitions do not match MigrationReference. Edit the JSON in " +
+                    "MigrationReference/ rather than the .asset; the definitions have now been " +
+                    "reimported to match. Files that changed:\n  " +
+                    string.Join("\n  ", diffs) +
+                    "\n\nIf one of those files is NEW, a definition asset was missing and the " +
+                    "importer recreated it with a fresh GUID — scenes and prefabs still reference " +
+                    "the old GUID, so restore the deleted asset (git checkout) and fix the " +
+                    "references before committing anything.");
 
             Debug.Log($"[CiChecks] Generated content matches its source ({before.Count} files).");
         }

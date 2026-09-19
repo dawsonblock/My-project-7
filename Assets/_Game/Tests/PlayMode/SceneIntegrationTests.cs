@@ -209,10 +209,16 @@ namespace Escape.Tests.PlayMode
         /// scene that did become ready — not fading a half-initialized scene
         /// back in and leaving the player standing in it.
         ///
-        /// The failure handler restores the readiness window, which is what
-        /// lets the arrival fail while the rollback succeeds; the event is
-        /// published before recovery begins, so this is exactly the production
-        /// sequence, not a test-only shortcut.
+        /// It also pins where the player ends up. LoadScene stored the FAILED
+        /// scene's spawn id, and SceneBootstrap reads any non-empty spawn id as
+        /// "arrive at this named point" — so a rollback that forgot to clear it
+        /// would drop the player on the recovery scene's spawn point instead of
+        /// restoring where they were. Dock's "default" spawn is at (0, 0.1, -6),
+        /// so a distinct pose here is observable.
+        ///
+        /// The failure handler restores the readiness window and pins the pose.
+        /// The event is published before recovery begins, so both take effect
+        /// exactly as they would in production — no test-only shortcut.
         /// </summary>
         [UnityTest]
         public IEnumerator SceneWithoutReady_RollsBackToTheLastReadyScene()
@@ -229,12 +235,22 @@ namespace Escape.Tests.PlayMode
             yield return WaitUntil(() => !scenes.IsTransitioning, 10f);
             Assert.AreEqual(SceneId.Dock, state.State.SceneId, "precondition: Dock is loaded");
 
+            // Deliberately far from Dock's authored "default" spawn (0, 0.1, -6).
+            var rollbackPose = new Vector3(9f, 0f, -7f);
+
             string changedTo = null;
             bool failed = false;
             System.Action<SceneTransitionFailedEvent> onFail = _ =>
             {
                 failed = true;
                 scenes.ReadyTimeoutSeconds = 5f; // the arrival failed; let the rollback land
+                // Pinned here, after the failed scene's own bootstrap has done
+                // its arrival work, so nothing can overwrite it before the
+                // recovery scene restores it.
+                state.State.Player.HasPose = true;
+                state.State.Player.Position = rollbackPose;
+                state.State.Player.Yaw = 0f;
+                state.State.Player.Pitch = 0f;
             };
             System.Action<SceneChangedEvent> onChange = e => changedTo = e.SceneId;
             events.Subscribe(onFail);
@@ -248,6 +264,8 @@ namespace Escape.Tests.PlayMode
                 scenes.ReadyTimeoutSeconds = 0f;
                 scenes.LoadScene(SceneId.ServiceEntrance, "default");
                 yield return WaitUntil(() => !scenes.IsTransitioning, 10f);
+                yield return null; // SceneBootstrap placement
+                yield return null;
             }
             finally
             {
@@ -261,6 +279,16 @@ namespace Escape.Tests.PlayMode
                 "a failed arrival must roll back to the last scene that did become ready");
             Assert.AreEqual(SceneId.Dock, state.State.SceneId,
                 "state must point at the recovered scene, not the scene that failed readiness");
+
+            // The rollback must restore the saved pose, not the recovery
+            // scene's spawn point — i.e. the failed scene's pending spawn was
+            // cleared before the rollback loaded.
+            var player = Object.FindAnyObjectByType<PlayerState>();
+            Assert.IsNotNull(player, "no player in the recovered scene");
+            var landed = player.transform.position;
+            Assert.Less(Vector3.Distance(landed, rollbackPose), 0.5f,
+                $"the rollback placed the player at {landed}, not the saved pose {rollbackPose} — " +
+                "it consumed the failed scene's spawn id instead of restoring where they were");
         }
 
         private static IEnumerator WaitUntil(System.Func<bool> pred, float timeout)

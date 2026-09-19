@@ -58,7 +58,14 @@ assert_results() {
         echo "FAIL: $mode reported 0 tests — refusing to treat an empty run as a pass." >&2
         return 3
     fi
-    if [[ -n "$failed" && "$failed" -ne 0 ]]; then
+    # A missing failed count is a malformed document, not a pass: the whole
+    # point of this check is to not depend on the runner's exit code, so an
+    # absent attribute must fail closed rather than skip the assertion.
+    if [[ -z "$failed" ]]; then
+        echo "FAIL: $mode results have no failed count — malformed NUnit document." >&2
+        return 3
+    fi
+    if [[ "$failed" -ne 0 ]]; then
         echo "FAIL: $mode reported $failed failing test(s)." >&2
         return 3
     fi

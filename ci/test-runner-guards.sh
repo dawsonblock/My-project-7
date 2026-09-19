@@ -93,6 +93,15 @@ RED="$TMP/red.xml"
 make_result "$RED" "Escape.Tests.PlayMode.dll" 34 3
 expect_reject "green exit but 3 recorded failures" playMode PlayMode "$RED" "$NOW"
 
+NOFAILED="$TMP/nofailed.xml"
+cat >"$NOFAILED" <<'XML'
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="34" result="Passed" total="34" passed="34">
+  <test-suite type="Assembly" id="1091" name="Escape.Tests.PlayMode.dll" />
+</test-run>
+XML
+expect_reject "malformed document with no failed count" playMode PlayMode "$NOFAILED" "$NOW"
+
 echo
 echo "=== $pass passed, $fail failed ==="
 [[ "$fail" -eq 0 ]] || exit 1

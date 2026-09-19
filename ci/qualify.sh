@@ -21,7 +21,9 @@ PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_DIR"
 
 ALLOW_DIRTY=0
-[[ "${1:-}" == "--allow-dirty" ]] && ALLOW_DIRTY=1
+if [[ "${1:-}" == "--allow-dirty" ]]; then
+    ALLOW_DIRTY=1
+fi
 
 UNITY_VERSION="$(grep -oE 'm_EditorVersion: [0-9a-z.]+' ProjectSettings/ProjectVersion.txt | awk '{print $2}')"
 UNITY_PATH="${UNITY_PATH:-/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity}"
@@ -228,11 +230,29 @@ stage smoke                   stage_smoke                   || true
 
 git status --porcelain >"$EVIDENCE/tree-after.txt"
 
-edit_total="$(grep -o 'total="[0-9]*"' "$EVIDENCE/TestResults-EditMode.xml" 2>/dev/null | head -1 | tr -dc '0-9')"
-edit_failed="$(grep -o 'failed="[0-9]*"' "$EVIDENCE/TestResults-EditMode.xml" 2>/dev/null | head -1 | tr -dc '0-9')"
-play_total="$(grep -o 'total="[0-9]*"' "$EVIDENCE/TestResults-PlayMode.xml" 2>/dev/null | head -1 | tr -dc '0-9')"
-play_failed="$(grep -o 'failed="[0-9]*"' "$EVIDENCE/TestResults-PlayMode.xml" 2>/dev/null | head -1 | tr -dc '0-9')"
-schema_version="$(grep -o '"version": *[0-9]*' Assets/_Game/MigrationReference/current-save-schema.json | head -1 | tr -dc '0-9')"
+# A player build is known to rewrite ProjectSettings (preloadedAssets, URP
+# global settings, the volume profile). Record it rather than let it pass
+# unnoticed: the manifest's source hash describes the tree as it was when the
+# run started, so churn afterwards is worth stating.
+tree_changed=false
+if ! diff -q "$EVIDENCE/tree-before.txt" "$EVIDENCE/tree-after.txt" >/dev/null 2>&1; then
+    tree_changed=true
+    warn "Tracked files changed during the run — see tree-after.txt (revert build churn)."
+    diff -u "$EVIDENCE/tree-before.txt" "$EVIDENCE/tree-after.txt" >&2 || true
+fi
+
+# Counts are null when a stage failed before producing its results file —
+# null says "unknown", whereas a sentinel like -1 reads like a real number.
+num_or_null() {
+    if [[ -n "$1" ]]; then echo "$1"; else echo "null"; fi
+}
+
+edit_total="$(grep -o 'total="[0-9]*"' "$EVIDENCE/TestResults-EditMode.xml" 2>/dev/null | head -1 | tr -dc '0-9' || true)"
+edit_failed="$(grep -o 'failed="[0-9]*"' "$EVIDENCE/TestResults-EditMode.xml" 2>/dev/null | head -1 | tr -dc '0-9' || true)"
+play_total="$(grep -o 'total="[0-9]*"' "$EVIDENCE/TestResults-PlayMode.xml" 2>/dev/null | head -1 | tr -dc '0-9' || true)"
+play_failed="$(grep -o 'failed="[0-9]*"' "$EVIDENCE/TestResults-PlayMode.xml" 2>/dev/null | head -1 | tr -dc '0-9' || true)"
+schema_version="$(grep -o '"version": *[0-9]*' Assets/_Game/MigrationReference/current-save-schema.json | head -1 | tr -dc '0-9' || true)"
+[[ -n "$schema_version" ]] || schema_version="null"
 
 all_passed=true
 [[ "$stage_failures" -eq 0 ]] || all_passed=false
@@ -262,11 +282,12 @@ cat >"$EVIDENCE/manifest.json" <<JSON
   "sourceTreeSha256": "$(cat "$EVIDENCE/source.sha256")",
   "unityVersion": "$UNITY_VERSION",
   "saveSchemaVersion": $schema_version,
+  "postRunTreeChanged": $tree_changed,
   "generatedContent": { "inSyncWithSource": $(grep -q '^generated-content: PASS' "$STAGES" && echo true || echo false) },
   "deterministicGeneration": { "passed": $(grep -q '^deterministic-generation: PASS' "$STAGES" && echo true || echo false) },
   "tests": {
-    "editMode": { "total": ${edit_total:-0}, "failed": ${edit_failed:--1} },
-    "playMode": { "total": ${play_total:-0}, "failed": ${play_failed:--1} }
+    "editMode": { "total": $(num_or_null "$edit_total"), "failed": $(num_or_null "$edit_failed") },
+    "playMode": { "total": $(num_or_null "$play_total"), "failed": $(num_or_null "$play_failed") }
   },
   "player": {
     "platform": "StandaloneOSX",

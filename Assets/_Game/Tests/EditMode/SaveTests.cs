@@ -220,13 +220,23 @@ namespace Escape.Tests.EditMode
         public void Save_Refuses_AnInvalidSlot_WithoutTouchingDisk()
         {
             _state.State.SceneId = "dock";
+            // "../escape" resolves to a sibling of the saves directory. Record
+            // whether that sibling already exists, so the assertion below can
+            // only fail if THIS call created it — asserting on an absolute path
+            // in the system temp dir would fail for unrelated reasons.
+            var sibling = Path.Combine(Path.GetDirectoryName(_dir), "escape.json");
+            bool siblingExistedBefore = File.Exists(sibling);
+
             Assert.IsFalse(_saves.Save("../escape"), "an invalid slot must not be written");
             Assert.IsFalse(_saves.HasSave("../escape"));
             Assert.IsFalse(_saves.Delete("../escape"));
             Assert.IsFalse(_saves.LoadIntoState("../escape", out var errors));
             StringAssert.Contains("Invalid save slot", string.Join(";", errors));
-            Assert.IsFalse(Directory.Exists(Path.Combine(Path.GetTempPath(), "escape")),
-                "an invalid slot must not escape the saves directory");
+
+            Assert.AreEqual(siblingExistedBefore, File.Exists(sibling),
+                "an invalid slot escaped the saves directory");
+            Assert.IsFalse(Directory.Exists(_dir),
+                "a refused save must not even create the saves directory");
         }
 
         [Test]
