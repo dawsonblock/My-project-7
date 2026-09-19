@@ -39,14 +39,19 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
   `Tools → Escape the Elites → Verify Generated Content Matches Source`
   (reimports the definitions and fails if any tracked `.asset` changed — i.e.
   if someone hand-edited a generated file). Also a stage of `ci/qualify.sh`.
-- A player build rewrites `ProjectSettings/ProjectSettings.asset`: it reorders
-  (and transiently empties) `preloadedAssets`. Revert that churn. `PlayerBuild`
-  now restores `preloadedAssets` and re-runs the volume-profile authoring pass,
-  but two things still need a hand-revert after a build:
-  - `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` gains a
-    shader-stripping `rid`.
-  - `Assets/Settings/DefaultVolumeProfile.asset` gains `PaniniProjection` and
-    `ProbeVolumesOptions` as documents Unity does not load. They are inert
+- A player build can rewrite settings files. `ci/qualify.sh` reports this as
+  `postRunTreeChanged`, so check the manifest rather than assuming — it is
+  currently **false** on a normal build.
+  - Historically `ProjectSettings/ProjectSettings.asset` churned
+    `preloadedAssets` and `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset`
+    lost a shader-stripping `rid` on every build. That turned out to be the
+    pending consequence of settings objects owned by packages the project no
+    longer uses: once the removals in `chore/package-reduction` were kept, a
+    subsequent full build reported no churn at all. If it reappears, revert the
+    churn and find out which package reintroduced it, rather than reverting on
+    sight every time.
+  - `Assets/Settings/DefaultVolumeProfile.asset` still gains `PaniniProjection`
+    and `ProbeVolumesOptions` as documents Unity does not load. They are inert
     (panini distance 0, no probe volumes) and cannot be removed or disabled
     from code, because the loaded component list does not contain them.
 
@@ -73,6 +78,16 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
   Prefab instances at load.
 
 ## Architecture quick map
+
+- **Packages are deliberately minimal — 11 direct dependencies.** The template's
+  feature packs (`characters-animation`, `gameplay-storytelling`,
+  `worldbuilding`) and the unused runtime packages (Behavior, Physics, Pipeline,
+  Services, Timeline) were removed on `chore/package-reduction`, which took the
+  player from 112M / 221 managed assemblies to 99M / 151. Two editor-only
+  packages are kept on purpose: `asset-manager-for-unity` (the committed `uam/`
+  tracking folder depends on it) and `ai.assistant` (it provides
+  `Unity.AI.MCP.Editor`, the unity-mcp bridge). Do not re-add a package without
+  checking `BuildEvidence/package-audit.txt` and re-running `ci/qualify.sh`.
 
 - `GameRoot` (Bootstrap scene) → `GameServices` registry → services
   (`ISceneService`, `ISaveService`, `ISaveCoordinator`, `IInputGate`, …)

@@ -1,5 +1,16 @@
 Package audit — 2026-09-19
 
+OUTCOME (2026-09-19, branch chore/package-reduction): this audit was acted on
+once the stabilization gates were green, in the two steps it recommended.
+Declared packages went 20 -> 11; player 112M -> 99M; managed assemblies
+221 -> 151. Every removal was verified with a full ci/qualify.sh run
+(deterministic generation, both suites, player build, built-player smoke).
+Two editor-only packages were deliberately KEPT: asset-manager-for-unity (the
+committed uam/ tracking folder depends on it) and ai.assistant (it provides
+Unity.AI.MCP.Editor, the unity-mcp bridge). Neither ships, so removing them
+would have cost a workflow for no size win. The per-step measurements are in
+the two commits on that branch.
+
 Scope: what the project declares, what its code uses, and what the built
 player actually ships. NOT an action list — see "why nothing was removed".
 
