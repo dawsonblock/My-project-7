@@ -21,8 +21,42 @@ CORRECTION to the earlier note below: ai.assistant is NOT player-free. It
 copies Unity.AI.MCP.Runtime.dll (9.7 KB) and Unity.AI.Tracing.dll (28 KB) into
 the player's Managed/ directory. It is kept for the Unity MCP development
 workflow, which is a deliberate ~38 KB trade, not a free dependency. A minimal
-release player needs a manifest without it. asset-manager-for-unity does not
-ship.
+release player needs a manifest without it.
+
+REMAINING ROOTS — each decided on evidence, not assumption:
+
+- com.unity.feature.development — REMOVED. An aggregate whose dependencies
+  (editorcoroutines, profile-analyzer, codecoverage, test-framework.performance)
+  are referenced by no .cs file. Kept explicitly instead: com.unity.ide.rider and
+  com.unity.ide.visualstudio, the latter being what generates the .csproj files
+  the repo's tooling reads. Graph 43 -> 37 entries; player unchanged; 10 .csproj
+  still generated.
+
+- com.unity.asset-manager-for-unity — REMOVED. uam/ held only the README the
+  package itself generates (no tracking state), its Settings.json was an empty
+  dictionary, and no code references it. It does not ship, so this is graph
+  hygiene. One manifest line restores it.
+
+- com.unity.modules.assetbundle and com.unity.modules.hierarchy — TESTED, then
+  REVERTED. Removed one at a time and fully qualified: 100,456,132 -> 100,453,540
+  (-2.6 KB) and -> 100,453,508 (-32 B), 150 assemblies unchanged, and
+  UnityEngine.AssetBundleModule.dll / UnityEngine.HierarchyModule.dll still ship
+  in both cases. So a com.unity.modules.* declaration does NOT control engine
+  module inclusion in Unity 6000.6.0f1. The entries are inert; they are left
+  declared rather than removed for a change that measures nothing.
+
+- Unity.Collections.Tests.CoreCLR.* (4 assemblies, shipped) — UPSTREAM DEFECT,
+  not ours. com.unity.collections ships these helper assemblies with
+  defineConstraints: [], includePlatforms: [] and autoReferenced: true, while its
+  parent Unity.Collections.Tests.asmdef correctly carries
+  ["UNITY_INCLUDE_TESTS"]. So they compile and pack into every player.
+  com.unity.collections arrives via com.unity.render-pipelines.core, so it cannot
+  be removed through the graph, and there is no project-side switch: nothing in
+  ProjectSettings controls UNITY_INCLUDE_TESTS for player builds. Not actionable
+  until Unity fixes the package.
+
+The 150-assembly player is therefore not the natural minimum, but the remaining
+excess is now accounted for rather than unknown.
 
 Scope: what the project declares, what its code uses, and what the built
 player actually ships. NOT an action list — see "why nothing was removed".

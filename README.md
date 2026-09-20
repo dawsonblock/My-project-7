@@ -185,8 +185,9 @@ All scripts are batchmode, need the editor **closed**, and are invoked through
 generated-content sync, deterministic generation, both test suites, player build,
 built-player smoke — and writes a single `manifest.json` binding every claim to the
 exact revision that produced it. **Any failed stage means no qualified manifest.**
-It refuses a dirty tree unless given `--allow-dirty`, which records
-`"qualified": false` rather than quietly qualifying an uncommitted revision.
+It refuses a dirty tree; `--allow-dirty` runs anyway but writes to
+`BuildEvidence/unqualified-<utc>/`, which is git-ignored, so a non-qualifying
+manifest can never end up in the evidence record.
 
 CI (`.github/workflows/unity-tests.yml`) runs the test suites, the determinism gate,
 and a macOS standalone player build followed by the built-player smoke test.

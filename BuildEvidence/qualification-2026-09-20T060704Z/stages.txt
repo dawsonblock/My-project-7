@@ -1,6 +1,0 @@
-source: PASS
-generated-content: PASS
-deterministic-generation: PASS
-tests: PASS
-player-build: PASS
-smoke: PASS

@@ -131,6 +131,9 @@ InitTestScene*.unity*
 # manifest pointing at logs that git silently dropped is worse than no manifest.
 !/BuildEvidence/qualification-*/*.log
 !/BuildEvidence/qualification-*/*.txt
+# Dirty (--allow-dirty) runs are not evidence and must never be committed: a
+# qualified:false manifest in the record is worse than no record.
+/BuildEvidence/unqualified-*/
 
 # PerformanceTesting package artifacts — rewritten by every test run
 /[Aa]ssets/Resources/PerformanceTestRun*.json*

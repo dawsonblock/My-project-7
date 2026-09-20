@@ -29,7 +29,15 @@ UNITY_VERSION="$(grep -oE 'm_EditorVersion: [0-9a-z.]+' ProjectSettings/ProjectV
 UNITY_PATH="${UNITY_PATH:-/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity}"
 
 RUN_ID="$(date -u +%Y-%m-%dT%H%M%SZ)"
-EVIDENCE="$PROJECT_DIR/BuildEvidence/qualification-$RUN_ID"
+# A dirty run is not evidence, so it must not land in the tracked evidence tree:
+# `git add -A` would sweep a qualified:false manifest into a commit and the
+# record would then contain a run that qualifies nothing. Dirty runs go to
+# unqualified-<utc>/, which .gitignore keeps out of the repository entirely.
+if [[ "$ALLOW_DIRTY" -eq 1 ]]; then
+    EVIDENCE="$PROJECT_DIR/BuildEvidence/unqualified-$RUN_ID"
+else
+    EVIDENCE="$PROJECT_DIR/BuildEvidence/qualification-$RUN_ID"
+fi
 STAGES="$EVIDENCE/stages.txt"
 APP="$PROJECT_DIR/Builds/StandaloneOSX/EscapeTheElites.app"
 

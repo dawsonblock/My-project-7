@@ -1,4 +1,0 @@
-=== Running editMode tests (Unity 6000.6.0f1) ===
-    editMode: 86 tests, 0 failed (name="Escape.Tests.EditMode.dll")
-=== Running playMode tests (Unity 6000.6.0f1) ===
-    playMode: 35 tests, 0 failed (name="Escape.Tests.PlayMode.dll")
