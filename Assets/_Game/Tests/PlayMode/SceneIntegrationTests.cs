@@ -291,6 +291,55 @@ namespace Escape.Tests.PlayMode
                 "it consumed the failed scene's spawn id instead of restoring where they were");
         }
 
+        /// <summary>
+        /// A load arriving while a scene transition is already running must be
+        /// refused outright, not half-applied.
+        ///
+        /// SaveService.Load commits save state and *then* asks for a scene
+        /// change, and SceneService silently drops a load request made during a
+        /// transition. So without a guard a second load lands its state while the
+        /// first transition's scene is the one that ends up loaded — GameState
+        /// describing one scene, Unity showing another, and no error anywhere.
+        /// </summary>
+        [UnityTest]
+        public IEnumerator Load_DuringATransition_IsRefused_AndLeavesStateUntouched()
+        {
+            yield return null;
+            var services = GameRoot.Instance.Services;
+            var scenes = services.Get<ISceneService>();
+            var state = services.Get<IGameStateService>();
+            var saves = services.Get<ISaveService>();
+
+            // A save whose state is unmistakable when it comes back.
+            scenes.LoadScene(SceneId.Dock, "default");
+            yield return WaitUntil(() => !scenes.IsTransitioning, 10f);
+            state.State.CollectedEvidence.Add("broadcast_key_001");
+            Assert.IsTrue(saves.Save(TestSlot), "precondition: a save exists");
+
+            // Live state no longer matches the save.
+            state.State.CollectedEvidence.Clear();
+
+            // Start a transition, then try to load in the middle of it.
+            scenes.LoadScene(SceneId.ServiceEntrance, "default");
+            Assert.IsTrue(scenes.IsTransitioning,
+                "precondition: LoadScene starts the transition synchronously");
+
+            LogAssert.Expect(LogType.Warning, new System.Text.RegularExpressions.Regex(
+                "refused — a scene transition is in progress"));
+            bool loaded = saves.Load(TestSlot);
+
+            Assert.IsFalse(loaded,
+                "loading during a transition must be refused, not partially applied");
+            Assert.IsFalse(state.State.CollectedEvidence.Contains("broadcast_key_001"),
+                "a refused load must not have replaced state — refusing before committing is " +
+                "the entire point of the guard");
+
+            // Let the transition finish so it cannot bleed into the next test.
+            yield return WaitUntil(() => !scenes.IsTransitioning, 10f);
+            Assert.AreEqual(SceneId.ServiceEntrance, state.State.SceneId,
+                "the transition that was already running must still complete normally");
+        }
+
         private static IEnumerator WaitUntil(System.Func<bool> pred, float timeout)
         {
             var t = 0f;

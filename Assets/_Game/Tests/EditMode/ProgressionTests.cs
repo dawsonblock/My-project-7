@@ -485,38 +485,47 @@ namespace Escape.Tests.EditMode
         }
 
         // ---------- save invariants: broadcast coherence ----------
+        //
+        // Policy: the completed objectives are the progression record and the
+        // two broadcast booleans are a cache of it, so the flags are derived
+        // from the objectives and never the other way round. Repairing upward
+        // would let a corrupt-but-valid file manufacture progression by
+        // flipping one boolean, so these tests pin the direction.
 
         [Test]
-        public void Validator_Repairs_RoutingObjective_MissingBehindBroadcastFlag()
+        public void Validator_ClearsBroadcastStarted_WhenTheRoutingObjectiveIsAbsent()
         {
             var data = new SaveData { sceneId = "dock", broadcastStarted = true };
             var r = SaveValidator.Validate(data, ContentDatabase.Load());
             Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
-            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"),
-                "BroadcastStarted implies the signal was routed — the objective should be restored");
+
+            Assert.IsFalse(data.broadcastStarted,
+                "the objective is authoritative: a flag must not survive without it");
+            Assert.IsFalse(data.completedObjectives.Contains("route_broadcast"),
+                "validation must not manufacture progression from a boolean");
         }
 
         [Test]
-        public void Validator_Repairs_TransmissionObjective_MissingBehindCompletedFlag()
+        public void Validator_ClearsBroadcastCompleted_WhenTheTransmissionObjectiveIsAbsent()
         {
             var data = new SaveData { sceneId = "dock", broadcastCompleted = true };
             var r = SaveValidator.Validate(data, ContentDatabase.Load());
             Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
-            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"));
-            Assert.IsTrue(data.completedObjectives.Contains("broadcast_truth"),
-                "BroadcastCompleted implies an actual transmission");
+
+            Assert.IsFalse(data.broadcastCompleted);
+            Assert.IsFalse(data.broadcastStarted);
+            Assert.IsFalse(data.completedObjectives.Contains("route_broadcast"));
+            Assert.IsFalse(data.completedObjectives.Contains("broadcast_truth"));
         }
 
         /// <summary>
-        /// The implication chain a single ordered pass cannot close. A save
-        /// carrying only the transmission objective reaches the flag repair
-        /// *after* the routing-objective repair has already run, so the
-        /// repaired result used to keep BroadcastStarted/BroadcastCompleted
-        /// with route_broadcast still missing — contradicting the invariants
-        /// the schema documents. Normalization has to reach a fixpoint.
+        /// A transmission with no routed relay is internally inconsistent. The
+        /// objectives are left alone — validation does not rewrite the
+        /// progression record — but the flags are not allowed to claim a
+        /// broadcast the record does not support.
         /// </summary>
         [Test]
-        public void Validator_ReachesAFixpoint_OnTheTransmissionObjectiveImplication()
+        public void Validator_DoesNotManufactureProgression_FromATransmissionObjectiveAlone()
         {
             var data = new SaveData
             {
@@ -528,12 +537,27 @@ namespace Escape.Tests.EditMode
             var r = SaveValidator.Validate(data, ContentDatabase.Load());
             Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
 
-            Assert.IsTrue(data.broadcastCompleted,
-                "A recorded transmission implies the broadcast completed");
-            Assert.IsTrue(data.completedObjectives.Contains("route_broadcast"),
-                "BroadcastCompleted implies the relay was routed, even when the routing objective " +
-                "only became implied partway through the repair");
-            Assert.IsTrue(data.completedObjectives.Contains("broadcast_truth"));
+            Assert.IsFalse(data.broadcastStarted,
+                "the relay was never routed, so BroadcastStarted must not be derived");
+            Assert.IsFalse(data.broadcastCompleted,
+                "a transmission implies a routed relay — without route_broadcast the flag is false");
+            Assert.AreEqual(1, data.completedObjectives.Count,
+                "validation must not add objectives to support a flag");
+        }
+
+        [Test]
+        public void Validator_ReconstructsFlags_FromTheObjectivesThatSupportThem()
+        {
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                completedObjectives = new List<string> { "route_broadcast", "broadcast_truth" }
+            };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+
+            Assert.IsTrue(data.broadcastStarted, "the objectives record a routed relay");
+            Assert.IsTrue(data.broadcastCompleted, "the objectives record a transmission");
         }
 
         [Test]
@@ -549,6 +573,28 @@ namespace Escape.Tests.EditMode
         [Test]
         public void Validator_KeepsEnding_WhenTheBroadcastCompleted()
         {
+            // The objectives are the record, so a legitimate completed
+            // broadcast carries them; the flags alone are not enough.
+            var data = new SaveData
+            {
+                sceneId = "dock",
+                broadcastStarted = true,
+                broadcastCompleted = true,
+                endingId = "ending_bad",
+                completedObjectives = new List<string> { "route_broadcast", "broadcast_truth" }
+            };
+            var r = SaveValidator.Validate(data, ContentDatabase.Load());
+            Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
+            Assert.AreEqual("ending_bad", data.endingId);
+        }
+
+        /// <summary>
+        /// An ending is the most visible thing a flag could invent, so the same
+        /// authority rule applies: without the objectives, the ending goes.
+        /// </summary>
+        [Test]
+        public void Validator_DropsEnding_WhenOnlyTheFlagsClaimTheBroadcast()
+        {
             var data = new SaveData
             {
                 sceneId = "dock",
@@ -558,7 +604,9 @@ namespace Escape.Tests.EditMode
             };
             var r = SaveValidator.Validate(data, ContentDatabase.Load());
             Assert.IsTrue(r.IsValid, string.Join(";", r.Errors));
-            Assert.AreEqual("ending_bad", data.endingId);
+            Assert.AreEqual("", data.endingId,
+                "the flags cannot grant an ending the objectives do not record");
+            Assert.IsFalse(data.broadcastCompleted);
         }
 
         // ---------- world manifest: scene-authored ids are verifiable ----------

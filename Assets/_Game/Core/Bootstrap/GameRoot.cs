@@ -45,9 +45,12 @@ namespace Escape.Core
             var audio = new AudioService(transform);
             var inputGate = new InputGate();
             var saveCoordinator = new SaveCoordinator();
-            var saves = new SaveService(state, content, events, dispatcher,
-                coordinator: saveCoordinator);
+            // SceneService is built first so SaveService can refuse a load while
+            // a transition is in flight. Loading commits save state and then asks
+            // for a scene change, which is not atomic on its own.
             var scenes = new SceneService(this, Services, state, content, events);
+            var saves = new SaveService(state, content, events, dispatcher,
+                coordinator: saveCoordinator, scenes: scenes);
 
             Services.Register<IGameCommandDispatcher>(dispatcher);
             Services.Register<IGameEventBus>(events);

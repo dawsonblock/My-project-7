@@ -117,16 +117,19 @@ namespace Escape.Core
         }
 
         /// <summary>
-        /// Broadcast coherence, run to a fixpoint. The flags and the
-        /// objectives imply each other in both directions — a completed
-        /// transmission implies the flags, and the flags imply the
-        /// prerequisite objectives — so a single ordered pass is not closed
-        /// under its own implications. Repairing "transmission objective is
-        /// complete" sets BroadcastCompleted, and *that* is what implies the
-        /// routing objective; if the routing rule was already evaluated, it
-        /// never runs again and the result violates the schema's own
-        /// documented invariants. Iterating until nothing changes is what
-        /// makes the output satisfy every rule at once.
+        /// Broadcast coherence. The completed objectives are authoritative —
+        /// they are the progression record, and the two booleans are a cache of
+        /// it. So the flags are *derived* from the objectives rather than
+        /// allowed to grant them.
+        ///
+        /// This direction matters. Repairing upward (a set flag inserting the
+        /// objectives it implies) lets a corrupt-but-valid file manufacture
+        /// progression: flip one boolean in the JSON and validation hands the
+        /// player the broadcast chain. Deriving downward means the worst a
+        /// damaged flag can do is be cleared.
+        ///
+        /// No iteration is needed, unlike the bidirectional repair this
+        /// replaces: a derivation has no implication chain to close.
         /// </summary>
         private static void NormalizeBroadcastState(SaveData data, IContentDatabase content,
             SaveValidationResult r)
@@ -135,60 +138,34 @@ namespace Escape.Core
             bool hasRouting = content.TryGetObjective(RoutingObjectiveId, out _);
             bool hasTransmission = content.TryGetObjective(TransmissionObjectiveId, out _);
 
-            bool changed = true;
-            int guard = 0;
-            while (changed && guard++ < 8)
-            {
-                changed = false;
+            // An objective the content does not define means "no check", not
+            // "not complete" — a content rename must degrade, not wipe saves.
+            bool routed = !hasRouting || data.completedObjectives.Contains(RoutingObjectiveId);
+            bool transmitted = !hasTransmission ||
+                               data.completedObjectives.Contains(TransmissionObjectiveId);
 
-                // BroadcastCompleted is the strongest flag: it implies a
-                // routed relay as well as a transmission.
-                if (data.broadcastCompleted && !data.broadcastStarted)
-                {
-                    r.Warnings.Add("BroadcastCompleted without BroadcastStarted — repaired.");
-                    data.broadcastStarted = true;
-                    r.WasRepaired = true;
-                    changed = true;
-                }
-
-                if (data.broadcastStarted && hasRouting &&
-                    RequireCompleted(data, RoutingObjectiveId, "broadcastStarted", r))
-                    changed = true;
-                if (data.broadcastCompleted && hasTransmission &&
-                    RequireCompleted(data, TransmissionObjectiveId, "broadcastCompleted", r))
-                    changed = true;
-
-                // The objective is the stronger claim in the other direction:
-                // the transmission happened, the flags just were not written.
-                if (hasTransmission &&
-                    data.completedObjectives.Contains(TransmissionObjectiveId) &&
-                    !data.broadcastCompleted)
-                {
-                    r.Warnings.Add("Transmission objective complete without BroadcastCompleted — repaired.");
-                    data.broadcastCompleted = true;
-                    data.broadcastStarted = true;
-                    r.WasRepaired = true;
-                    changed = true;
-                }
-            }
+            // A transmission implies a routed relay.
+            ReconcileFlag(ref data.broadcastStarted, routed, "routing objective", r);
+            ReconcileFlag(ref data.broadcastCompleted, transmitted && routed,
+                "completed transmission", r);
         }
 
         /// <summary>
-        /// Restores a prerequisite objective that a later-state flag implies.
-        /// Repairs upward, matching how BroadcastCompleted implies
-        /// BroadcastStarted above. Returns true when it changed anything, so
-        /// the caller can iterate to a fixpoint.
+        /// Reconciles one flag with the objectives that imply it, warning in
+        /// either direction. Reconstructing a flag the objectives support is
+        /// repair; clearing a flag they do not support is refusing to let the
+        /// flag invent progression.
         /// </summary>
-        private static bool RequireCompleted(SaveData data, string objectiveId, string because,
+        private static void ReconcileFlag(ref bool flag, bool expected, string because,
             SaveValidationResult r)
         {
-            if (data.completedObjectives == null) data.completedObjectives = new List<string>();
-            if (data.completedObjectives.Contains(objectiveId)) return false;
-            r.Warnings.Add($"Objective '{objectiveId}' missing though {because} is set — repaired.");
-            data.completedObjectives.Add(objectiveId);
-            data.activeObjectives?.Remove(objectiveId);
+            if (flag == expected) return;
+            r.Warnings.Add(expected
+                ? $"Broadcast flag set from the {because} — repaired."
+                : $"Broadcast flag cleared: the {because} is not in completedObjectives " +
+                  "(objectives are authoritative).");
+            flag = expected;
             r.WasRepaired = true;
-            return true;
         }
 
         private static SaveValidationResult Done(SaveValidationResult r)

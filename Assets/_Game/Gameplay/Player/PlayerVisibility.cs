@@ -14,8 +14,6 @@ namespace Escape.Gameplay
     {
         public enum Exposure { Bright, Normal, Dim, Dark }
 
-        private static readonly List<PlayerVisibility> _all = new List<PlayerVisibility>();
-
         private PlayerState _state;
         private FlashlightController _flashlight;
         private Data.StealthTuning _tuning;
@@ -29,11 +27,7 @@ namespace Escape.Gameplay
             _flashlight = GetComponentInChildren<FlashlightController>();
         }
 
-        private void OnEnable()
-        {
-            _all.Add(this);
-            TryBind();
-        }
+        private void OnEnable() => TryBind();
 
         private void Start() => TryBind();
 
@@ -44,8 +38,6 @@ namespace Escape.Gameplay
             if (_tuning != null || GameRoot.Instance == null) return;
             _tuning = GameRoot.Instance.Services.Get<IContentDatabase>().Tuning;
         }
-
-        private void OnDisable() => _all.Remove(this);
 
         public void EnterZone(LightingZone zone) => _zones.Add(zone);
         public void ExitZone(LightingZone zone) => _zones.Remove(zone);

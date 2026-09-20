@@ -1,15 +1,28 @@
 Package audit — 2026-09-19
 
 OUTCOME (2026-09-19, branch chore/package-reduction): this audit was acted on
-once the stabilization gates were green, in the two steps it recommended.
-Declared packages went 20 -> 11; player 112M -> 99M; managed assemblies
-221 -> 151. Every removal was verified with a full ci/qualify.sh run
-(deterministic generation, both suites, player build, built-player smoke).
-Two editor-only packages were deliberately KEPT: asset-manager-for-unity (the
-committed uam/ tracking folder depends on it) and ai.assistant (it provides
-Unity.AI.MCP.Editor, the unity-mcp bridge). Neither ships, so removing them
-would have cost a workflow for no size win. The per-step measurements are in
-the two commits on that branch.
+once the stabilization gates were green, in the two steps it recommended, plus
+two follow-up cuts. Declared packages went 20 -> 11; player 112M -> 96M;
+managed assemblies 221 -> 151 -> 150. Every removal was verified with a full
+ci/qualify.sh run (deterministic generation, both suites, player build,
+built-player smoke).
+
+Follow-up cuts on the same branch:
+- TextMesh Pro/Examples & Extras deleted (148 GUIDs, 0 references from
+  Assets/_Game) — 103,956,107 -> 100,456,676 bytes.
+- Adaptive Performance / App UI / Sentis residue removed (orphaned settings
+  assets, stale EditorBuildSettings entries, a dead preloadedAssets slot, the
+  SENTIS_ANALYTICS_ENABLED define, m_UseAdaptivePerformance 1 -> 0). This did
+  NOT shrink the player: UnityEngine.AdaptivePerformanceModule.dll still ships
+  and is not manifest-controllable — there is no adaptiveperformance entry in
+  the package graph at all.
+
+CORRECTION to the earlier note below: ai.assistant is NOT player-free. It
+copies Unity.AI.MCP.Runtime.dll (9.7 KB) and Unity.AI.Tracing.dll (28 KB) into
+the player's Managed/ directory. It is kept for the Unity MCP development
+workflow, which is a deliberate ~38 KB trade, not a free dependency. A minimal
+release player needs a manifest without it. asset-manager-for-unity does not
+ship.
 
 Scope: what the project declares, what its code uses, and what the built
 player actually ships. NOT an action list — see "why nothing was removed".

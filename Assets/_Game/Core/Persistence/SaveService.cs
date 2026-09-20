@@ -51,6 +51,7 @@ namespace Escape.Core
         private readonly IGameEventBus _events;
         private readonly IGameCommandDispatcher _dispatcher;
         private readonly ISaveCoordinator _coordinator;
+        private readonly ISceneService _scenes;
         private readonly string _dir;
 
         public string[] Slots { get; } = { Autosave, "slot1", "slot2", "slot3" };
@@ -83,13 +84,15 @@ namespace Escape.Core
 
         public SaveService(IGameStateService state, IContentDatabase content,
             IGameEventBus events, IGameCommandDispatcher dispatcher,
-            string directory = null, ISaveCoordinator coordinator = null)
+            string directory = null, ISaveCoordinator coordinator = null,
+            ISceneService scenes = null)
         {
             _state = state;
             _content = content;
             _events = events;
             _dispatcher = dispatcher;
             _coordinator = coordinator;
+            _scenes = scenes;
             _dir = directory ?? Path.Combine(Application.persistentDataPath, "saves");
         }
 
@@ -268,8 +271,26 @@ namespace Escape.Core
             return result.IsValid;
         }
 
+        /// <summary>
+        /// Loads a slot and moves the session to the scene it recorded.
+        ///
+        /// Refused while a scene transition is in flight, and refused *before*
+        /// anything is committed. Committing state and then asking for a scene
+        /// change is not atomic: SceneService drops a load request made during a
+        /// transition, so a second load arriving mid-transition would leave
+        /// GameState describing one scene while Unity was still showing another —
+        /// and nothing downstream would notice, because both halves succeed.
+        /// </summary>
         public bool Load(string slot)
         {
+            if (_scenes != null && _scenes.IsTransitioning)
+            {
+                Debug.LogWarning($"[SaveService] Load '{slot}' refused — a scene transition is " +
+                                 "in progress, and committing state without the matching scene " +
+                                 "change would desynchronise them.");
+                _events.Publish(new SystemMessageEvent("Cannot load while the scene is changing."));
+                return false;
+            }
             if (!LoadIntoState(slot, out var errors))
             {
                 Debug.LogWarning($"[SaveService] Load '{slot}' rejected: {string.Join("; ", errors)}");
