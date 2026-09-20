@@ -56,6 +56,17 @@ Unity 6000.6.0f1, URP 17.6.0, Input System 1.20.0, AI Navigation 2.0.14.
     and `ProbeVolumesOptions` as documents Unity does not load. They are inert
     (panini distance 0, no probe volumes) and cannot be removed or disabled
     from code, because the loaded component list does not contain them.
+- **Deleting `Library/` is safe but has one sharp edge.** The caches regenerate
+  (and come back *smaller* — a cold reimport rebuilt them at roughly half their
+  bloated size), but the first reimport after wiping `Library/ArtifactDB`,
+  `SourceAssetDB`, `DataStore` and `Search` **empties
+  `m_RuntimeSettings.m_List`** in
+  `Assets/Settings/UniversalRenderPipelineGlobalSettings.asset` — 17 `rid`
+  references dropped in one go. Revert it (`git checkout --`); it does not recur
+  on subsequent builds, confirmed by a full `ci/qualify.sh` reporting
+  `postRunTreeChanged: false` straight afterwards. Always re-run the gate after a
+  cache wipe rather than assuming a cleanup was non-destructive.
+  Keep `Library/PackageCache` unless you want Unity re-downloading every package.
 
 ## Generated-content invariants — do not break
 

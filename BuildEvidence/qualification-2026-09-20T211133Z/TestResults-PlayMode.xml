@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="35" result="Passed" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.1703952">
+  <test-suite type="TestSuite" id="1051" name="Escape the Elites" fullname="Escape the Elites" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.170395" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1094" name="Escape.Tests.PlayMode.dll" fullname="/Users/dawsonblock/unity/My project (7)/Library/ScriptAssemblies/Escape.Tests.PlayMode.dll" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.163986" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="9256" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1095" name="Escape" fullname="Escape" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.162974" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1096" name="Tests" fullname="Escape.Tests" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.162010" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1097" name="PlayMode" fullname="Escape.Tests.PlayMode" runstate="Runnable" testcasecount="35" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:08Z" duration="7.161239" total="35" passed="35" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1092" name="EvidenceBoardLateBindTests" fullname="Escape.Tests.PlayMode.EvidenceBoardLateBindTests" classname="Escape.Tests.PlayMode.EvidenceBoardLateBindTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.413952" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1093" name="TabOpensBoard_BoundToAPlayerThatSpawnedAfterIt" fullname="Escape.Tests.PlayMode.EvidenceBoardLateBindTests.TabOpensBoard_BoundToAPlayerThatSpawnedAfterIt" methodname="TabOpensBoard_BoundToAPlayerThatSpawnedAfterIt" classname="Escape.Tests.PlayMode.EvidenceBoardLateBindTests" runstate="Runnable" seed="236594127" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.343209" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1052" name="GameplaySmokeTests" fullname="Escape.Tests.PlayMode.GameplaySmokeTests" classname="Escape.Tests.PlayMode.GameplaySmokeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.019785" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1054" name="Detection_RisesAndDecays" fullname="Escape.Tests.PlayMode.GameplaySmokeTests.Detection_RisesAndDecays" methodname="Detection_RisesAndDecays" classname="Escape.Tests.PlayMode.GameplaySmokeTests" runstate="Runnable" seed="799663986" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.013509" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="GameRoot_RegistersAllServices" fullname="Escape.Tests.PlayMode.GameplaySmokeTests.GameRoot_RegistersAllServices" methodname="GameRoot_RegistersAllServices" classname="Escape.Tests.PlayMode.GameplaySmokeTests" runstate="Runnable" seed="56241737" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.002135" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1055" name="PauseInputTests" fullname="Escape.Tests.PlayMode.PauseInputTests" classname="Escape.Tests.PlayMode.PauseInputTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.065415" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1056" name="Escape_OpensThenCloses_PauseMenu" fullname="Escape.Tests.PlayMode.PauseInputTests.Escape_OpensThenCloses_PauseMenu" methodname="Escape_OpensThenCloses_PauseMenu" classname="Escape.Tests.PlayMode.PauseInputTests" runstate="Runnable" seed="1451430868" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.024308" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="Escape_WithModalOpen_CancelsTop_NotPause" fullname="Escape.Tests.PlayMode.PauseInputTests.Escape_WithModalOpen_CancelsTop_NotPause" methodname="Escape_WithModalOpen_CancelsTop_NotPause" classname="Escape.Tests.PlayMode.PauseInputTests" runstate="Runnable" seed="200163545" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.012154" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="Pause_SelectsControlOnOpen_DeselectsOnClose" fullname="Escape.Tests.PlayMode.PauseInputTests.Pause_SelectsControlOnOpen_DeselectsOnClose" methodname="Pause_SelectsControlOnOpen_DeselectsOnClose" classname="Escape.Tests.PlayMode.PauseInputTests" runstate="Runnable" seed="938915856" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.026108" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1059" name="PlayerLookTests" fullname="Escape.Tests.PlayMode.PlayerLookTests" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.254340" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1069" name="DisablingTheReader_LeavesNoMapEnabled" fullname="Escape.Tests.PlayMode.PlayerLookTests.DisablingTheReader_LeavesNoMapEnabled" methodname="DisablingTheReader_LeavesNoMapEnabled" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="951863044" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.073610" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="GamepadLook_IsFrameRateIndependent" fullname="Escape.Tests.PlayMode.PlayerLookTests.GamepadLook_IsFrameRateIndependent" methodname="GamepadLook_IsFrameRateIndependent" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="847996826" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.077600" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="GamepadLook_UsesControllerSensitivity" fullname="Escape.Tests.PlayMode.PlayerLookTests.GamepadLook_UsesControllerSensitivity" methodname="GamepadLook_UsesControllerSensitivity" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="1349492990" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.009430" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="InvertY_FlipsPitch" fullname="Escape.Tests.PlayMode.PlayerLookTests.InvertY_FlipsPitch" methodname="InvertY_FlipsPitch" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="202924731" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.007615" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1068" name="LookFromGamepad_TracksActuatingDevice" fullname="Escape.Tests.PlayMode.PlayerLookTests.LookFromGamepad_TracksActuatingDevice" methodname="LookFromGamepad_TracksActuatingDevice" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="1250126463" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.003850" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="MouseLook_ChangesPlayerYaw" fullname="Escape.Tests.PlayMode.PlayerLookTests.MouseLook_ChangesPlayerYaw" methodname="MouseLook_ChangesPlayerYaw" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="423405805" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.004520" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="MouseLook_UsesMouseSensitivity" fullname="Escape.Tests.PlayMode.PlayerLookTests.MouseLook_UsesMouseSensitivity" methodname="MouseLook_UsesMouseSensitivity" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="676624571" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.005249" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="Pitch_ClampsToLimits" fullname="Escape.Tests.PlayMode.PlayerLookTests.Pitch_ClampsToLimits" methodname="Pitch_ClampsToLimits" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="292294406" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.051278" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="UiOpen_DisablesLook" fullname="Escape.Tests.PlayMode.PlayerLookTests.UiOpen_DisablesLook" methodname="UiOpen_DisablesLook" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="1154177185" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.005732" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="VerticalLook_ChangesPitch_NotYaw" fullname="Escape.Tests.PlayMode.PlayerLookTests.VerticalLook_ChangesPitch_NotYaw" methodname="VerticalLook_ChangesPitch_NotYaw" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="1671235252" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.003963" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1062" name="Yaw_PersistsAcrossFrames" fullname="Escape.Tests.PlayMode.PlayerLookTests.Yaw_PersistsAcrossFrames" methodname="Yaw_PersistsAcrossFrames" classname="Escape.Tests.PlayMode.PlayerLookTests" runstate="Runnable" seed="1640136525" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.004578" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1071" name="PlayerMovementTests" fullname="Escape.Tests.PlayMode.PlayerMovementTests" classname="Escape.Tests.PlayMode.PlayerMovementTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:02Z" duration="0.106471" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1075" name="CrouchInput_SlowsMovement_ThroughTheInjectedSource" fullname="Escape.Tests.PlayMode.PlayerMovementTests.CrouchInput_SlowsMovement_ThroughTheInjectedSource" methodname="CrouchInput_SlowsMovement_ThroughTheInjectedSource" classname="Escape.Tests.PlayMode.PlayerMovementTests" runstate="Runnable" seed="495165880" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.037122" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1072" name="ForwardInput_MovesThePlayer" fullname="Escape.Tests.PlayMode.PlayerMovementTests.ForwardInput_MovesThePlayer" methodname="ForwardInput_MovesThePlayer" classname="Escape.Tests.PlayMode.PlayerMovementTests" runstate="Runnable" seed="2111050696" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:01Z" duration="0.018557" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1073" name="Movement_FollowsPlayerYaw" fullname="Escape.Tests.PlayMode.PlayerMovementTests.Movement_FollowsPlayerYaw" methodname="Movement_FollowsPlayerYaw" classname="Escape.Tests.PlayMode.PlayerMovementTests" runstate="Runnable" seed="623087677" result="Passed" start-time="2026-09-20 21:15:01Z" end-time="2026-09-20 21:15:02Z" duration="0.017520" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1074" name="UiOpen_SuppressesMovement" fullname="Escape.Tests.PlayMode.PlayerMovementTests.UiOpen_SuppressesMovement" methodname="UiOpen_SuppressesMovement" classname="Escape.Tests.PlayMode.PlayerMovementTests" runstate="Runnable" seed="501649156" result="Passed" start-time="2026-09-20 21:15:02Z" end-time="2026-09-20 21:15:02Z" duration="0.026940" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1076" name="SceneIntegrationTests" fullname="Escape.Tests.PlayMode.SceneIntegrationTests" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-20 21:15:02Z" end-time="2026-09-20 21:15:08Z" duration="6.173288" total="6" passed="6" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1077" name="Dock_Loads_AndBootstraps" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.Dock_Loads_AndBootstraps" methodname="Dock_Loads_AndBootstraps" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="1255821996" result="Passed" start-time="2026-09-20 21:15:02Z" end-time="2026-09-20 21:15:02Z" duration="0.502312" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:02 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+]]></output>
+              </test-case>
+              <test-case id="1082" name="Load_DuringATransition_IsRefused_AndLeavesStateUntouched" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.Load_DuringATransition_IsRefused_AndLeavesStateUntouched" methodname="Load_DuringATransition_IsRefused_AndLeavesStateUntouched" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="1409648571" result="Passed" start-time="2026-09-20 21:15:02Z" end-time="2026-09-20 21:15:04Z" duration="1.503909" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:02 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+[SaveService] Load 'itest_slot' refused — a scene transition is in progress, and committing state without the matching scene change would desynchronise them.
+[CMD] 15:15:03 COMPLETE_OBJECTIVE infiltrate_service
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+]]></output>
+              </test-case>
+              <test-case id="1078" name="Save_Load_RoundTrip_RestoresLivePose" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.Save_Load_RoundTrip_RestoresLivePose" methodname="Save_Load_RoundTrip_RestoresLivePose" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="1680276824" result="Passed" start-time="2026-09-20 21:15:04Z" end-time="2026-09-20 21:15:05Z" duration="1.516255" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:04 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+[CMD] 15:15:04 CHANGE_SCENE dock
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:05 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+]]></output>
+              </test-case>
+              <test-case id="1079" name="SceneWithoutReady_FailsClosed_AndWithholdsSceneChanged" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.SceneWithoutReady_FailsClosed_AndWithholdsSceneChanged" methodname="SceneWithoutReady_FailsClosed_AndWithholdsSceneChanged" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="279217002" result="Passed" start-time="2026-09-20 21:15:05Z" end-time="2026-09-20 21:15:06Z" duration="0.507739" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:05 ACTIVATE_OBJECTIVE reach_compound
+[SceneService] 'Dock' never signalled SceneReady — transition failed, SceneChanged withheld.
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+[SceneService] Recovery into 'MainMenu' also failed readiness — the session has no trusted scene.
+]]></output>
+              </test-case>
+              <test-case id="1080" name="SceneWithoutReady_OnTheMainMenu_IsFatalWithNoFallback" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.SceneWithoutReady_OnTheMainMenu_IsFatalWithNoFallback" methodname="SceneWithoutReady_OnTheMainMenu_IsFatalWithNoFallback" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="456762210" result="Passed" start-time="2026-09-20 21:15:06Z" end-time="2026-09-20 21:15:06Z" duration="0.122145" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SceneService] 'MainMenu' never signalled SceneReady — transition failed, SceneChanged withheld.
+[SceneService] 'main_menu' failed readiness and there is no recovery scene to fall back to — the session has no trusted scene.
+]]></output>
+              </test-case>
+              <test-case id="1081" name="SceneWithoutReady_RollsBackToTheLastReadyScene" fullname="Escape.Tests.PlayMode.SceneIntegrationTests.SceneWithoutReady_RollsBackToTheLastReadyScene" methodname="SceneWithoutReady_RollsBackToTheLastReadyScene" classname="Escape.Tests.PlayMode.SceneIntegrationTests" runstate="Runnable" seed="712427923" result="Passed" start-time="2026-09-20 21:15:06Z" end-time="2026-09-20 21:15:08Z" duration="2.016547" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:06 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+[SceneService] 'ServiceEntrance' never signalled SceneReady — transition failed, SceneChanged withheld.
+[CMD] 15:15:07 COMPLETE_OBJECTIVE infiltrate_service
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+[CMD] 15:15:07 ACTIVATE_OBJECTIVE reach_compound
+[SceneService] Recovered from 'service_entrance' by returning to 'Dock'.
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1083" name="UiQualificationTests" fullname="Escape.Tests.PlayMode.UiQualificationTests" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.123924" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1091" name="Document_ShowAndCancel_TogglesGate" fullname="Escape.Tests.PlayMode.UiQualificationTests.Document_ShowAndCancel_TogglesGate" methodname="Document_ShowAndCancel_TogglesGate" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="266824378" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.028875" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1090" name="EvidenceBoard_HostStaysActive_WhileClosed" fullname="Escape.Tests.PlayMode.UiQualificationTests.EvidenceBoard_HostStaysActive_WhileClosed" methodname="EvidenceBoard_HostStaysActive_WhileClosed" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="1553145284" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.004765" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1089" name="LargeUi_IsReactive_OnTheMainMenu" fullname="Escape.Tests.PlayMode.UiQualificationTests.LargeUi_IsReactive_OnTheMainMenu" methodname="LargeUi_IsReactive_OnTheMainMenu" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="1694435434" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.009346" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="Settings_Close_FlushesPendingWrites" fullname="Escape.Tests.PlayMode.UiQualificationTests.Settings_Close_FlushesPendingWrites" methodname="Settings_Close_FlushesPendingWrites" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="702845477" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.023757" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1088" name="Settings_Close_ReturnsFocus_ToAnyNamedAnchor" fullname="Escape.Tests.PlayMode.UiQualificationTests.Settings_Close_ReturnsFocus_ToAnyNamedAnchor" methodname="Settings_Close_ReturnsFocus_ToAnyNamedAnchor" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="529656768" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.018737" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+              </test-case>
+              <test-case id="1087" name="Settings_Close_ReturnsFocusToItsOpener" fullname="Escape.Tests.PlayMode.UiQualificationTests.Settings_Close_ReturnsFocusToItsOpener" methodname="Settings_Close_ReturnsFocusToItsOpener" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="1862813730" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.014732" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+There are 2 event systems in the scene. Please ensure there is always exactly one event system in the scene
+]]></output>
+              </test-case>
+              <test-case id="1084" name="Settings_OpenAndClose_PushesAndPopsTheGate" fullname="Escape.Tests.PlayMode.UiQualificationTests.Settings_OpenAndClose_PushesAndPopsTheGate" methodname="Settings_OpenAndClose_PushesAndPopsTheGate" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="1721295324" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.010315" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="Settings_WithoutGameRoot_IsSafeToOpenAndClose" fullname="Escape.Tests.PlayMode.UiQualificationTests.Settings_WithoutGameRoot_IsSafeToOpenAndClose" methodname="Settings_WithoutGameRoot_IsSafeToOpenAndClose" classname="Escape.Tests.PlayMode.UiQualificationTests" runstate="Runnable" seed="234948038" result="Passed" start-time="2026-09-20 21:15:08Z" end-time="2026-09-20 21:15:08Z" duration="0.009384" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: /Users/dawsonblock/Library/Application Support/Escape the Elites/Escape the Elites/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>
