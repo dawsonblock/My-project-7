@@ -7,12 +7,12 @@ Darwin version:          25.2.0
 Architecture:            arm64
 Running under Rosetta:   NO
 Available memory:        16384 MB
-Date:                    2026-09-20T03:10:54Z
+Date:                    2026-09-20T06:07:44Z
 Launching external process: /Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/NetCoreRuntime/dotnet
-VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 55303)
-VBCSCompiler prewarm took 2.75 ms
+VBCSCompilerPreWarmer: pre-warm launched (dotnet PID 33366)
+VBCSCompiler prewarm took 2.95 ms
 [Licensing::Module] Trying to connect to existing licensing client channel...
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-dawsonblock" at "2026-09-20T03:10:54.160568Z"
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-dawsonblock" at "2026-09-20T06:07:44.116556Z"
 Launching external process: /Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Helpers/PackageManager/Server/UnityPackageManager
 
 COMMAND LINE ARGUMENTS:
@@ -71,23 +71,23 @@ Successfully changed project path to: /Users/dawsonblock/unity/My project (7)
 Logging is directed to a specific file, skipping project log.
 Player connection [8337845312]  Target information:
 
-Player connection [8337845312]  * "[IP] 172.16.1.228 [Port] 55504 [Flags] 2 [Guid] 2474740839 [EditorId] 2474740839 [Version] 1048832 [Id] OSXEditor(0,Mac.gateway.sasktel.net) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
+Player connection [8337845312]  * "[IP] 172.16.1.228 [Port] 55504 [Flags] 2 [Guid] 49102498 [EditorId] 49102498 [Version] 1048832 [Id] OSXEditor(0,Mac.gateway.sasktel.net) [Debug] 1 [PackageName] OSXEditor [ProjectName] Editor" 
 
 Player connection [8337845312] Host joined multi-casting on [225.0.0.222:54997]...
 Player connection [8337845312] Host joined alternative multi-casting on [225.0.0.222:34997]...
 Input System module state changed to: Initialized.
 [Physics::Module] Initialized fallback backend.
 [Physics::Module] Id: 0xdecafbad
-[Package Manager] Connected to IPC stream "Upm-55300" after 0.1 seconds.
+[Package Manager] Connected to IPC stream "Upm-33365" after 0.1 seconds.
 [Licensing::Module] Licensing is not yet initialized.
 [Licensing::Client] Handshaking with LicensingClient:
   Version:                 1.18.3+d7ffd15
-  Session Id:              d70f71d4a19848789ce7c4c4cdc3f099
+  Session Id:              cf3c7d2dceda4af489d253d4fc112ac9
   Correlation Id:          f0554d3a71ae63b997897297e72cf6a9
-  External correlation Id: 5123800191181486730
+  External correlation Id: 4664211905655682598
   Machine Id:              n3escge5pqjPvr3IgPQQt/UsqME=
-[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-dawsonblock" (connect: 0.00s, validation: 0.00s, handshake: 0.36s)
-[Licensing::IpcConnector] Successfully connected to: "LicenseClient-dawsonblock-notifications" at "2026-09-20T03:10:54.524154Z"
+[Licensing::Module] Successfully connected to LicensingClient on channel: "LicenseClient-dawsonblock" (connect: 0.00s, validation: 0.00s, handshake: 0.35s)
+[Licensing::IpcConnector] Successfully connected to: "LicenseClient-dawsonblock-notifications" at "2026-09-20T06:07:44.471731Z"
 [Licensing::Module] Error: Access token is unavailable; failed to update
 [Licensing::Client] Successfully resolved entitlement details
 [Licensing::Module] License group:
@@ -96,8 +96,8 @@ Input System module state changed to: Initialized.
   Type: Assigned
   Expiration: Unlimited
 [Licensing::Client] Successfully updated license, isAsync: True, time: 0.00
-[Licensing::Module] Licensing Background thread has ended after 0.37s
-[Licensing::Module] Licensing is initialized (took 0.11s).
+[Licensing::Module] Licensing Background thread has ended after 0.36s
+[Licensing::Module] Licensing is initialized (took 0.13s).
 [Licensing::Client] Successfully resolved entitlement details
 Library Redirect Path: Library/
 Initialising UDS system complete:
@@ -131,56 +131,51 @@ Mono path[0] = '/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Res
 Mono path[1] = '/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/BCLExtensions/runtime/netstandard2.1'
 Mono path[2] = '/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/MonoBleedingEdge/lib/mono/unityjit-macos'
 Mono config path = '/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56300
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56365
 CodeReloadManager initialized
 ImportWorker Server TCP listen port: 0
 AcceleratorClientConnectionCallback - disconnected - :0
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: /Applications/Unity/Hub/Editor/6000.6.0f1/PlaybackEngines/MacStandaloneSupport/UnityEditor.OSXStandalone.Extensions.dll
-Registered in 0.000374 seconds.
+Registered in 0.000490 seconds.
 Native extension for OSXStandalone target not found
 Package Manager log level set to [2]
 ScheduleIndexationOnStartup MainProcess:False IndexOnStartup:True
 Scripting: successfully reloaded assembly
-- Finished resetting the current domain, in  0.447 seconds
-Domain Reload Profiling: 818ms
-	BeginReloadAssembly (74ms)
-		CreateAndSetChildDomain (14ms)
-	RebuildCommonClasses (5ms)
-	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (38ms)
-	LoadAllAssembliesAndSetupDomain (239ms)
-		LoadAssemblies (60ms)
-		TypeCache.Refresh (171ms)
-			TypeCache.ScanAssembly (157ms)
+- Finished resetting the current domain, in  0.406 seconds
+Domain Reload Profiling: 737ms
+	BeginReloadAssembly (59ms)
+		CreateAndSetChildDomain (5ms)
+	RebuildCommonClasses (3ms)
+	RebuildNativeTypeToScriptingClass (13ms)
+	initialDomainReloadingComplete (36ms)
+	LoadAllAssembliesAndSetupDomain (219ms)
+		LoadAssemblies (53ms)
+		TypeCache.Refresh (157ms)
+			TypeCache.ScanAssembly (145ms)
 		AnalyzeDomain (1ms)
-	FinalizeReload (448ms)
+	FinalizeReload (407ms)
 		SetupLoadedEditorAssemblies (0ms)
-			BeforeProcessingInitializeOnLoad (69ms)
-			ProcessInitializeOnLoadAttributes (68ms)
-			ProcessInitializeOnLoadMethodAttributes (171ms)
+			BeforeProcessingInitializeOnLoad (66ms)
+			ProcessInitializeOnLoadAttributes (66ms)
+			ProcessInitializeOnLoadMethodAttributes (140ms)
 [Licensing::Client] Successfully resolved entitlement details
 Application.AssetDatabase Initial Refresh Start
 [Package Manager] Restoring resolved packages state from cache
 [Licensing::Client] Successfully resolved entitlement details
-[Package Manager] Registered 43 packages:
+[Package Manager] Registered 37 packages:
   Packages from [https://packages.unity.com]:
     com.unity.ai.assistant@2.19.0-pre.2 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7)
     com.unity.ai.navigation@2.0.14 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ai.navigation@134dd6a3b97b)
-    com.unity.asset-manager-for-unity@1.11.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.asset-manager-for-unity@71c49222cba8)
-    com.unity.inputsystem@1.20.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.inputsystem@7a4e1a2a8194)
-    com.unity.ide.visualstudio@2.0.28 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ide.visualstudio@b5edea5f33f4)
     com.unity.ide.rider@3.0.40 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ide.rider@e4950c6d131b)
-    com.unity.performance.profile-analyzer@1.4.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.performance.profile-analyzer@2bb26871883c)
-    com.unity.testtools.codecoverage@1.3.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.testtools.codecoverage@19a841221620)
-    com.unity.settings-manager@2.1.1 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.settings-manager@0b8638c5ce86)
-    com.unity.nuget.newtonsoft-json@3.2.2 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.nuget.newtonsoft-json@4dfd81071c64)
+    com.unity.ide.visualstudio@2.0.28 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ide.visualstudio@b5edea5f33f4)
+    com.unity.inputsystem@1.20.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.inputsystem@7a4e1a2a8194)
     com.unity.nuget.mono-cecil@1.11.6 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.nuget.mono-cecil@ecb9724e46ff)
+    com.unity.nuget.newtonsoft-json@3.2.2 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.nuget.newtonsoft-json@4dfd81071c64)
     com.unity.searcher@4.9.5 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.searcher@a463122f2c00)
     com.unity.profiling.core@1.0.3 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.profiling.core@8a49f7027d06)
   Built-in packages:
-    com.unity.feature.development@1.0.2 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.feature.development@767aadbc6eb7)
     com.unity.render-pipelines.universal@17.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.render-pipelines.universal@8457e85b8184)
     com.unity.test-framework@1.8.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.test-framework@7a3849e09bd0)
     com.unity.ugui@2.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.ugui@23caec89ae27)
@@ -199,11 +194,10 @@ Application.AssetDatabase Initial Refresh Start
     com.unity.render-pipelines.core@17.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.render-pipelines.core@2d66c71e606e)
     com.unity.shadergraph@17.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.shadergraph@ef6135652377)
     com.unity.render-pipelines.universal-config@17.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.render-pipelines.universal-config@561422b74439)
-    com.unity.editorcoroutines@6.6.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.editorcoroutines@8cd72baa102a)
-    com.unity.modules.unitywebrequest@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.modules.unitywebrequest)
     com.unity.modules.ai@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.modules.ai)
     com.unity.2d.sprite@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.2d.sprite@947350d67f82)
     com.unity.mathematics@1.4.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.mathematics@8306a64d0cd6)
+    com.unity.modules.unitywebrequest@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.modules.unitywebrequest)
     com.unity.modules.animation@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.modules.animation)
     com.unity.modules.physicscore2d@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.modules.physicscore2d)
     com.unity.graph-authoring@1.0.0 (location: /Users/dawsonblock/unity/My project (7)/Library/PackageCache/com.unity.graph-authoring@cfd2588851ee)
@@ -219,13 +213,13 @@ warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.runtime.interopservices.windowsruntime has duplicate hint path. Ignoring "/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/UnityReferenceAssemblies/unity-4.8-api/Facades/System.Runtime.InteropServices.WindowsRuntime.dll" in favor of "/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/NetStandard/Extensions/2.0.0/System.Runtime.InteropServices.WindowsRuntime.dll"
 warn: Unity.ILPP.Runner.PostProcessingAssemblyLoadContext[0]
       Assembly system.componentmodel.composition has duplicate hint path. Ignoring "/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/UnityReferenceAssemblies/unity-4.8-api/System.ComponentModel.Composition.dll" in favor of "/Applications/Unity/Hub/Editor/6000.6.0f1/Unity.app/Contents/Resources/Scripting/NetStandard/compat/2.1.0/shims/netfx/System.ComponentModel.Composition.dll"
-ExitCode: 0 Duration: 0s575ms
-[1028/1404  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
-*** Tundra build success (0.55 seconds), 1 items updated, 1404 evaluated
-AssetDatabase: script compilation time: 1.090611s
+ExitCode: 0 Duration: 0s449ms
+[ 893/1209  0s] ILPP-Configuration Library/ilpp-configuration.nevergeneratedoutput
+*** Tundra build success (0.43 seconds), 1 items updated, 1209 evaluated
+AssetDatabase: script compilation time: 0.930729s
 Begin MonoManager ReloadAssembly
-Total cache size 268327832
-Total cache size after purge 268327832, took 00:00:00.2014651
+Total cache size 267881652
+Total cache size after purge 267881652, took 00:00:00.1618589
 Symbol file LoadedFromMemory is not a mono symbol file
 'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
 'Packages/com.unity.render-pipelines.core/Editor/Deprecated.cs' contains partial class of Unity.Object, exactly 1 of the partial classes needs to be in a file with the same filename. This is to know the one that can be referenced from ie. GameObjects
@@ -255,98 +249,97 @@ UnityEditor.AssemblyReloadEvents:OnAfterAssemblyReload () (at /Users/bokken/buil
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-- Finished resetting the current domain, in  1.306 seconds
-Domain Reload Profiling: 2142ms
-	BeginReloadAssembly (144ms)
-		DisableScriptedObjects (16ms)
-		CreateAndSetChildDomain (36ms)
+- Finished resetting the current domain, in  1.057 seconds
+Domain Reload Profiling: 1732ms
+	BeginReloadAssembly (141ms)
+		DisableScriptedObjects (12ms)
+		CreateAndSetChildDomain (45ms)
 	RebuildCommonClasses (6ms)
 	RebuildNativeTypeToScriptingClass (13ms)
-	initialDomainReloadingComplete (56ms)
-	LoadAllAssembliesAndSetupDomain (616ms)
-		LoadAssemblies (240ms)
-		TypeCache.Refresh (232ms)
-			TypeCache.ScanAssembly (212ms)
-		AnalyzeDomain (63ms)
-			BuildScriptInfoCaches (47ms)
-	FinalizeReload (1307ms)
+	initialDomainReloadingComplete (48ms)
+	LoadAllAssembliesAndSetupDomain (465ms)
+		LoadAssemblies (181ms)
+		TypeCache.Refresh (178ms)
+			TypeCache.ScanAssembly (160ms)
+		AnalyzeDomain (37ms)
+			BuildScriptInfoCaches (33ms)
+	FinalizeReload (1058ms)
 		SetupLoadedEditorAssemblies (0ms)
-			BeforeProcessingInitializeOnLoad (95ms)
-			ProcessInitializeOnLoadAttributes (619ms)
-			ProcessInitializeOnLoadMethodAttributes (263ms)
+			BeforeProcessingInitializeOnLoad (89ms)
+			ProcessInitializeOnLoadAttributes (521ms)
+			ProcessInitializeOnLoadMethodAttributes (123ms)
 		AwakeInstancesAfterBackupRestoration (14ms)
 Starting new worker id: 0 with log in /Users/dawsonblock/unity/My project (7)/Logs/AssetImportWorkerHW0.log
 
-Asset Pipeline Refresh (id=e195654882ea5410196ab38467bada46): Total: 4.381 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
+Asset Pipeline Refresh (id=4b2f74e0d2c284a2fb66f23924d62982): Total: 3.466 seconds - Initiated by InitialRefreshV2(ForceSynchronousImport)
 	(Values over 0.05ms)
 	Summary:
 		Imports: total=0 (actual=0, local cache=0, cache server=0)
-		Asset DB Process Time: managed=0 ms, native=2287 ms
-		Asset DB Callback time: managed=66 ms, native=9 ms
-		Scripting: domain reloads=1, domain reload time=877 ms, compile time=1092 ms, other=47 ms
-		Project Asset Count: scripts=1765, non-scripts=3150
+		Asset DB Process Time: managed=0 ms, native=1748 ms
+		Asset DB Callback time: managed=32 ms, native=7 ms
+		Scripting: domain reloads=1, domain reload time=706 ms, compile time=932 ms, other=39 ms
+		Project Asset Count: scripts=1515, non-scripts=3034
 		Asset File Changes: new=0, changed=0, moved=0, deleted=0
 		Scan Filter Count: 1
-	InvokePackagesCallback: 10.868ms
-	ApplyChangesToAssetFolders: 0.269ms
-	Scan: 690.615ms
-	Collect global state as custom dependencies: 12.386ms
-	CategorizeScriptCompilationAssets: 29.112ms
-	ProcessAssetsWithTransientArtifactChanges: 75.713ms
-	CategorizeAssets: 70.627ms
-	CompileScripts: 1092.384ms
-	ImportOutOfDateAssets: 1317.319ms (1310.808ms without children)
-		ReloadNativeAssets: 0.059ms
-		UnloadImportedAssets: 3.884ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.819ms
-		ImportSchedulerStart: 1.746ms
-	PostProcessAllAssets: 66.164ms
-		MonoPostProcessAllAssets: 66.122ms
-			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 10.712ms
-			SyncVS.PostprocessSyncProject 5.474ms
-			GraphRefreshPostprocessor.OnPostprocessAllAssets 3.478ms
-			EditModeScopePostprocessor.OnPostprocessAllAssets 3.025ms
-			SpeedTree9Postprocessor.OnPostprocessAllAssets 1.100ms
-			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 1.036ms
-			AssetChangeDetector.OnPostprocessAllAssets 0.618ms
-			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.402ms
-			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.350ms
-			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.168ms
-			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.158ms
-			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.140ms
-			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.119ms
-			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.097ms
-	UnloadStreamsBegin: 2.357ms
-	PersistCurrentRevisions: 0.121ms
-	GenerateScriptTypeHashes: 2.013ms
-	GenerateScriptTypeSerializationHashes: 3.376ms
-	Untracked: 1008.680ms
+	InvokePackagesCallback: 8.183ms
+	ApplyChangesToAssetFolders: 0.169ms
+	Scan: 454.770ms
+	Collect global state as custom dependencies: 11.965ms
+	CategorizeScriptCompilationAssets: 23.166ms
+	ProcessAssetsWithTransientArtifactChanges: 53.588ms
+	CategorizeAssets: 62.919ms
+	CompileScripts: 932.382ms
+	ImportOutOfDateAssets: 1069.137ms (1061.745ms without children)
+		UnloadImportedAssets: 3.916ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.787ms
+		ImportSchedulerStart: 2.641ms
+	PostProcessAllAssets: 32.192ms
+		MonoPostProcessAllAssets: 32.143ms
+			UniversalRenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 10.488ms
+			SyncVS.PostprocessSyncProject 5.596ms
+			WindowAssetPostprocessingWatcher.OnPostprocessAllAssets 1.321ms
+			GraphRefreshPostprocessor.OnPostprocessAllAssets 1.266ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 1.255ms
+			EditModeScopePostprocessor.OnPostprocessAllAssets 0.657ms
+			AssetChangeDetector.OnPostprocessAllAssets 0.560ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.446ms
+			ShaderReflectionAssetPostProcessor.OnPostprocessAllAssets 0.347ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.195ms
+			ReferencedClipsPostProcessor.OnPostprocessAllAssets 0.191ms
+			TerrainToolbarOverlayPostProcessor.OnPostprocessAllAssets 0.157ms
+			ProjectSettingsPostprocessor.OnPostprocessAllAssets 0.146ms
+			AssetDatabaseCallbacks.OnPostprocessAllAssets 0.144ms
+	UnloadStreamsBegin: 1.767ms
+	PersistCurrentRevisions: 0.118ms
+	GenerateScriptTypeHashes: 2.074ms
+	GenerateScriptTypeSerializationHashes: 3.362ms
+	Untracked: 814.176ms
 
 Application.AssetDatabase Initial Refresh End
 Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
 Shader Hidden/ChartRasterizerHardware is not supported: GPU does not support conservative rasterization
-Scanning for USB devices : 0.032ms
+Scanning for USB devices : 0.050ms
 Initializing Unity extensions:
 [MODES] ModeService[none].Initialize
 [MODES] ModeService[none].LoadModes
 [MODES] Loading mode Default (0) for mode-current-id-Escape the Elites
 Unloading 63 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 7194 unused Assets / (7.4 MB). Loaded Objects now: 8174.
-Memory consumption went from 257.6 MB to 250.2 MB.
-Total: 22.825083 ms (FindLiveObjects: 0.621125 ms CreateObjectMapping: 0.327625 ms MarkObjects: 18.126084 ms  DeleteObjects: 3.600125 ms)
+Unloading 5978 unused Assets / (6.4 MB). Loaded Objects now: 6957.
+Memory consumption went from 245.0 MB to 238.7 MB.
+Total: 21.414459 ms (FindLiveObjects: 0.556375 ms CreateObjectMapping: 0.214333 ms MarkObjects: 17.823625 ms  DeleteObjects: 2.686250 ms)
 
-[Project] Loading completed in 7.759 seconds
-	Project init time: 				7.418 seconds
+[Project] Loading completed in 5.855 seconds
+	Project init time: 				5.600 seconds
 		Template init time: 		0.000 seconds
-		Package Manager init time: 		0.240 seconds
-		Asset Database init time: 		0.561 seconds
+		Package Manager init time: 		0.258 seconds
+		Asset Database init time: 		0.557 seconds
 		Global illumination init time: 	0.001 seconds
-		Assemblies load time: 			0.840 seconds
-		Unity extensions init time: 	0.043 seconds
-		Asset Database refresh time: 	4.381 seconds
-	Scene opening time: 			0.257 seconds
-##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1789873861925,"processId":55300,"projectLoad":7.759342083000001,"projectInit":7.417758208,"templateInit":0.0,"packageManagerInit":0.240480167,"assetDatabaseInit":0.56085525,"globalIlluminationInit":0.0008995,"assembliesLoad":0.839809208,"unityExtensionsInit":0.043125833,"assetDatabaseRefresh":4.381455917,"sceneOpening":0.257055208}
-##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1789873861925,"processId":55300,"editorVersion":"6000.6.0f1 (f7f8ed4d1e24)","branch":"6000.6/respin/6000.6.0f1-fa21a270ab12","buildType":"Release","platform":"OSX"}
+		Assemblies load time: 			0.758 seconds
+		Unity extensions init time: 	0.041 seconds
+		Asset Database refresh time: 	3.467 seconds
+	Scene opening time: 			0.189 seconds
+##utp:{"type":"ProjectInfo","version":2,"phase":"Immediate","time":1789884469966,"processId":33365,"projectLoad":5.855352,"projectInit":5.599905334,"templateInit":0.0,"packageManagerInit":0.257661083,"assetDatabaseInit":0.556967625,"globalIlluminationInit":0.000756541,"assembliesLoad":0.75769925,"unityExtensionsInit":0.040575875,"assetDatabaseRefresh":3.46657675,"sceneOpening":0.189089166}
+##utp:{"type":"EditorInfo","version":2,"phase":"Immediate","time":1789884469966,"processId":33365,"editorVersion":"6000.6.0f1 (f7f8ed4d1e24)","branch":"6000.6/respin/6000.6.0f1-fa21a270ab12","buildType":"Release","platform":"OSX"}
 [Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
 [Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
 [Licensing::Client] Successfully resolved entitlement details
@@ -418,7 +411,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Created Unix socket with fd=91
+Created Unix socket with fd=77
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -439,7 +432,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Bound Unix socket to /tmp/unity-mcp-57915bc5-55300
+Bound Unix socket to /tmp/unity-mcp-57915bc5-33365
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -460,7 +453,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Set socket permissions to 0600: /tmp/unity-mcp-57915bc5-55300
+Set socket permissions to 0600: /tmp/unity-mcp-57915bc5-33365
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -481,7 +474,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Listening on Unix socket: /tmp/unity-mcp-57915bc5-55300
+Listening on Unix socket: /tmp/unity-mcp-57915bc5-33365
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -523,7 +516,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-MCP Bridge V2 started using Unix Socket at /tmp/unity-mcp-57915bc5-55300 (OS=OSXEditor)
+MCP Bridge V2 started using Unix Socket at /tmp/unity-mcp-57915bc5-33365 (OS=OSXEditor)
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -543,7 +536,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Saved connection info to /Users/dawsonblock/.unity/mcp/connections/bridge-57915bc5-55300.json
+Saved connection info to /Users/dawsonblock/.unity/mcp/connections/bridge-57915bc5-33365.json
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -566,10 +559,9 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 Start Indexing on Editor startup
 [Indexing] Starting Initial Indexing for Assets
-Worker ready: AssetImportWorkerHW0 0
 [UnityConnectServicesConfig] config is NOT valid, switching to default
-Created GICache directory at /Users/dawsonblock/Library/Caches/com.unity3d.UnityEditor/GiCache. Took: 0.006s, timestamps: [7.780 - 7.786]
-Accepted Unix socket connection: fd=94
+Created GICache directory at /Users/dawsonblock/Library/Caches/com.unity3d.UnityEditor/GiCache. Took: 0.002s, timestamps: [5.861 - 5.863]
+Accepted Unix socket connection: fd=91
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -582,31 +574,6 @@ UnityEditor.Search.Dispatcher/Task:Invoke () (at /Users/bokken/build/output/unit
 UnityEditor.Search.Dispatcher:Process (UnityEditor.Search.Dispatcher/Task&) (at /Users/bokken/build/output/unity/unity/Modules/QuickSearch/Editor/UI/Dispatcher.cs:78)
 UnityEditor.Search.Dispatcher:Update () (at /Users/bokken/build/output/unity/unity/Modules/QuickSearch/Editor/UI/Dispatcher.cs:101)
 UnityEditor.EditorApplication:Internal_InvokeTickEvents () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:419)
-
-(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
-
-MCP client info: rmcp v3.1.0
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:Log (object)
-Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
-Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
-Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
-Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
-Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
-Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
-Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
-Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1707)
-System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>:Start<Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75> (Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75&)
-Unity.AI.MCP.Editor.Bridge:ExecuteCommandAsync (Unity.AI.MCP.Editor.Models.Command,Unity.AI.MCP.Editor.Connection.IConnectionTransport,System.Threading.CancellationToken)
-Unity.AI.MCP.Editor.Bridge:ProcessCommands () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1537)
-Unity.AI.MCP.Editor.Bridge:<RequestDrainOnMainThread>b__69_0 (object) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1468)
-UnityEngine.UnitySynchronizationContext/WorkRequest:Invoke () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:156)
-UnityEngine.UnitySynchronizationContext:Exec () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:84)
-UnityEngine.UnitySynchronizationContext:ExecuteTasks () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/UnitySynchronizationContext.cs:110)
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
@@ -643,6 +610,9 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
+[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
 Sent handshake (unity-mcp protocol v2.0, tools=38)
   at Unity.AI.MCP.Editor.Bridge.HandleClientAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token) [0x006db] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:802 
   at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
@@ -701,88 +671,108 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
-[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
-[Licensing::Client] Error: Code 404 while processing request (status: Found 0 entitlement groups and 0 free entitlements matching requested entitlement ids)
-Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 0 unused Assets / (0 B). Loaded Objects now: 8328.
-Memory consumption went from 221.5 MB to 221.5 MB.
-Total: 24.894750 ms (FindLiveObjects: 0.681084 ms CreateObjectMapping: 0.153750 ms MarkObjects: 23.685125 ms  DeleteObjects: 0.024959 ms)
-
-[INFO ] [relay] relay.startup port=9001 mcpClientPort=9002 editorPid=55300
+[INFO ] [relay] relay.startup port=9001 mcpClientPort=9002 editorPid=33365
 [INFO ] [relay] log === RELAY SERVER STARTED === (unity-ai-relay v1.0.12-build.99)
+MCP client info: rmcp v3.1.0
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Unity.AI.Tracing.ConsoleSink:LogToConsole (string,string,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:313)
+Unity.AI.Tracing.ConsoleSink:Write (Unity.AI.Tracing.TraceEvent) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs:277)
+Unity.AI.Tracing.TraceWriter:WriteEventInternal (string,string,Unity.AI.Tracing.TraceEventOptions,string,System.Nullable`1<int>) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:373)
+Unity.AI.Tracing.TraceWriter:Event (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceWriter.cs:297)
+Unity.AI.Tracing.TraceLogger:Emit (string,string,string,string,Unity.AI.Tracing.TraceEventOptions,object,System.Exception) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:105)
+Unity.AI.Tracing.TraceLogger:Info (string,string,string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceLogger.cs:35)
+Unity.AI.MCP.Editor.Helpers.McpLog:Log (string,Unity.AI.Tracing.TraceEventOptions) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Helpers/McpLog.cs:15)
+Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1707)
+System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>:Start<Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75> (Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75&)
+Unity.AI.MCP.Editor.Bridge:ExecuteCommandAsync (Unity.AI.MCP.Editor.Models.Command,Unity.AI.MCP.Editor.Connection.IConnectionTransport,System.Threading.CancellationToken)
+Unity.AI.MCP.Editor.Bridge:ProcessCommands () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1537)
+UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:413)
+
+(Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
+
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
 [INFO ] [relay] log TLS trust: NODE_USE_SYSTEM_CA=on systemCAs=2 bundledCAs=145
 [INFO ] [relay] log Starting relay server...
-[INFO ] [relay] log Command line arguments: ["bun","/$bunfs/root/relay_mac_arm64","--relay","--port","9001","--mcp-client-port","9002","--editor-pid","55300","--shutdown-delay","180","--log-dir","/Users/dawsonblock/unity/My project (7)/Logs"]
-[INFO ] [relay] log Parsed config: {"port":9001,"mcpClientPort":9002,"editorPid":"55300","shutdownDelaySeconds":180}
+[INFO ] [relay] log Command line arguments: ["bun","/$bunfs/root/relay_mac_arm64","--relay","--port","9001","--mcp-client-port","9002","--editor-pid","33365","--shutdown-delay","180","--log-dir","/Users/dawsonblock/unity/My project (7)/Logs"]
+[INFO ] [relay] log Parsed config: {"port":9001,"mcpClientPort":9002,"editorPid":"33365","shutdownDelaySeconds":180}
 [INFO ] [relay] log Initializing relay components...
 [INFO ] [relay] log Creating RelayEditor...
 [INFO ] [relay] log WebSocket server started
 [INFO ] [relay] log Relay server initialization completed
 [INFO ] [relay] log MCP Client initialized at port: 9002
-[INFO ] [relay] log Unity MCP Relay server started | Port: 9002 | Endpoints: /mcp/start-server, /mcp/stop-server, /mcp/server-status, /mcp/call-tool
-Importing 'GUID: 0000000000000000b000000000000000 - Path: ProjectSettings/EditorBuildSettings.asset' with importer (LibraryAssetImporter)
-Imported 'GUID: 0000000000000000b000000000000000' -> (Import Result ID: '20daa54de3fc82f69ba3ee90f0b8a981') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=0a89a5c5f492143e0fa186859e17ba6f DependenciesID=928eef1d6241641f1638445dad6f2fee StaticDependenciesID=9dd4016036db10c35975be250ca5a091 
-[INFO ] [relay] log Unity client connected with ID: editor-55300-54p1bn (relay 1.0.12-build.99)
-[INFO ] [relay] connection.established clientId=editor-55300-54p1bn port=9001
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 7111.
+Memory consumption went from 208.4 MB to 208.4 MB.
+Total: 21.251167 ms (FindLiveObjects: 0.411458 ms CreateObjectMapping: 0.133000 ms MarkObjects: 20.488459 ms  DeleteObjects: 0.019541 ms)
 
-Asset Pipeline Refresh (id=d00716af4b8374ca69c493f18fef5e90): Total: 0.412 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+[INFO ] [relay] log Unity MCP Relay server started | Port: 9002 | Endpoints: /mcp/start-server, /mcp/stop-server, /mcp/server-status, /mcp/call-tool
+[INFO ] [relay] log Unity client connected with ID: editor-33365-6m4yxv (relay 1.0.12-build.99)
+[INFO ] [relay] connection.established clientId=editor-33365-6m4yxv port=9001
+Worker ready: AssetImportWorkerHW0 0
+Importing 'GUID: 0000000000000000b000000000000000 - Path: ProjectSettings/EditorBuildSettings.asset' with importer (LibraryAssetImporter)
+Imported 'GUID: 0000000000000000b000000000000000' -> (Import Result ID: '20daa54de3fc82f69ba3ee90f0b8a981') in 0.005 seconds [static dependencies only]. Details - ImportResultOutputID=0a89a5c5f492143e0fa186859e17ba6f DependenciesID=928eef1d6241641f1638445dad6f2fee StaticDependenciesID=9dd4016036db10c35975be250ca5a091 
+
+Asset Pipeline Refresh (id=757baf38392d64f35878d4fd667a3d0e): Total: 0.317 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
 	(Values over 0.05ms)
 	Summary:
 		Imports: total=1 (actual=1, local cache=0, cache server=0)
-		Asset DB Process Time: managed=1 ms, native=130 ms
-		Asset DB Callback time: managed=279 ms, native=1 ms
+		Asset DB Process Time: managed=2 ms, native=73 ms
+		Asset DB Callback time: managed=240 ms, native=0 ms
 		Scripting: domain reloads=0, domain reload time=0 ms, compile time=0 ms, other=0 ms
-		Project Asset Count: scripts=1765, non-scripts=3150
+		Project Asset Count: scripts=1515, non-scripts=3034
 		Asset File Changes: new=0, changed=0, moved=0, deleted=0
 		Scan Filter Count: 1
-	ApplyChangesToAssetFolders: 0.102ms
-	Scan: 29.994ms
-	Collect global state as custom dependencies: 0.349ms
-	ProcessAssetsWithTransientArtifactChanges: 2.607ms
-	CategorizeAssets: 48.023ms
-	ImportOutOfDateAssets: 37.112ms (0.186ms without children)
-		ImportManagerImport: 35.998ms (0.893ms without children)
-		ReloadNativeAssets: 0.055ms
-		UnloadImportedAssets: 0.077ms
-		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.511ms
-		ImportSchedulerStart: 0.284ms
-	PostProcessAllAssets: 279.973ms
-		XRBuildSystem.XRAssetImported 0.382ms
-		MonoPostProcessAllAssets: 279.297ms
-			AssetPostprocessor.OnPostprocessAllAssets 69.734ms
-			StyleCatalogPostProcessor.OnPostprocessAllAssets 39.846ms
-			AssetReferenceReimportMonitor.OnPostprocessAllAssets 18.119ms
-			BuilderAssetPostprocessor.OnPostprocessAllAssets 4.634ms
-			SpriteSlicePostprocessor.OnPostprocessAllAssets 1.371ms
-			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 1.027ms
-			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 1.018ms
-			SyncVS.PostprocessSyncProject 0.623ms
-			SpriteEditorTexturePostprocessor.OnPostprocessAllAssets 0.421ms
-			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.385ms
-			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.380ms
-			MaterialPostprocessor.OnPostprocessAllAssets 0.371ms
-			PostProcessor.OnPostprocessAllAssets 0.321ms
-			UploadAssetPostprocessor.OnPostprocessAllAssets 0.305ms
-			TextAssetPostProcessor.OnPostprocessAllAssets 0.272ms
-			AudioMixerPostprocessor.OnPostprocessAllAssets 0.258ms
-			AssetEvents.OnPostprocessAllAssets 0.230ms
-			AssetChangedListener.OnPostprocessAllAssets 0.198ms
-			SkillsProjectAssetPostprocessor.OnPostprocessAllAssets 0.181ms
-			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.180ms
-			ConfigAssetsTracker.OnPostprocessAllAssets 0.137ms
-			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.106ms
-			SpeedTreePostProcessor.OnPostprocessAllAssets 0.106ms
-			ThemePostprocessor.OnPostprocessAllAssets 0.102ms
-			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.080ms
-	PostAssetChangesProfiler: 0.383ms
-	GatherAllCurrentPrimaryImportResultRevisions: 0.524ms
-	PersistCurrentRevisions: 0.126ms
-	Untracked: 13.219ms
+	ApplyChangesToAssetFolders: 0.098ms
+	Scan: 8.846ms
+	Collect global state as custom dependencies: 0.109ms
+	ProcessAssetsWithTransientArtifactChanges: 0.803ms
+	CategorizeAssets: 46.554ms
+	ImportOutOfDateAssets: 7.496ms (0.127ms without children)
+		ImportManagerImport: 6.444ms (1.019ms without children)
+		UnloadImportedAssets: 0.082ms
+		EnsureUptoDateAssetsAreRegisteredWithGuidPM: 0.463ms
+		ImportSchedulerStart: 0.335ms
+	PostProcessAllAssets: 240.917ms
+		XRBuildSystem.XRAssetImported 0.229ms
+		MonoPostProcessAllAssets: 240.407ms
+			AssetPostprocessor.OnPostprocessAllAssets 54.741ms
+			AssetReferenceReimportMonitor.OnPostprocessAllAssets 15.645ms
+			StyleCatalogPostProcessor.OnPostprocessAllAssets 15.622ms
+			BuilderAssetPostprocessor.OnPostprocessAllAssets 5.669ms
+			SyncVS.PostprocessSyncProject 3.941ms
+			SpriteSlicePostprocessor.OnPostprocessAllAssets 1.581ms
+			RetainedModeAssetPostprocessor.OnPostprocessAllAssets 0.994ms
+			ShaderGraphAssetPostProcessor.OnPostprocessAllAssets 0.968ms
+			TMPro_TexturePostProcessor.OnPostprocessAllAssets 0.570ms
+			SpriteEditorTexturePostprocessor.OnPostprocessAllAssets 0.407ms
+			ArtifactBrowserPostProcessor.OnPostprocessAllAssets 0.406ms
+			TextAssetPostProcessor.OnPostprocessAllAssets 0.341ms
+			MaterialPostprocessor.OnPostprocessAllAssets 0.336ms
+			PostProcessor.OnPostprocessAllAssets 0.276ms
+			AudioMixerPostprocessor.OnPostprocessAllAssets 0.228ms
+			SkillsProjectAssetPostprocessor.OnPostprocessAllAssets 0.222ms
+			AssetEvents.OnPostprocessAllAssets 0.219ms
+			InputActionJsonNameModifierAssetProcessor.OnPostprocessAllAssets 0.196ms
+			AssetChangedListener.OnPostprocessAllAssets 0.169ms
+			ConfigAssetsTracker.OnPostprocessAllAssets 0.119ms
+			ThemePostprocessor.OnPostprocessAllAssets 0.109ms
+			InputActionAssetPostprocessor.OnPostprocessAllAssets 0.102ms
+			ScenarioDriftAssetsTracker.OnPostprocessAllAssets 0.098ms
+			SpeedTreePostProcessor.OnPostprocessAllAssets 0.096ms
+			RenderPipelineGlobalSettingsPostprocessor.OnPostprocessAllAssets 0.080ms
+			SpeedTree9Postprocessor.OnPostprocessAllAssets 0.053ms
+	PostAssetChangesProfiler: 0.312ms
+	GatherAllCurrentPrimaryImportResultRevisions: 0.650ms
+	PersistCurrentRevisions: 0.195ms
+	Untracked: 11.221ms
 
-Importing 'GUID: c02a1cc9a672046ad90e1d609d5ead8c - Path: Assets/InitTestScene9be089be-ef38-4b08-8890-650c76336bb7.unity' with importer (DefaultImporter)
-Imported 'GUID: c02a1cc9a672046ad90e1d609d5ead8c' -> (Import Result ID: 'd66c1aae80f3f7e6cedf2924bcc641c3') in 0.004 seconds [static dependencies only]. Details - ImportResultOutputID=e37395cdd3af5a82cc8bfe6cb95c0d6c DependenciesID=5b5782377913c0c752bc337a553269ea StaticDependenciesID=06fa53b378b1eec7c84ce8e8cb7eefd1 
-Asset Pipeline Refresh (id=931b4fab6f947456ea285ef6516cb448): Total: 0.113 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Importing 'GUID: 678a86c403c1546e1b8cee9c2d19af1f - Path: Assets/InitTestScenef33e2939-e5b8-4304-a99c-b4592729339e.unity' with importer (DefaultImporter)
+Imported 'GUID: 678a86c403c1546e1b8cee9c2d19af1f' -> (Import Result ID: 'b25fd12aaffb53b073e90b7e3a5a995f') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=5fec5d8bb63dc92b456552a72498049f DependenciesID=2dd0a020760e7bbc63841d67d42f8f22 StaticDependenciesID=2eb46f72625461d40939216e03cbc507 
+Asset Pipeline Refresh (id=df1b1dc7ca3394b0ca4251e47232ea53): Total: 0.040 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
 Executing IPrebuildSetup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
@@ -798,11 +788,213 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 48)
 
-Thread 0x16cfab000 may have been prematurely finalized
+Thread 0x16d2f3000 may have been prematurely finalized
 Entering Playmode with Reload Domain disabled.
 If you experience any issues, please disable "Enter Play Mode Options" in Editor Settings
 Entering Playmode with Reload Scene disabled. If you experience any issues, please disable "Enter Play Mode Options" in Editor Settings
-[TIMING] Validation took 2904ms
+Unloading 118 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.649000 ms
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+Loaded scene 'Assets/_Game/Scenes/Dock.unity'
+	Deserialize:            42.715 ms
+	Integration:            51.952 ms
+	Integration of assets:  1.262 ms
+	Thread Wait Time:       -0.009 ms
+	Total Operation Time:   95.921 ms
+Unloading 252 unused Assets / (182.2 KB). Loaded Objects now: 8007.
+Memory consumption went from 244.6 MB to 244.4 MB.
+Total: 25.931375 ms (FindLiveObjects: 0.530417 ms CreateObjectMapping: 0.121916 ms MarkObjects: 24.203500 ms  DeleteObjects: 0.928042 ms)
+
+[CMD] 00:07:52 ACTIVATE_OBJECTIVE reach_compound
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
+Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
+Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+
+(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
+TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
+TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
+TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
+UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
+UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
+
+(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
+
+Unloading 51 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 4.382875 ms
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+Loaded scene 'Assets/_Game/Scenes/Dock.unity'
+	Deserialize:            3.919 ms
+	Integration:            22.957 ms
+	Integration of assets:  0.589 ms
+	Thread Wait Time:       0.002 ms
+	Total Operation Time:   27.467 ms
+Unloading 93 unused Assets / (25.5 KB). Loaded Objects now: 8008.
+Memory consumption went from 235.3 MB to 235.2 MB.
+Total: 22.205792 ms (FindLiveObjects: 0.595875 ms CreateObjectMapping: 0.131167 ms MarkObjects: 21.234375 ms  DeleteObjects: 0.096167 ms)
+
+[CMD] 00:07:52 ACTIVATE_OBJECTIVE reach_compound
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
+Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
+Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+
+(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
+TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
+TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
+TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
+UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
+UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
+
+(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
+
+[SaveService] Load 'itest_slot' refused — a scene transition is in progress, and committing state without the matching scene change would desynchronise them.
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:LogWarning (object)
+Escape.Core.SaveService:Load (string) (at Assets/_Game/Core/Persistence/SaveService.cs:288)
+Escape.Tests.PlayMode.SceneIntegrationTests/<Load_DuringATransition_IsRefused_AndLeavesStateUntouched>d__9:MoveNext () (at Assets/_Game/Tests/PlayMode/SceneIntegrationTests.cs:329)
+UnityEngine.TestTools.TestEnumerator/<Execute>d__8:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52)
+UnityEngine.TestTools.EnumerableTestMethodCommand/<ExecuteEnumerableAndRecordExceptions>d__4:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:85)
+UnityEngine.TestTools.EnumerableTestMethodCommand:AdvanceEnumerator (System.Collections.IEnumerator) (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:64)
+UnityEngine.TestTools.EnumerableTestMethodCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:47)
+UnityEngine.TestRunner.NUnitExtensions.Runner.UnityLogCheckDelegatingCommand/<ExecuteEnumerable>d__4:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Runner/UnityLogCheckDelegatingCommand.cs:66)
+UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<NUnit.Framework.ITestAction>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
+UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<System.Reflection.MethodInfo>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
+UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<System.Reflection.MethodInfo>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
+UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<UnityEngine.TestTools.IOuterUnityTestAction>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
+UnityEngine.TestTools.RetryCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/RetryCommand.cs:37)
+UnityEngine.TestTools.RepeatCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/RepeatCommand.cs:36)
+UnityEngine.TestTools.IgnoreTestCommand/<ExecuteEnumerable>d__3:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/IgnoreTestCommand.cs:42)
+UnityEngine.TestTools.StrictCheckCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/StrictCheckCommand.cs:29)
+UnityEngine.TestTools.Utils.CoroutineRunner/<WrapEnumeratorForChecks>d__8:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/Utils/CoroutineRunner.cs:58)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+
+(Filename: Assets/_Game/Core/Persistence/SaveService.cs Line: 288)
+
+[INFO ] [relay] log [shell-env] PATH augmented with shell environment (35 entries)
+Unloading 30 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 1.200500 ms
+Loaded scene 'Assets/_Game/Scenes/ServiceEntrance.unity'
+	Deserialize:            25.907 ms
+	Integration:            25.863 ms
+	Integration of assets:  0.354 ms
+	Thread Wait Time:       -0.005 ms
+	Total Operation Time:   52.119 ms
+Unloading 172 unused Assets / (458.5 KB). Loaded Objects now: 8148.
+Memory consumption went from 235.6 MB to 235.2 MB.
+Total: 20.109917 ms (FindLiveObjects: 0.467375 ms CreateObjectMapping: 0.110416 ms MarkObjects: 19.219375 ms  DeleteObjects: 0.174583 ms)
+
+[CMD] 00:07:53 COMPLETE_OBJECTIVE infiltrate_service
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
+Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.CompleteObjectiveCommand> (Escape.Core.CompleteObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
+Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:52)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+
+(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
+TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
+TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
+TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
+UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
+UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
+
+(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
+
+Unloading 25 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.520042 ms
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+Loaded scene 'Assets/_Game/Scenes/Dock.unity'
+	Deserialize:            13.323 ms
+	Integration:            27.355 ms
+	Integration of assets:  0.613 ms
+	Thread Wait Time:       0.002 ms
+	Total Operation Time:   41.293 ms
+Unloading 111 unused Assets / (377.6 KB). Loaded Objects now: 8009.
+Memory consumption went from 234.3 MB to 234.0 MB.
+Total: 29.103833 ms (FindLiveObjects: 0.659541 ms CreateObjectMapping: 1.183708 ms MarkObjects: 26.754125 ms  DeleteObjects: 0.331792 ms)
+
+[CMD] 00:07:54 ACTIVATE_OBJECTIVE reach_compound
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object)
+UnityEngine.Debug:Log (object)
+Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
+Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
+Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
+UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
+
+(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
+UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
+UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
+UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
+UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
+UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
+TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
+TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
+TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
+TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
+UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
+UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
+
+(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
+
+[TIMING] Validation took 3486ms
   at Unity.AI.MCP.Editor.Bridge.ValidateAndApproveAsync (Unity.AI.MCP.Editor.Connection.IConnectionTransport transport, System.Threading.CancellationToken token, System.Boolean isBatchMode) [0x0014d] in ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1052 
   at System.Runtime.CompilerServices.AsyncMethodBuilderCore+MoveNextRunner.InvokeMoveNext (System.Object stateMachine) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
   at System.Threading.ExecutionContext.RunInternal (System.Threading.ExecutionContext executionContext, System.Threading.ContextCallback callback, System.Object state, System.Boolean preserveSyncCtx) [0x00000] in <0e19fd8bd8e94908bba2ee4f803bc6a7>:0 
@@ -921,209 +1113,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Unloading 118 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.536500 ms
-ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
-ParticleSystem component deleted: Component belongs to a disabled built-in package.
-Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            36.705 ms
-	Integration:            66.558 ms
-	Integration of assets:  3.982 ms
-	Thread Wait Time:       -0.005 ms
-	Total Operation Time:   107.240 ms
-Unloading 253 unused Assets / (184.8 KB). Loaded Objects now: 9224.
-Memory consumption went from 256.5 MB to 256.3 MB.
-Total: 23.389250 ms (FindLiveObjects: 0.450917 ms CreateObjectMapping: 0.139000 ms MarkObjects: 21.657458 ms  DeleteObjects: 0.993709 ms)
-
-[CMD] 21:11:07 ACTIVATE_OBJECTIVE reach_compound
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:Log (object)
-Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
-Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
-Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
-UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
-
-(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
-
-The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
-UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
-TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
-TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
-TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
-TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
-UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
-UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
-
-(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
-
-Unloading 51 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.147750 ms
-ParticleSystem component deleted: Component belongs to a disabled built-in package.
-ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
-Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            3.479 ms
-	Integration:            25.200 ms
-	Integration of assets:  0.136 ms
-	Thread Wait Time:       0.629 ms
-	Total Operation Time:   29.444 ms
-Unloading 93 unused Assets / (50.0 KB). Loaded Objects now: 9225.
-Memory consumption went from 241.4 MB to 241.3 MB.
-Total: 22.165541 ms (FindLiveObjects: 0.832834 ms CreateObjectMapping: 0.249833 ms MarkObjects: 20.821458 ms  DeleteObjects: 0.089750 ms)
-
-[CMD] 21:11:08 ACTIVATE_OBJECTIVE reach_compound
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:Log (object)
-Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
-Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
-Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
-UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
-
-(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
-
-The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
-UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
-TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
-TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
-TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
-TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
-UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
-UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
-
-(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
-
-[SaveService] Load 'itest_slot' refused — a scene transition is in progress, and committing state without the matching scene change would desynchronise them.
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:LogWarning (object)
-Escape.Core.SaveService:Load (string) (at Assets/_Game/Core/Persistence/SaveService.cs:288)
-Escape.Tests.PlayMode.SceneIntegrationTests/<Load_DuringATransition_IsRefused_AndLeavesStateUntouched>d__9:MoveNext () (at Assets/_Game/Tests/PlayMode/SceneIntegrationTests.cs:329)
-UnityEngine.TestTools.TestEnumerator/<Execute>d__8:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Attributes/TestEnumerator.cs:52)
-UnityEngine.TestTools.EnumerableTestMethodCommand/<ExecuteEnumerableAndRecordExceptions>d__4:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:85)
-UnityEngine.TestTools.EnumerableTestMethodCommand:AdvanceEnumerator (System.Collections.IEnumerator) (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:64)
-UnityEngine.TestTools.EnumerableTestMethodCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/EnumerableTestMethodCommand.cs:47)
-UnityEngine.TestRunner.NUnitExtensions.Runner.UnityLogCheckDelegatingCommand/<ExecuteEnumerable>d__4:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Runner/UnityLogCheckDelegatingCommand.cs:66)
-UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<NUnit.Framework.ITestAction>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
-UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<System.Reflection.MethodInfo>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
-UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<System.Reflection.MethodInfo>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
-UnityEngine.TestTools.BeforeAfterTestCommandBase`1/<ExecuteEnumerable>d__16<UnityEngine.TestTools.IOuterUnityTestAction>:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/BeforeAfterTestCommandBase.cs:213)
-UnityEngine.TestTools.RetryCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/RetryCommand.cs:37)
-UnityEngine.TestTools.RepeatCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/RepeatCommand.cs:36)
-UnityEngine.TestTools.IgnoreTestCommand/<ExecuteEnumerable>d__3:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/IgnoreTestCommand.cs:42)
-UnityEngine.TestTools.StrictCheckCommand/<ExecuteEnumerable>d__2:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/NUnitExtensions/Commands/StrictCheckCommand.cs:29)
-UnityEngine.TestTools.Utils.CoroutineRunner/<WrapEnumeratorForChecks>d__8:MoveNext () (at ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEngine.TestRunner/Utils/CoroutineRunner.cs:58)
-UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
-
-(Filename: Assets/_Game/Core/Persistence/SaveService.cs Line: 288)
-
-Unloading 30 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.634792 ms
-Loaded scene 'Assets/_Game/Scenes/ServiceEntrance.unity'
-	Deserialize:            30.812 ms
-	Integration:            63.973 ms
-	Integration of assets:  1.631 ms
-	Thread Wait Time:       0.013 ms
-	Total Operation Time:   96.429 ms
-Unloading 172 unused Assets / (413.7 KB). Loaded Objects now: 9365.
-Memory consumption went from 240.3 MB to 239.9 MB.
-Total: 54.006333 ms (FindLiveObjects: 1.114000 ms CreateObjectMapping: 0.255541 ms MarkObjects: 52.129292 ms  DeleteObjects: 0.321167 ms)
-
-[CMD] 21:11:09 COMPLETE_OBJECTIVE infiltrate_service
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:Log (object)
-Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
-Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.CompleteObjectiveCommand> (Escape.Core.CompleteObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
-Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:52)
-UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
-
-(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
-
-The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
-UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
-TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
-TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
-TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
-TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
-UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
-UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
-
-(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
-
-Unloading 25 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.078042 ms
-ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
-ParticleSystem component deleted: Component belongs to a disabled built-in package.
-Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            10.820 ms
-	Integration:            24.065 ms
-	Integration of assets:  0.164 ms
-	Thread Wait Time:       0.315 ms
-	Total Operation Time:   35.363 ms
-Unloading 111 unused Assets / (396.3 KB). Loaded Objects now: 9226.
-Memory consumption went from 239.8 MB to 239.4 MB.
-Total: 21.585375 ms (FindLiveObjects: 0.446083 ms CreateObjectMapping: 0.132959 ms MarkObjects: 20.692541 ms  DeleteObjects: 0.170209 ms)
-
-[CMD] 21:11:09 ACTIVATE_OBJECTIVE reach_compound
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object)
-UnityEngine.Debug:Log (object)
-Escape.Core.CommandJournal:Record (string) (at Assets/_Game/Core/Commands/CommandJournal.cs:26)
-Escape.Core.GameCommandDispatcher:Dispatch<Escape.Core.ActivateObjectiveCommand> (Escape.Core.ActivateObjectiveCommand) (at Assets/_Game/Core/Commands/GameCommandDispatcher.cs:36)
-Escape.Gameplay.SceneBootstrap/<Start>d__5:MoveNext () (at Assets/_Game/Gameplay/World/SceneBootstrap.cs:54)
-UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr) (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/Coroutines.cs:17)
-
-(Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
-
-The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
-UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
-UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
-UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
-UnityEngine.DebugLogHandler:LogFormat (UnityEngine.LogType,UnityEngine.Object,string,object[])
-UnityEngine.Logger:Log (UnityEngine.LogType,object,UnityEngine.Object)
-UnityEngine.Debug:LogWarning (object,UnityEngine.Object)
-TMPro.TextMeshProUGUI:SetArraySizes (TMPro.TMP_Text/TextProcessingElement[]) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:1980)
-TMPro.TMP_Text:ParseInputText () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TMP_Text.cs:2157)
-TMPro.TextMeshProUGUI:OnPreRenderCanvas () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:2465)
-TMPro.TextMeshProUGUI:Rebuild (UnityEngine.UI.CanvasUpdate) (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs:226)
-UnityEngine.UI.CanvasUpdateRegistry:PerformUpdate () (at ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/UGUI/UI/Core/CanvasUpdateRegistry.cs:226)
-UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unity/unity/Modules/UI/ScriptBindings/UICanvas.bindings.cs:161)
-
-(Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
-
-[INFO ] [relay] log [shell-env] PATH augmented with shell environment (35 entries)
-[CMD] 21:11:10 CHANGE_SCENE dock
+[CMD] 00:07:54 CHANGE_SCENE dock
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1153,20 +1143,20 @@ UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr
 (Filename: Assets/_Game/Core/Commands/CommandJournal.cs Line: 26)
 
 Unloading 9 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.818750 ms
+UnloadTime: 5.259083 ms
 ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
 ParticleSystem component deleted: Component belongs to a disabled built-in package.
 Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            7.436 ms
-	Integration:            35.669 ms
-	Integration of assets:  0.491 ms
-	Thread Wait Time:       0.004 ms
-	Total Operation Time:   43.599 ms
-Unloading 92 unused Assets / (56.5 KB). Loaded Objects now: 9227.
-Memory consumption went from 237.8 MB to 237.7 MB.
-Total: 67.420792 ms (FindLiveObjects: 4.303959 ms CreateObjectMapping: 0.851333 ms MarkObjects: 61.824458 ms  DeleteObjects: 0.130750 ms)
+	Deserialize:            6.050 ms
+	Integration:            31.687 ms
+	Integration of assets:  0.269 ms
+	Thread Wait Time:       0.003 ms
+	Total Operation Time:   38.009 ms
+Unloading 92 unused Assets / (26.6 KB). Loaded Objects now: 8010.
+Memory consumption went from 229.5 MB to 229.4 MB.
+Total: 25.897750 ms (FindLiveObjects: 0.717042 ms CreateObjectMapping: 0.210375 ms MarkObjects: 24.734125 ms  DeleteObjects: 0.096666 ms)
 
-[CMD] 21:11:10 ACTIVATE_OBJECTIVE reach_compound
+[CMD] 00:07:55 ACTIVATE_OBJECTIVE reach_compound
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1197,20 +1187,20 @@ UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unit
 (Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
 
 Unloading 8 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.900292 ms
-ParticleSystem component deleted: Component belongs to a disabled built-in package.
+UnloadTime: 0.961708 ms
 ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+ParticleSystem component deleted: Component belongs to a disabled built-in package.
 Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            13.966 ms
-	Integration:            23.926 ms
-	Integration of assets:  6.660 ms
+	Deserialize:            3.307 ms
+	Integration:            15.410 ms
+	Integration of assets:  0.147 ms
 	Thread Wait Time:       0.007 ms
-	Total Operation Time:   44.559 ms
-Unloading 92 unused Assets / (24.8 KB). Loaded Objects now: 9227.
-Memory consumption went from 237.8 MB to 237.7 MB.
-Total: 24.008208 ms (FindLiveObjects: 0.499541 ms CreateObjectMapping: 0.184667 ms MarkObjects: 23.080792 ms  DeleteObjects: 0.093084 ms)
+	Total Operation Time:   18.871 ms
+Unloading 92 unused Assets / (36.1 KB). Loaded Objects now: 8010.
+Memory consumption went from 227.9 MB to 227.8 MB.
+Total: 20.965500 ms (FindLiveObjects: 0.377417 ms CreateObjectMapping: 0.209667 ms MarkObjects: 20.163000 ms  DeleteObjects: 0.078916 ms)
 
-[CMD] 21:11:11 ACTIVATE_OBJECTIVE reach_compound
+[CMD] 00:07:55 ACTIVATE_OBJECTIVE reach_compound
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1265,28 +1255,28 @@ UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr
 (Filename: Assets/_Game/Core/Services/SceneService.cs Line: 209)
 
 Unloading 8 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.142666 ms
+UnloadTime: 1.157292 ms
 Loaded scene 'Assets/_Game/Scenes/MainMenu.unity'
-	Deserialize:            5.973 ms
-	Integration:            28.419 ms
-	Integration of assets:  0.031 ms
-	Thread Wait Time:       2.375 ms
-	Total Operation Time:   36.798 ms
-Unloading 50 unused Assets / (447.7 KB). Loaded Objects now: 8467.
-Memory consumption went from 236.7 MB to 236.3 MB.
-Total: 119.963125 ms (FindLiveObjects: 5.814875 ms CreateObjectMapping: 0.882875 ms MarkObjects: 109.762833 ms  DeleteObjects: 3.097916 ms)
+	Deserialize:            2.729 ms
+	Integration:            9.848 ms
+	Integration of assets:  0.020 ms
+	Thread Wait Time:       0.035 ms
+	Total Operation Time:   12.633 ms
+Unloading 50 unused Assets / (455.5 KB). Loaded Objects now: 7250.
+Memory consumption went from 225.2 MB to 224.8 MB.
+Total: 20.360959 ms (FindLiveObjects: 0.585208 ms CreateObjectMapping: 0.116459 ms MarkObjects: 19.225084 ms  DeleteObjects: 0.286125 ms)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.637042 ms
+UnloadTime: 0.414792 ms
 Loaded scene 'Assets/_Game/Scenes/MainMenu.unity'
-	Deserialize:            0.756 ms
-	Integration:            10.282 ms
-	Integration of assets:  0.002 ms
-	Thread Wait Time:       0.011 ms
-	Total Operation Time:   11.050 ms
-Unloading 11 unused Assets / (8.0 KB). Loaded Objects now: 8467.
-Memory consumption went from 228.2 MB to 228.2 MB.
-Total: 20.340708 ms (FindLiveObjects: 0.449791 ms CreateObjectMapping: 0.130792 ms MarkObjects: 19.591417 ms  DeleteObjects: 0.026959 ms)
+	Deserialize:            0.367 ms
+	Integration:            8.079 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.106 ms
+	Total Operation Time:   8.553 ms
+Unloading 11 unused Assets / (8.0 KB). Loaded Objects now: 7250.
+Memory consumption went from 216.8 MB to 216.8 MB.
+Total: 18.056125 ms (FindLiveObjects: 0.337583 ms CreateObjectMapping: 0.104542 ms MarkObjects: 17.465125 ms  DeleteObjects: 0.022208 ms)
 
 [SceneService] 'MainMenu' never signalled SceneReady — transition failed, SceneChanged withheld.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -1313,20 +1303,20 @@ UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr
 (Filename: Assets/_Game/Core/Services/SceneService.cs Line: 189)
 
 Unloading 37 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.507750 ms
-ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
+UnloadTime: 0.469750 ms
 ParticleSystem component deleted: Component belongs to a disabled built-in package.
+ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
 Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            32.355 ms
-	Integration:            21.461 ms
-	Integration of assets:  0.543 ms
-	Thread Wait Time:       0.344 ms
-	Total Operation Time:   54.703 ms
-Unloading 92 unused Assets / (24.1 KB). Loaded Objects now: 9227.
-Memory consumption went from 237.8 MB to 237.8 MB.
-Total: 20.699334 ms (FindLiveObjects: 0.475583 ms CreateObjectMapping: 0.257209 ms MarkObjects: 19.717500 ms  DeleteObjects: 0.091083 ms)
+	Deserialize:            12.209 ms
+	Integration:            17.682 ms
+	Integration of assets:  0.193 ms
+	Thread Wait Time:       0.224 ms
+	Total Operation Time:   30.308 ms
+Unloading 92 unused Assets / (22.5 KB). Loaded Objects now: 8010.
+Memory consumption went from 226.3 MB to 226.3 MB.
+Total: 19.743792 ms (FindLiveObjects: 0.378708 ms CreateObjectMapping: 0.129417 ms MarkObjects: 19.020542 ms  DeleteObjects: 0.086500 ms)
 
-[CMD] 21:11:12 ACTIVATE_OBJECTIVE reach_compound
+[CMD] 00:07:56 ACTIVATE_OBJECTIVE reach_compound
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1369,18 +1359,18 @@ UnityEngine.SetupCoroutine:InvokeMoveNext (System.Collections.IEnumerator,intptr
 (Filename: Assets/_Game/Core/Services/SceneService.cs Line: 107)
 
 Unloading 29 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 5.389833 ms
+UnloadTime: 0.976459 ms
 Loaded scene 'Assets/_Game/Scenes/ServiceEntrance.unity'
-	Deserialize:            21.613 ms
-	Integration:            41.686 ms
-	Integration of assets:  1.049 ms
-	Thread Wait Time:       1.456 ms
-	Total Operation Time:   65.803 ms
-Unloading 172 unused Assets / (418.5 KB). Loaded Objects now: 9366.
-Memory consumption went from 240.3 MB to 239.9 MB.
-Total: 548.094666 ms (FindLiveObjects: 1.345167 ms CreateObjectMapping: 0.327584 ms MarkObjects: 56.484958 ms  DeleteObjects: 489.736875 ms)
+	Deserialize:            6.256 ms
+	Integration:            17.628 ms
+	Integration of assets:  0.245 ms
+	Thread Wait Time:       0.058 ms
+	Total Operation Time:   24.186 ms
+Unloading 172 unused Assets / (448.9 KB). Loaded Objects now: 8149.
+Memory consumption went from 227.8 MB to 227.3 MB.
+Total: 18.502708 ms (FindLiveObjects: 0.359167 ms CreateObjectMapping: 0.106750 ms MarkObjects: 17.773125 ms  DeleteObjects: 0.133125 ms)
 
-[CMD] 21:11:13 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 00:07:57 COMPLETE_OBJECTIVE infiltrate_service
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1411,20 +1401,20 @@ UnityEngine.Canvas:SendWillRenderCanvases () (at /Users/bokken/build/output/unit
 (Filename: ./Library/PackageCache/com.unity.ugui@23caec89ae27/Runtime/TMP/TextMeshProUGUI.cs Line: 1980)
 
 Unloading 24 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 1.785292 ms
+UnloadTime: 1.274750 ms
 ParticleSystem component deleted: Component belongs to a disabled built-in package.
 ParticleSystemRenderer component deleted: Component belongs to a disabled built-in package.
 Loaded scene 'Assets/_Game/Scenes/Dock.unity'
-	Deserialize:            8.727 ms
-	Integration:            19.970 ms
-	Integration of assets:  0.174 ms
-	Thread Wait Time:       0.350 ms
-	Total Operation Time:   29.221 ms
-Unloading 110 unused Assets / (2.1 MB). Loaded Objects now: 9227.
-Memory consumption went from 239.9 MB to 237.8 MB.
-Total: 19.085375 ms (FindLiveObjects: 0.383916 ms CreateObjectMapping: 0.114042 ms MarkObjects: 18.287916 ms  DeleteObjects: 0.152459 ms)
+	Deserialize:            4.461 ms
+	Integration:            20.048 ms
+	Integration of assets:  0.245 ms
+	Thread Wait Time:       0.008 ms
+	Total Operation Time:   24.762 ms
+Unloading 110 unused Assets / (390.3 KB). Loaded Objects now: 8010.
+Memory consumption went from 227.3 MB to 226.9 MB.
+Total: 19.236708 ms (FindLiveObjects: 0.372708 ms CreateObjectMapping: 0.107458 ms MarkObjects: 18.471584 ms  DeleteObjects: 0.153625 ms)
 
-[CMD] 21:11:13 ACTIVATE_OBJECTIVE reach_compound
+[CMD] 00:07:58 ACTIVATE_OBJECTIVE reach_compound
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1567,17 +1557,17 @@ UnityEngine.EventSystems.EventSystem:Update () (at ./Library/PackageCache/com.un
 
 Saving results to: /Users/dawsonblock/Library/Application Support/Escape the Elites/Escape the Elites/TestResults.xml
 Saving results to: /Users/dawsonblock/unity/My project (7)/TestResults-playMode.xml
-Thread 0x444087000 may have been prematurely finalized
+Thread 0x441c47000 may have been prematurely finalized
 Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
 Loaded scene 'Temp/__Backupscenes/0.backup'
-	Deserialize:            1.765 ms
-	Integration:            11.120 ms
-	Integration of assets:  0.002 ms
-	Thread Wait Time:       0.020 ms
-	Total Operation Time:   12.906 ms
-Unloading 86 unused Assets / (504.7 KB). Loaded Objects now: 8404.
-Memory consumption went from 237.0 MB to 236.5 MB.
-Total: 25.532833 ms (FindLiveObjects: 0.675583 ms CreateObjectMapping: 0.255083 ms MarkObjects: 23.786792 ms  DeleteObjects: 0.640625 ms)
+	Deserialize:            0.968 ms
+	Integration:            7.850 ms
+	Integration of assets:  0.001 ms
+	Thread Wait Time:       0.004 ms
+	Total Operation Time:   8.823 ms
+Unloading 86 unused Assets / (0.5 MB). Loaded Objects now: 7187.
+Memory consumption went from 224.3 MB to 223.8 MB.
+Total: 18.858083 ms (FindLiveObjects: 0.327875 ms CreateObjectMapping: 0.106000 ms MarkObjects: 18.100750 ms  DeleteObjects: 0.198458 ms)
 
 Executing IPostBuildCleanup for: Unity.PerformanceTesting.Editor.TestRunBuilder.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -1595,11 +1585,11 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 (Filename: ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEditor.TestRunner/TestRun/Tasks/BuildActionTaskBase.cs Line: 48)
 
 Unloading 1 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 0 unused Assets / (0 B). Loaded Objects now: 8406.
-Memory consumption went from 228.0 MB to 228.0 MB.
-Total: 44.308416 ms (FindLiveObjects: 0.342792 ms CreateObjectMapping: 0.123166 ms MarkObjects: 43.546125 ms  DeleteObjects: 0.019542 ms)
+Unloading 0 unused Assets / (0 B). Loaded Objects now: 7189.
+Memory consumption went from 215.3 MB to 215.3 MB.
+Total: 18.665833 ms (FindLiveObjects: 0.280000 ms CreateObjectMapping: 0.102875 ms MarkObjects: 18.147958 ms  DeleteObjects: 0.007125 ms)
 
-Asset Pipeline Refresh (id=d22662077c0804b7b9c013e21d54501c): Total: 0.093 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Asset Pipeline Refresh (id=70d232ce41be54e639c4421af95cb661): Total: 0.047 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
 DisplayProgressbar: Undo
 Test run completed. Exiting with code 0 (Ok). Run completed.
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -1614,7 +1604,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.test-framework@7a3849e09bd0/UnityEditor.TestRunner/CommandLineTest/Executer.cs Line: 81)
 
-MonoPathRemapper: Attempts to remap: 85851; Successful remaps: 20272
+MonoPathRemapper: Attempts to remap: 83888; Successful remaps: 20034
 Serialized file version minimum: 22, current 23
 Deleted discovery files
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
@@ -1639,7 +1629,7 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
-Deleted socket file: /tmp/unity-mcp-57915bc5-55300
+Deleted socket file: /tmp/unity-mcp-57915bc5-33365
 UnityEngine.Debug:ExtractStackTraceNoAlloc (byte*,int,string)
 UnityEngine.StackTraceUtility:ExtractStackTrace () (at /Users/bokken/build/output/unity/unity/Runtime/Export/Scripting/StackTrace.cs:23)
 UnityEngine.DebugLogHandler:Internal_Log (UnityEngine.LogType,UnityEngine.LogOption,string,UnityEngine.Object)
@@ -1685,11 +1675,11 @@ UnityEditor.EditorApplication:Internal_CallUpdateFunctions () (at /Users/bokken/
 (Filename: ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Tracing/TraceSinks.cs Line: 313)
 
 Importing 'GUID: 00000000000000004000000000000000 - Path: ProjectSettings/ProjectSettings.asset' with importer (LibraryAssetImporter)
-Imported 'GUID: 00000000000000004000000000000000' -> (Import Result ID: '3528cbe804d86b1b5ecc9e89e443275a') in 0.003 seconds [static dependencies only]. Details - ImportResultOutputID=054c890a8f4b6dddbea933bc5e4b7df4 DependenciesID=200a65b73fb2cdc9e70b26b2f043f2de StaticDependenciesID=aa26d1b74a8377576ce7cbdf1619f4b4 
+Imported 'GUID: 00000000000000004000000000000000' -> (Import Result ID: '3528cbe804d86b1b5ecc9e89e443275a') in 0.002 seconds [static dependencies only]. Details - ImportResultOutputID=054c890a8f4b6dddbea933bc5e4b7df4 DependenciesID=200a65b73fb2cdc9e70b26b2f043f2de StaticDependenciesID=aa26d1b74a8377576ce7cbdf1619f4b4 
 Importing 'GUID: 0000000000000000b000000000000000 - Path: ProjectSettings/EditorBuildSettings.asset' with importer (LibraryAssetImporter)
 Imported 'GUID: 0000000000000000b000000000000000' -> (Import Result ID: '20daa54de3fc82f69ba3ee90f0b8a981') in 0.001 seconds [static dependencies only]. Details - ImportResultOutputID=0a89a5c5f492143e0fa186859e17ba6f DependenciesID=928eef1d6241641f1638445dad6f2fee StaticDependenciesID=9dd4016036db10c35975be250ca5a091 
-Asset Pipeline Refresh (id=44ae7588ea5be42c89888d9f83dddb1a): Total: 0.028 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
-Thread 0x444087000 may have been prematurely finalized
+Asset Pipeline Refresh (id=00d7a798f604a4c9186cc0e6577fab8d): Total: 0.018 seconds - Initiated by StopAssetImportingV2(NoUpdateAssetOptions)
+Thread 0x442047000 may have been prematurely finalized
 Input System module state changed to: ShutdownInProgress.
 Input Polling Thread exited.
 Input System module state changed to: Shutdown.
@@ -1700,14 +1690,13 @@ VB/C# compiler server shut down successfully.
 [Physics::Module] Id: 0xf2b8ea05
 [Licensing::IpcConnector] LicenseClient-dawsonblock-notifications channel disconnected successfully.
 [Licensing::IpcConnector] LicenseClient-dawsonblock channel disconnected successfully.
-Thread 0x16e2cf000 may have been prematurely finalized
-Thread 0x16e243000 may have been prematurely finalized
 Thread 0x16e3e7000 may have been prematurely finalized
-Thread 0x16e12b000 may have been prematurely finalized
+Thread 0x16e58b000 may have been prematurely finalized
+Thread 0x16e4ff000 may have been prematurely finalized
 Thread 0x16e35b000 may have been prematurely finalized
-Thread 0x16e1b7000 may have been prematurely finalized
-Thread 0x16e09f000 may have been prematurely finalized
-Thread 0x16e013000 may have been prematurely finalized
+Thread 0x16e6a3000 may have been prematurely finalized
+Thread 0x16e473000 may have been prematurely finalized
+Thread 0x16e617000 may have been prematurely finalized
 MSBuild server shut down successfully.
 Lingering sessions upon destruction of worker manager
 Unity Data Store service was successfully shut down
@@ -1716,4 +1705,4 @@ Shut down UDS service system complete
 AcceleratorClientConnectionCallback - disconnected - :0
 Cleanup mono
 CodeReloadManager destroyed
-debugger-agent: Unable to listen on 43
+debugger-agent: Unable to listen on 44

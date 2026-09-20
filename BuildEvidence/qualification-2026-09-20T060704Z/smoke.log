@@ -21,116 +21,117 @@ Begin MonoManager ReloadAssembly
 [Physics::Module] SDK Version: 4.1.2
 [Physics::Module] Integration Version: 1.0.0
 [Physics::Module] Threading Mode: Multi-Threaded
-UnloadTime: 0.493875 ms
+UnloadTime: 0.423708 ms
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.433917 ms
+UnloadTime: 0.416584 ms
 Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1604.
-Total: 0.646791 ms (FindLiveObjects: 0.041458 ms CreateObjectMapping: 0.021959 ms MarkObjects: 0.567000 ms  DeleteObjects: 0.009292 ms)
+Total: 0.693334 ms (FindLiveObjects: 0.044917 ms CreateObjectMapping: 0.020583 ms MarkObjects: 0.609542 ms  DeleteObjects: 0.011250 ms)
 
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 2.244125 ms
+UnloadTime: 2.030583 ms
 Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 2429.
-Total: 1.051542 ms (FindLiveObjects: 0.056042 ms CreateObjectMapping: 0.022916 ms MarkObjects: 0.939333 ms  DeleteObjects: 0.023375 ms)
+Total: 0.934333 ms (FindLiveObjects: 0.042125 ms CreateObjectMapping: 0.017375 ms MarkObjects: 0.844792 ms  DeleteObjects: 0.020666 ms)
 
-[CMD] 21:11:41 ACTIVATE_OBJECTIVE reach_compound
+[CMD] 00:08:29 ACTIVATE_OBJECTIVE reach_compound
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
 Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 3.138958 ms
+UnloadTime: 2.935042 ms
 Failed to create agent because there is no valid NavMesh
 Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 2569.
-Total: 1.050959 ms (FindLiveObjects: 0.063334 ms CreateObjectMapping: 0.031416 ms MarkObjects: 0.879500 ms  DeleteObjects: 0.066375 ms)
+Total: 12.613333 ms (FindLiveObjects: 0.058834 ms CreateObjectMapping: 0.023625 ms MarkObjects: 0.823959 ms  DeleteObjects: 11.696625 ms)
 
-[CMD] 21:11:42 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 00:08:30 COMPLETE_OBJECTIVE infiltrate_service
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.923583 ms
+UnloadTime: 0.938875 ms
 Failed to create agent because there is no valid NavMesh
 Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2525.
-Total: 0.942625 ms (FindLiveObjects: 0.057334 ms CreateObjectMapping: 0.023250 ms MarkObjects: 0.815542 ms  DeleteObjects: 0.035334 ms)
+Total: 12.057333 ms (FindLiveObjects: 0.052459 ms CreateObjectMapping: 0.020750 ms MarkObjects: 0.955917 ms  DeleteObjects: 11.017875 ms)
 
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
 Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.536417 ms
+UnloadTime: 0.516375 ms
 Failed to create agent because there is no valid NavMesh
 Failed to create agent because there is no valid NavMesh
 Unloading 37 unused Assets to reduce memory usage. Loaded Objects now: 2635.
-Total: 0.851584 ms (FindLiveObjects: 0.054500 ms CreateObjectMapping: 0.023375 ms MarkObjects: 0.719291 ms  DeleteObjects: 0.043708 ms)
+Total: 11.217958 ms (FindLiveObjects: 0.051292 ms CreateObjectMapping: 0.020208 ms MarkObjects: 0.788792 ms  DeleteObjects: 10.345417 ms)
 
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
 Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.554833 ms
+UnloadTime: 0.589000 ms
 Failed to create agent because there is no valid NavMesh
 Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 2487.
-Total: 0.900083 ms (FindLiveObjects: 0.054333 ms CreateObjectMapping: 0.023958 ms MarkObjects: 0.770084 ms  DeleteObjects: 0.041292 ms)
+Total: 13.104958 ms (FindLiveObjects: 0.052958 ms CreateObjectMapping: 0.019334 ms MarkObjects: 0.950333 ms  DeleteObjects: 12.070750 ms)
 
-[CMD] 21:11:45 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 00:08:33 COMPLETE_OBJECTIVE reach_bunker
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
 Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.472625 ms
+UnloadTime: 0.645833 ms
 Failed to create agent because there is no valid NavMesh
 Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 2493.
-Total: 23.457209 ms (FindLiveObjects: 0.054417 ms CreateObjectMapping: 0.023792 ms MarkObjects: 0.831417 ms  DeleteObjects: 22.537458 ms)
+Total: 1.000750 ms (FindLiveObjects: 0.063709 ms CreateObjectMapping: 0.027250 ms MarkObjects: 0.858042 ms  DeleteObjects: 0.040125 ms)
 
-[CMD] 21:11:46 COMPLETE_OBJECTIVE reach_tower
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_tower
 The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
-[CMD] 21:11:47 COLLECT_EVIDENCE access_log_001
-[CMD] 21:11:47 COLLECT_EVIDENCE broadcast_key_001
-[CMD] 21:11:47 COLLECT_EVIDENCE broadcast_script_001
-[CMD] 21:11:47 COLLECT_EVIDENCE guest_log_001
-[CMD] 21:11:47 COLLECT_EVIDENCE incident_report_001
-[CMD] 21:11:47 COLLECT_EVIDENCE keycard_staff
-[CMD] 21:11:47 COLLECT_EVIDENCE ledger_page_001
-[CMD] 21:11:47 COLLECT_EVIDENCE public_statement_001
-[CMD] 21:11:47 COLLECT_EVIDENCE security_memo_001
-[CMD] 21:11:47 COLLECT_EVIDENCE server_archive_001
-[CMD] 21:11:47 COLLECT_EVIDENCE transport_manifest_001
-[CMD] 21:11:47 COLLECT_EVIDENCE vault_keylog_001
-[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
-[CMD] 21:11:47 COMPLETE_OBJECTIVE corroborate_story
-[CMD] 21:11:47 COMPLETE_OBJECTIVE download_archive
-[CMD] 21:11:47 COMPLETE_OBJECTIVE find_keycard
-[CMD] 21:11:47 COMPLETE_OBJECTIVE infiltrate_service
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_compound
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
-[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
-[CMD] 21:11:47 COMPLETE_OBJECTIVE search_office
-[CMD] 21:11:47 COMPLETE_OBJECTIVE unlock_service_door
-[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
-[CMD] 21:11:47 COMPLETE_OBJECTIVE corroborate_story
-[CMD] 21:11:47 COMPLETE_OBJECTIVE download_archive
-[CMD] 21:11:47 COMPLETE_OBJECTIVE find_keycard
-[CMD] 21:11:47 COMPLETE_OBJECTIVE infiltrate_service
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
-[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
-[CMD] 21:11:47 COMPLETE_OBJECTIVE search_office
-[CMD] 21:11:47 COMPLETE_OBJECTIVE unlock_service_door
-[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
-[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
-[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
-[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
-[CMD] 21:11:47 ROUTE_BROADCAST route_broadcast
-[CMD] 21:11:47 COMPLETE_BROADCAST broadcast_truth
-[CMD] 21:11:47 CHANGE_SCENE broadcast_tower
+[CMD] 00:08:34 COLLECT_EVIDENCE access_log_001
+[CMD] 00:08:34 COLLECT_EVIDENCE broadcast_key_001
+[CMD] 00:08:34 COLLECT_EVIDENCE broadcast_script_001
+[CMD] 00:08:34 COLLECT_EVIDENCE guest_log_001
+[CMD] 00:08:34 COLLECT_EVIDENCE incident_report_001
+[CMD] 00:08:34 COLLECT_EVIDENCE keycard_staff
+[CMD] 00:08:34 COLLECT_EVIDENCE ledger_page_001
+[CMD] 00:08:34 COLLECT_EVIDENCE public_statement_001
+[CMD] 00:08:34 COLLECT_EVIDENCE security_memo_001
+[CMD] 00:08:34 COLLECT_EVIDENCE server_archive_001
+[CMD] 00:08:34 COLLECT_EVIDENCE transport_manifest_001
+[CMD] 00:08:34 COLLECT_EVIDENCE vault_keylog_001
+[CMD] 00:08:34 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 00:08:34 COMPLETE_OBJECTIVE corroborate_story
+[CMD] 00:08:34 COMPLETE_OBJECTIVE download_archive
+[CMD] 00:08:34 COMPLETE_OBJECTIVE find_keycard
+[CMD] 00:08:34 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_compound
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_tower
+[CMD] 00:08:34 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 00:08:34 COMPLETE_OBJECTIVE search_office
+[CMD] 00:08:34 COMPLETE_OBJECTIVE unlock_service_door
+[CMD] 00:08:34 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 00:08:34 COMPLETE_OBJECTIVE corroborate_story
+[CMD] 00:08:34 COMPLETE_OBJECTIVE download_archive
+[CMD] 00:08:34 COMPLETE_OBJECTIVE find_keycard
+[CMD] 00:08:34 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_tower
+[CMD] 00:08:34 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 00:08:34 COMPLETE_OBJECTIVE search_office
+[CMD] 00:08:34 COMPLETE_OBJECTIVE unlock_service_door
+[CMD] 00:08:34 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 00:08:34 COMPLETE_OBJECTIVE reach_tower
+[CMD] 00:08:34 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 00:08:34 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 00:08:34 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 00:08:34 ROUTE_BROADCAST route_broadcast
+[CMD] 00:08:34 COMPLETE_BROADCAST broadcast_truth
+[CMD] 00:08:34 CHANGE_SCENE broadcast_tower
 Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 0.481542 ms
+UnloadTime: 0.493875 ms
 Failed to create agent because there is no valid NavMesh
 Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 2494.
-Total: 0.890167 ms (FindLiveObjects: 0.053333 ms CreateObjectMapping: 0.023542 ms MarkObjects: 0.782792 ms  DeleteObjects: 0.017750 ms)
+Total: 0.909458 ms (FindLiveObjects: 0.053792 ms CreateObjectMapping: 0.019167 ms MarkObjects: 0.811083 ms  DeleteObjects: 0.015083 ms)
 
-[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
+[CMD] 00:08:35 COMPLETE_OBJECTIVE reach_tower
 SMOKE PASS — scenes, progression and save round-trip verified.
-Thread 0x16d233000 may have been prematurely finalized
+Thread 0x16f033000 may have been prematurely finalized
 [Physics::Module] Cleanup current backend.
 [Physics::Module] Id: 0xf2b8ea05
 Input System module state changed to: ShutdownInProgress.
 Input Polling Thread exited.
 Input System module state changed to: Shutdown.
-Thread 0x16bd1f000 may have been prematurely finalized
-Thread 0x16be37000 may have been prematurely finalized
-Thread 0x16bdab000 may have been prematurely finalized
-Thread 0x16bec3000 may have been prematurely finalized
+Thread 0x16dc37000 may have been prematurely finalized
+Thread 0x16dbab000 may have been prematurely finalized
+Thread 0x16dd4f000 may have been prematurely finalized
+Thread 0x16dcc3000 may have been prematurely finalized
+Thread 0x16dddb000 may have been prematurely finalized
 CodeReloadManager destroyed

@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="86" result="Passed" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.533961">
+  <test-suite type="TestSuite" id="1000" name="Escape the Elites" fullname="Escape the Elites" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.533961" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1093" name="Escape.Tests.EditMode.dll" fullname="/Users/dawsonblock/unity/My project (7)/Library/ScriptAssemblies/Escape.Tests.EditMode.dll" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.527552" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="32621" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1094" name="Escape" fullname="Escape" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.526845" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1095" name="Tests" fullname="Escape.Tests" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.526123" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1096" name="EditMode" fullname="Escape.Tests.EditMode" runstate="Runnable" testcasecount="86" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.525496" total="86" passed="86" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="CommandAndStateTests" fullname="Escape.Tests.EditMode.CommandAndStateTests" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" testcasecount="10" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.034091" total="10" passed="10" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="CollectEvidence_IsIdempotent" fullname="Escape.Tests.EditMode.CommandAndStateTests.CollectEvidence_IsIdempotent" methodname="CollectEvidence_IsIdempotent" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="263370404" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.014755" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="CollectEvidence_UnknownId_FailsSafely" fullname="Escape.Tests.EditMode.CommandAndStateTests.CollectEvidence_UnknownId_FailsSafely" methodname="CollectEvidence_UnknownId_FailsSafely" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="933647511" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001845" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[EvidenceService] Unknown evidence id 'does_not_exist' from 'test'. Ignored.
+]]></output>
+              </test-case>
+              <test-case id="1002" name="CollectEvidence_UpdatesState_AndPublishesEvent" fullname="Escape.Tests.EditMode.CommandAndStateTests.CollectEvidence_UpdatesState_AndPublishesEvent" methodname="CollectEvidence_UpdatesState_AndPublishesEvent" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="1305484300" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000753" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="Commands_AreJournaled" fullname="Escape.Tests.EditMode.CommandAndStateTests.Commands_AreJournaled" methodname="Commands_AreJournaled" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="1163946098" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001232" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="Ending_Evaluation_IsDeterministic" fullname="Escape.Tests.EditMode.CommandAndStateTests.Ending_Evaluation_IsDeterministic" methodname="Ending_Evaluation_IsDeterministic" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="328073304" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001167" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="Ending_Fallback_WhenNothingCollected" fullname="Escape.Tests.EditMode.CommandAndStateTests.Ending_Fallback_WhenNothingCollected" methodname="Ending_Fallback_WhenNothingCollected" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="1539205021" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000250" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="Evidence_CompletesEvidenceDrivenObjective" fullname="Escape.Tests.EditMode.CommandAndStateTests.Evidence_CompletesEvidenceDrivenObjective" methodname="Evidence_CompletesEvidenceDrivenObjective" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="2071378672" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000292" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="Insight_GrantedWhenPairCollected" fullname="Escape.Tests.EditMode.CommandAndStateTests.Insight_GrantedWhenPairCollected" methodname="Insight_GrantedWhenPairCollected" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="933546722" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000409" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="Objective_RequiresPrerequisiteObjective" fullname="Escape.Tests.EditMode.CommandAndStateTests.Objective_RequiresPrerequisiteObjective" methodname="Objective_RequiresPrerequisiteObjective" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="74973784" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000544" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="UnlockDoor_PersistsInState" fullname="Escape.Tests.EditMode.CommandAndStateTests.UnlockDoor_PersistsInState" methodname="UnlockDoor_PersistsInState" classname="Escape.Tests.EditMode.CommandAndStateTests" runstate="Runnable" seed="145382975" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000225" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1012" name="ContentValidationTests" fullname="Escape.Tests.EditMode.ContentValidationTests" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.081863" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1022" name="AtLeastOneEnding_AlwaysQualifies" fullname="Escape.Tests.EditMode.ContentValidationTests.AtLeastOneEnding_AlwaysQualifies" methodname="AtLeastOneEnding_AlwaysQualifies" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1238728231" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.010988" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1018" name="DependencyGraph_Diamond_IsNotCycle" fullname="Escape.Tests.EditMode.ContentValidationTests.DependencyGraph_Diamond_IsNotCycle" methodname="DependencyGraph_Diamond_IsNotCycle" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="152409975" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.010950" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1020" name="DependencyGraph_SelfLoop_Fails" fullname="Escape.Tests.EditMode.ContentValidationTests.DependencyGraph_SelfLoop_Fails" methodname="DependencyGraph_SelfLoop_Fails" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1865499960" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000258" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1019" name="DependencyGraph_SimpleCycle_Fails" fullname="Escape.Tests.EditMode.ContentValidationTests.DependencyGraph_SimpleCycle_Fails" methodname="DependencyGraph_SimpleCycle_Fails" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1396774510" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000265" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="EvidenceIds_AreUnique_AndNonEmpty" fullname="Escape.Tests.EditMode.ContentValidationTests.EvidenceIds_AreUnique_AndNonEmpty" methodname="EvidenceIds_AreUnique_AndNonEmpty" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="532925814" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.009715" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="EvidenceRelationships_ReferenceValidAssets" fullname="Escape.Tests.EditMode.ContentValidationTests.EvidenceRelationships_ReferenceValidAssets" methodname="EvidenceRelationships_ReferenceValidAssets" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="942844770" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.003375" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="ObjectiveIds_AreUnique_AndNonEmpty" fullname="Escape.Tests.EditMode.ContentValidationTests.ObjectiveIds_AreUnique_AndNonEmpty" methodname="ObjectiveIds_AreUnique_AndNonEmpty" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1376670639" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.009407" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1017" name="Objectives_HaveNoImpossibleCycles" fullname="Escape.Tests.EditMode.ContentValidationTests.Objectives_HaveNoImpossibleCycles" methodname="Objectives_HaveNoImpossibleCycles" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="126174427" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.002034" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1023" name="RealContent_MainObjectiveChain_IsCompletable" fullname="Escape.Tests.EditMode.ContentValidationTests.RealContent_MainObjectiveChain_IsCompletable" methodname="RealContent_MainObjectiveChain_IsCompletable" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="727338488" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.019587" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1015" name="TerminalAndEndingIds_AreUnique" fullname="Escape.Tests.EditMode.ContentValidationTests.TerminalAndEndingIds_AreUnique" methodname="TerminalAndEndingIds_AreUnique" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1468142405" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.003062" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1021" name="TerminalCommands_ReferenceValidTargets" fullname="Escape.Tests.EditMode.ContentValidationTests.TerminalCommands_ReferenceValidTargets" methodname="TerminalCommands_ReferenceValidTargets" classname="Escape.Tests.EditMode.ContentValidationTests" runstate="Runnable" seed="1864326940" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.003997" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1024" name="InputAndSettingsTests" fullname="Escape.Tests.EditMode.InputAndSettingsTests" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.013338" total="5" passed="5" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1026" name="InputGate_CancelTop_Ignores_NonCancelable" fullname="Escape.Tests.EditMode.InputAndSettingsTests.InputGate_CancelTop_Ignores_NonCancelable" methodname="InputGate_CancelTop_Ignores_NonCancelable" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" seed="1377019411" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000624" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1025" name="InputGate_CancelTop_Routes_To_Topmost" fullname="Escape.Tests.EditMode.InputAndSettingsTests.InputGate_CancelTop_Routes_To_Topmost" methodname="InputGate_CancelTop_Routes_To_Topmost" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" seed="1203550722" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000206" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="InputGate_UiOpen_Follows_Stack" fullname="Escape.Tests.EditMode.InputAndSettingsTests.InputGate_UiOpen_Follows_Stack" methodname="InputGate_UiOpen_Follows_Stack" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" seed="584832783" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000456" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="Settings_Cache_ServesReads_WithoutPlayerPrefs" fullname="Escape.Tests.EditMode.InputAndSettingsTests.Settings_Cache_ServesReads_WithoutPlayerPrefs" methodname="Settings_Cache_ServesReads_WithoutPlayerPrefs" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" seed="1419554255" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.002687" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1029" name="Settings_Persist_Writes_OnlyOnFlush" fullname="Escape.Tests.EditMode.InputAndSettingsTests.Settings_Persist_Writes_OnlyOnFlush" methodname="Settings_Persist_Writes_OnlyOnFlush" classname="Escape.Tests.EditMode.InputAndSettingsTests" runstate="Runnable" seed="1626918395" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.008089" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1030" name="ProgressionGraphTests" fullname="Escape.Tests.EditMode.ProgressionGraphTests" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.304206" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1038" name="AuthoredWorldObjectIds_AreUniqueAcrossScenes" fullname="Escape.Tests.EditMode.ProgressionGraphTests.AuthoredWorldObjectIds_AreUniqueAcrossScenes" methodname="AuthoredWorldObjectIds_AreUniqueAcrossScenes" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="236270261" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.079659" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1040" name="CriticalPath_CompletesBroadcastTruth_AndTransmits" fullname="Escape.Tests.EditMode.ProgressionGraphTests.CriticalPath_CompletesBroadcastTruth_AndTransmits" methodname="CriticalPath_CompletesBroadcastTruth_AndTransmits" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1214461133" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.028668" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1041" name="CriticalPath_CompletesEveryRequiredObjective" fullname="Escape.Tests.EditMode.ProgressionGraphTests.CriticalPath_CompletesEveryRequiredObjective" methodname="CriticalPath_CompletesEveryRequiredObjective" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="362771732" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.014842" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1042" name="CriticalPath_EarnsBetterThanTheFallbackEnding" fullname="Escape.Tests.EditMode.ProgressionGraphTests.CriticalPath_EarnsBetterThanTheFallbackEnding" methodname="CriticalPath_EarnsBetterThanTheFallbackEnding" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="220775734" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.023686" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1032" name="CriticalPath_IsConnectedFromDock" fullname="Escape.Tests.EditMode.ProgressionGraphTests.CriticalPath_IsConnectedFromDock" methodname="CriticalPath_IsConnectedFromDock" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="496467852" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.021338" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1033" name="EveryGate_RequirementNamesRealContent" fullname="Escape.Tests.EditMode.ProgressionGraphTests.EveryGate_RequirementNamesRealContent" methodname="EveryGate_RequirementNamesRealContent" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1382057116" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.019517" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1039" name="EverySceneGate_IsSatisfiable_ByTheTimeThePlayerArrives" fullname="Escape.Tests.EditMode.ProgressionGraphTests.EverySceneGate_IsSatisfiable_ByTheTimeThePlayerArrives" methodname="EverySceneGate_IsSatisfiable_ByTheTimeThePlayerArrives" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1203807786" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.019490" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1031" name="EveryTransition_TargetsKnownScene" fullname="Escape.Tests.EditMode.ProgressionGraphTests.EveryTransition_TargetsKnownScene" methodname="EveryTransition_TargetsKnownScene" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="647801201" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.011556" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1037" name="NoIrreversibleEdge_StrandsARequirementNeededLater" fullname="Escape.Tests.EditMode.ProgressionGraphTests.NoIrreversibleEdge_StrandsARequirementNeededLater" methodname="NoIrreversibleEdge_StrandsARequirementNeededLater" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1154951806" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.020355" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1034" name="ObjectiveRequirements_Resolve_And_EvidenceIsGranted" fullname="Escape.Tests.EditMode.ProgressionGraphTests.ObjectiveRequirements_Resolve_And_EvidenceIsGranted" methodname="ObjectiveRequirements_Resolve_And_EvidenceIsGranted" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="3518603" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.019667" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1035" name="TerminalRequirements_Resolve" fullname="Escape.Tests.EditMode.ProgressionGraphTests.TerminalRequirements_Resolve" methodname="TerminalRequirements_Resolve" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1092928872" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.019471" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1036" name="TerminalUnlockCodes_AreDiscoverableInOrBeforeTheirScene" fullname="Escape.Tests.EditMode.ProgressionGraphTests.TerminalUnlockCodes_AreDiscoverableInOrBeforeTheirScene" methodname="TerminalUnlockCodes_AreDiscoverableInOrBeforeTheirScene" classname="Escape.Tests.EditMode.ProgressionGraphTests" runstate="Runnable" seed="1942817100" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.017325" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1043" name="ProgressionTests" fullname="Escape.Tests.EditMode.ProgressionTests" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" testcasecount="33" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.062016" total="33" passed="33" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1048" name="BroadcastObjectives_AreExplicit_AndOrdered" fullname="Escape.Tests.EditMode.ProgressionTests.BroadcastObjectives_AreExplicit_AndOrdered" methodname="BroadcastObjectives_AreExplicit_AndOrdered" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1021728877" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001526" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1046" name="BroadcastTruth_RequiresTransmission_NotJustKey" fullname="Escape.Tests.EditMode.ProgressionTests.BroadcastTruth_RequiresTransmission_NotJustKey" methodname="BroadcastTruth_RequiresTransmission_NotJustKey" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="754498787" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000340" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1049" name="DockExit_RequiresBroadcastKey" fullname="Escape.Tests.EditMode.ProgressionTests.DockExit_RequiresBroadcastKey" methodname="DockExit_RequiresBroadcastKey" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1526813313" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.006785" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1063" name="Domain_CompletesTheTransmissionObjective_WithoutOutsideSequencing" fullname="Escape.Tests.EditMode.ProgressionTests.Domain_CompletesTheTransmissionObjective_WithoutOutsideSequencing" methodname="Domain_CompletesTheTransmissionObjective_WithoutOutsideSequencing" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1052118945" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000767" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1061" name="EvidenceObjective_IsRefused_ByBareCommand_WithoutItsEvidence" fullname="Escape.Tests.EditMode.ProgressionTests.EvidenceObjective_IsRefused_ByBareCommand_WithoutItsEvidence" methodname="EvidenceObjective_IsRefused_ByBareCommand_WithoutItsEvidence" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1462718606" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000324" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1045" name="EvidenceObjective_StillCompletes_FromEvidence" fullname="Escape.Tests.EditMode.ProgressionTests.EvidenceObjective_StillCompletes_FromEvidence" methodname="EvidenceObjective_StillCompletes_FromEvidence" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="68753514" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001073" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1044" name="ExplicitObjective_DoesNotComplete_FromEvidenceAlone" fullname="Escape.Tests.EditMode.ProgressionTests.ExplicitObjective_DoesNotComplete_FromEvidenceAlone" methodname="ExplicitObjective_DoesNotComplete_FromEvidenceAlone" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="818455657" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000579" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1074" name="Manifest_CoversEveryAuthoredWorldId" fullname="Escape.Tests.EditMode.ProgressionTests.Manifest_CoversEveryAuthoredWorldId" methodname="Manifest_CoversEveryAuthoredWorldId" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1458468327" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.023270" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1065" name="Migration_V2ToV3_RecordsPoseValidity" fullname="Escape.Tests.EditMode.ProgressionTests.Migration_V2ToV3_RecordsPoseValidity" methodname="Migration_V2ToV3_RecordsPoseValidity" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1542057940" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001340" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1051" name="MostRecentSlot_Finds_BackupOnly_Save" fullname="Escape.Tests.EditMode.ProgressionTests.MostRecentSlot_Finds_BackupOnly_Save" methodname="MostRecentSlot_Finds_BackupOnly_Save" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="926335832" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.011797" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json.bak': Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1062" name="ObjectiveCompletion_IsRefused_BeforeItsPrerequisites" fullname="Escape.Tests.EditMode.ProgressionTests.ObjectiveCompletion_IsRefused_BeforeItsPrerequisites" methodname="ObjectiveCompletion_IsRefused_BeforeItsPrerequisites" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1463567814" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000309" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1050" name="OfficeExit_RequiresRoutedBroadcast" fullname="Escape.Tests.EditMode.ProgressionTests.OfficeExit_RequiresRoutedBroadcast" methodname="OfficeExit_RequiresRoutedBroadcast" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1822285139" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001309" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1047" name="OfficeTerminal_Broadcast_IsGated_AndCompletesRouting" fullname="Escape.Tests.EditMode.ProgressionTests.OfficeTerminal_Broadcast_IsGated_AndCompletesRouting" methodname="OfficeTerminal_Broadcast_IsGated_AndCompletesRouting" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1767196537" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000417" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1064" name="PoseAtWorldOrigin_IsARecordedPose" fullname="Escape.Tests.EditMode.ProgressionTests.PoseAtWorldOrigin_IsARecordedPose" methodname="PoseAtWorldOrigin_IsARecordedPose" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1209442838" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000502" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1058" name="Routing_IsRefused_UntilItsPrerequisitesAreMet" fullname="Escape.Tests.EditMode.ProgressionTests.Routing_IsRefused_UntilItsPrerequisitesAreMet" methodname="Routing_IsRefused_UntilItsPrerequisitesAreMet" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="915538104" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000219" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1059" name="Routing_IsRefused_WithoutTheKey_EvenWithTheArchiveInHand" fullname="Escape.Tests.EditMode.ProgressionTests.Routing_IsRefused_WithoutTheKey_EvenWithTheArchiveInHand" methodname="Routing_IsRefused_WithoutTheKey_EvenWithTheArchiveInHand" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1583671277" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000186" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1060" name="RoutingObjective_DeclaresTheBroadcastKey" fullname="Escape.Tests.EditMode.ProgressionTests.RoutingObjective_DeclaresTheBroadcastKey" methodname="RoutingObjective_DeclaresTheBroadcastKey" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="719913949" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000135" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1052" name="SlotInfo_Marks_MissingPrimary_AsRecoverable" fullname="Escape.Tests.EditMode.ProgressionTests.SlotInfo_Marks_MissingPrimary_AsRecoverable" methodname="SlotInfo_Marks_MissingPrimary_AsRecoverable" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="577606732" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001860" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1057" name="Transmission_IsRefused_UntilTheRelayIsRouted" fullname="Escape.Tests.EditMode.ProgressionTests.Transmission_IsRefused_UntilTheRelayIsRouted" methodname="Transmission_IsRefused_UntilTheRelayIsRouted" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1903967788" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000222" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1055" name="Validator_Clamps_NegativeLures" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_Clamps_NegativeLures" methodname="Validator_Clamps_NegativeLures" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1309986649" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000271" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1068" name="Validator_ClearsBroadcastCompleted_WhenTheTransmissionObjectiveIsAbsent" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_ClearsBroadcastCompleted_WhenTheTransmissionObjectiveIsAbsent" methodname="Validator_ClearsBroadcastCompleted_WhenTheTransmissionObjectiveIsAbsent" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1574658833" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="Validator_ClearsBroadcastStarted_WhenTheRoutingObjectiveIsAbsent" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_ClearsBroadcastStarted_WhenTheRoutingObjectiveIsAbsent" methodname="Validator_ClearsBroadcastStarted_WhenTheRoutingObjectiveIsAbsent" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1464598459" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000125" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1069" name="Validator_DoesNotManufactureProgression_FromATransmissionObjectiveAlone" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_DoesNotManufactureProgression_FromATransmissionObjectiveAlone" methodname="Validator_DoesNotManufactureProgression_FromATransmissionObjectiveAlone" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="2025199748" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000200" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1056" name="Validator_Drops_UnknownEnding" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_Drops_UnknownEnding" methodname="Validator_Drops_UnknownEnding" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1563616681" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000128" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1073" name="Validator_DropsEnding_WhenOnlyTheFlagsClaimTheBroadcast" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_DropsEnding_WhenOnlyTheFlagsClaimTheBroadcast" methodname="Validator_DropsEnding_WhenOnlyTheFlagsClaimTheBroadcast" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1266623744" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000143" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1071" name="Validator_DropsEnding_WithoutACompletedBroadcast" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_DropsEnding_WithoutACompletedBroadcast" methodname="Validator_DropsEnding_WithoutACompletedBroadcast" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1750633344" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000106" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1075" name="Validator_DropsUnknownDoorId_WhenManifestIsPresent" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_DropsUnknownDoorId_WhenManifestIsPresent" methodname="Validator_DropsUnknownDoorId_WhenManifestIsPresent" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="181527802" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000363" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1072" name="Validator_KeepsEnding_WhenTheBroadcastCompleted" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_KeepsEnding_WhenTheBroadcastCompleted" methodname="Validator_KeepsEnding_WhenTheBroadcastCompleted" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1001279634" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000164" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1076" name="Validator_KeepsSceneIds_WhenNoManifestIsAvailable" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_KeepsSceneIds_WhenNoManifestIsAvailable" methodname="Validator_KeepsSceneIds_WhenNoManifestIsAvailable" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="673052644" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000135" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1070" name="Validator_ReconstructsFlags_FromTheObjectivesThatSupportThem" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_ReconstructsFlags_FromTheObjectivesThatSupportThem" methodname="Validator_ReconstructsFlags_FromTheObjectivesThatSupportThem" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="379088272" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000151" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1053" name="Validator_Repairs_ActiveCompletedOverlap" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_Repairs_ActiveCompletedOverlap" methodname="Validator_Repairs_ActiveCompletedOverlap" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1464868798" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1054" name="Validator_Repairs_BroadcastFlag_Inconsistency" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_Repairs_BroadcastFlag_Inconsistency" methodname="Validator_Repairs_BroadcastFlag_Inconsistency" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1395389849" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000094" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="Validator_Repairs_PoseWithoutTheFlag" fullname="Escape.Tests.EditMode.ProgressionTests.Validator_Repairs_PoseWithoutTheFlag" methodname="Validator_Repairs_PoseWithoutTheFlag" classname="Escape.Tests.EditMode.ProgressionTests" runstate="Runnable" seed="1481368827" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000255" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1077" name="SaveTests" fullname="Escape.Tests.EditMode.SaveTests" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" testcasecount="15" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.027539" total="15" passed="15" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1083" name="Migrator_V1_To_V2_SplitsPose" fullname="Escape.Tests.EditMode.SaveTests.Migrator_V1_To_V2_SplitsPose" methodname="Migrator_V1_To_V2_SplitsPose" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="631761921" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001069" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1089" name="Save_Canonicalizes_Duplicates_And_Empties" fullname="Escape.Tests.EditMode.SaveTests.Save_Canonicalizes_Duplicates_And_Empties" methodname="Save_Canonicalizes_Duplicates_And_Empties" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="675737107" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001898" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1086" name="Save_CorruptPrimary_AndCorruptBackup_Fails" fullname="Escape.Tests.EditMode.SaveTests.Save_CorruptPrimary_AndCorruptBackup_Fails" methodname="Save_CorruptPrimary_AndCorruptBackup_Fails" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="66585828" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001467" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1085" name="Save_CorruptPrimary_FallsBack_ToBackup" fullname="Escape.Tests.EditMode.SaveTests.Save_CorruptPrimary_FallsBack_ToBackup" methodname="Save_CorruptPrimary_FallsBack_ToBackup" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="136132045" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.004043" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json.bak': Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1081" name="Save_Drops_UnknownEvidenceIds" fullname="Escape.Tests.EditMode.SaveTests.Save_Drops_UnknownEvidenceIds" methodname="Save_Drops_UnknownEvidenceIds" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="1845947697" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001723" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json': Dropped evidence id 'bogus_evidence' (unknown).; Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1088" name="Save_Legacy_V1_File_Loads" fullname="Escape.Tests.EditMode.SaveTests.Save_Legacy_V1_File_Loads" methodname="Save_Legacy_V1_File_Loads" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="914552257" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001427" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json': Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1091" name="Save_Refuses_AnInvalidSlot_WithoutTouchingDisk" fullname="Escape.Tests.EditMode.SaveTests.Save_Refuses_AnInvalidSlot_WithoutTouchingDisk" methodname="Save_Refuses_AnInvalidSlot_WithoutTouchingDisk" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="70376652" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.003538" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Refusing to write invalid slot id '../escape' — a slot is [A-Za-z0-9_-]+ and is never interpreted as a path.
+[SaveService] Refusing to query invalid slot id '../escape' — a slot is [A-Za-z0-9_-]+ and is never interpreted as a path.
+[SaveService] Refusing to delete invalid slot id '../escape' — a slot is [A-Za-z0-9_-]+ and is never interpreted as a path.
+[SaveService] Refusing to load invalid slot id '../escape' — a slot is [A-Za-z0-9_-]+ and is never interpreted as a path.
+]]></output>
+              </test-case>
+              <test-case id="1087" name="Save_Rejects_FutureSchema" fullname="Escape.Tests.EditMode.SaveTests.Save_Rejects_FutureSchema" methodname="Save_Rejects_FutureSchema" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="341873594" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000781" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1082" name="Save_Rejects_NonFinitePosition" fullname="Escape.Tests.EditMode.SaveTests.Save_Rejects_NonFinitePosition" methodname="Save_Rejects_NonFinitePosition" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="1487832915" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000764" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1090" name="Save_Rejects_SlotIdsThatArePaths" fullname="Escape.Tests.EditMode.SaveTests.Save_Rejects_SlotIdsThatArePaths" methodname="Save_Rejects_SlotIdsThatArePaths" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="893941181" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.000382" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1080" name="Save_Rejects_UnknownScene" fullname="Escape.Tests.EditMode.SaveTests.Save_Rejects_UnknownScene" methodname="Save_Rejects_UnknownScene" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="2075941815" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001342" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1084" name="Save_RoundTrips_Yaw_Pitch_Flashlight" fullname="Escape.Tests.EditMode.SaveTests.Save_RoundTrips_Yaw_Pitch_Flashlight" methodname="Save_RoundTrips_Yaw_Pitch_Flashlight" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="422944242" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001330" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json': Pose recorded without HasPose — repaired.; Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1092" name="SaveCoordinator_Captures_Participant_State" fullname="Escape.Tests.EditMode.SaveTests.SaveCoordinator_Captures_Participant_State" methodname="SaveCoordinator_Captures_Participant_State" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="1544737780" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001324" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1078" name="SaveLoad_RoundTrips" fullname="Escape.Tests.EditMode.SaveTests.SaveLoad_RoundTrips" methodname="SaveLoad_RoundTrips" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="289285133" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001784" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json': Pose recorded without HasPose — repaired.; Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+]]></output>
+              </test-case>
+              <test-case id="1079" name="SaveLoad_RoundTrips_LureState" fullname="Escape.Tests.EditMode.SaveTests.SaveLoad_RoundTrips_LureState" methodname="SaveLoad_RoundTrips_LureState" classname="Escape.Tests.EditMode.SaveTests" runstate="Runnable" seed="757730284" result="Passed" start-time="2026-09-20 06:07:41Z" end-time="2026-09-20 06:07:41Z" duration="0.001573" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[[SaveService] Repaired save 'slot1.json': Broadcast flag set from the routing objective — repaired.; Broadcast flag set from the completed transmission — repaired.
+Saving results to: /Users/dawsonblock/Library/Application Support/Escape the Elites/Escape the Elites/TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

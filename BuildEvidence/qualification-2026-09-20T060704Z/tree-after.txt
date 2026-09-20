@@ -1,0 +1,5 @@
+ M Packages/manifest.json
+ M Packages/packages-lock.json
+ D ProjectSettings/Packages/com.unity.asset-manager-for-unity/Settings.json
+ D uam/README.txt
+?? BuildEvidence/qualification-2026-09-20T060704Z/
