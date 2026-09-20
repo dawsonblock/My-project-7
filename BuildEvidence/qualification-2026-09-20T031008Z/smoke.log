@@ -1,0 +1,136 @@
+Mono path[0] = '/Users/dawsonblock/unity/My project (7)/Builds/StandaloneOSX/EscapeTheElites.app/Contents/Resources/Data/Managed'
+Mono config path = '/Users/dawsonblock/unity/My project (7)/Builds/StandaloneOSX/EscapeTheElites.app/Contents/MonoBleedingEdge/etc'
+CodeReloadManager initialized
+Input System module state changed to: Initialized.
+[Physics::Module] Initialized fallback backend.
+[Physics::Module] Id: 0xdecafbad
+Initialize engine version: 6000.6.0f1 (f7f8ed4d1e24)
+[EntityIdStore] init: VM path (explicit commit), pageSize=16384, blockCount=262144, entitiesPerBlock=1024, slots reserved=4294967296 bytes
+[Subsystems] Discovering subsystems at path /Users/dawsonblock/unity/My project (7)/Builds/StandaloneOSX/EscapeTheElites.app/Contents/Resources/Data/UnitySubsystems
+Forcing GfxDevice: Null
+GfxDevice: creating device client; kGfxThreadingModeNonThreaded
+NullGfxDevice:
+    Version:  NULL 1.0 [1.0]
+    Renderer: Null Device
+    Vendor:   Unity Technologies
+Begin MonoManager ReloadAssembly
+- Finished resetting the current domain, in  0.005 seconds
+[Physics::Module] Selected backend.
+[Physics::Module] Name: PhysX
+[Physics::Module] Id: 0xf2b8ea05
+[Physics::Module] SDK Version: 4.1.2
+[Physics::Module] Integration Version: 1.0.0
+[Physics::Module] Threading Mode: Multi-Threaded
+UnloadTime: 0.493875 ms
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.433917 ms
+Unloading 4 unused Assets to reduce memory usage. Loaded Objects now: 1604.
+Total: 0.646791 ms (FindLiveObjects: 0.041458 ms CreateObjectMapping: 0.021959 ms MarkObjects: 0.567000 ms  DeleteObjects: 0.009292 ms)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 2.244125 ms
+Unloading 14 unused Assets to reduce memory usage. Loaded Objects now: 2429.
+Total: 1.051542 ms (FindLiveObjects: 0.056042 ms CreateObjectMapping: 0.022916 ms MarkObjects: 0.939333 ms  DeleteObjects: 0.023375 ms)
+
+[CMD] 21:11:41 ACTIVATE_OBJECTIVE reach_compound
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 3.138958 ms
+Failed to create agent because there is no valid NavMesh
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 2569.
+Total: 1.050959 ms (FindLiveObjects: 0.063334 ms CreateObjectMapping: 0.031416 ms MarkObjects: 0.879500 ms  DeleteObjects: 0.066375 ms)
+
+[CMD] 21:11:42 COMPLETE_OBJECTIVE infiltrate_service
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.923583 ms
+Failed to create agent because there is no valid NavMesh
+Unloading 28 unused Assets to reduce memory usage. Loaded Objects now: 2525.
+Total: 0.942625 ms (FindLiveObjects: 0.057334 ms CreateObjectMapping: 0.023250 ms MarkObjects: 0.815542 ms  DeleteObjects: 0.035334 ms)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.536417 ms
+Failed to create agent because there is no valid NavMesh
+Failed to create agent because there is no valid NavMesh
+Unloading 37 unused Assets to reduce memory usage. Loaded Objects now: 2635.
+Total: 0.851584 ms (FindLiveObjects: 0.054500 ms CreateObjectMapping: 0.023375 ms MarkObjects: 0.719291 ms  DeleteObjects: 0.043708 ms)
+
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+Unloading 6 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.554833 ms
+Failed to create agent because there is no valid NavMesh
+Unloading 24 unused Assets to reduce memory usage. Loaded Objects now: 2487.
+Total: 0.900083 ms (FindLiveObjects: 0.054333 ms CreateObjectMapping: 0.023958 ms MarkObjects: 0.770084 ms  DeleteObjects: 0.041292 ms)
+
+[CMD] 21:11:45 COMPLETE_OBJECTIVE reach_bunker
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.472625 ms
+Failed to create agent because there is no valid NavMesh
+Unloading 25 unused Assets to reduce memory usage. Loaded Objects now: 2493.
+Total: 23.457209 ms (FindLiveObjects: 0.054417 ms CreateObjectMapping: 0.023792 ms MarkObjects: 0.831417 ms  DeleteObjects: 22.537458 ms)
+
+[CMD] 21:11:46 COMPLETE_OBJECTIVE reach_tower
+The character with Unicode value \u25B8 was not found in the [LiberationSans SDF] font asset or any potential fallbacks. It was replaced by Unicode character \u25A1 in text object [Objective].
+[CMD] 21:11:47 COLLECT_EVIDENCE access_log_001
+[CMD] 21:11:47 COLLECT_EVIDENCE broadcast_key_001
+[CMD] 21:11:47 COLLECT_EVIDENCE broadcast_script_001
+[CMD] 21:11:47 COLLECT_EVIDENCE guest_log_001
+[CMD] 21:11:47 COLLECT_EVIDENCE incident_report_001
+[CMD] 21:11:47 COLLECT_EVIDENCE keycard_staff
+[CMD] 21:11:47 COLLECT_EVIDENCE ledger_page_001
+[CMD] 21:11:47 COLLECT_EVIDENCE public_statement_001
+[CMD] 21:11:47 COLLECT_EVIDENCE security_memo_001
+[CMD] 21:11:47 COLLECT_EVIDENCE server_archive_001
+[CMD] 21:11:47 COLLECT_EVIDENCE transport_manifest_001
+[CMD] 21:11:47 COLLECT_EVIDENCE vault_keylog_001
+[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 21:11:47 COMPLETE_OBJECTIVE corroborate_story
+[CMD] 21:11:47 COMPLETE_OBJECTIVE download_archive
+[CMD] 21:11:47 COMPLETE_OBJECTIVE find_keycard
+[CMD] 21:11:47 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_compound
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
+[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 21:11:47 COMPLETE_OBJECTIVE search_office
+[CMD] 21:11:47 COMPLETE_OBJECTIVE unlock_service_door
+[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 21:11:47 COMPLETE_OBJECTIVE corroborate_story
+[CMD] 21:11:47 COMPLETE_OBJECTIVE download_archive
+[CMD] 21:11:47 COMPLETE_OBJECTIVE find_keycard
+[CMD] 21:11:47 COMPLETE_OBJECTIVE infiltrate_service
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
+[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 21:11:47 COMPLETE_OBJECTIVE search_office
+[CMD] 21:11:47 COMPLETE_OBJECTIVE unlock_service_door
+[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_bunker
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
+[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 21:11:47 COMPLETE_OBJECTIVE broadcast_truth
+[CMD] 21:11:47 COMPLETE_OBJECTIVE route_broadcast
+[CMD] 21:11:47 ROUTE_BROADCAST route_broadcast
+[CMD] 21:11:47 COMPLETE_BROADCAST broadcast_truth
+[CMD] 21:11:47 CHANGE_SCENE broadcast_tower
+Unloading 7 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 0.481542 ms
+Failed to create agent because there is no valid NavMesh
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 2494.
+Total: 0.890167 ms (FindLiveObjects: 0.053333 ms CreateObjectMapping: 0.023542 ms MarkObjects: 0.782792 ms  DeleteObjects: 0.017750 ms)
+
+[CMD] 21:11:47 COMPLETE_OBJECTIVE reach_tower
+SMOKE PASS — scenes, progression and save round-trip verified.
+Thread 0x16d233000 may have been prematurely finalized
+[Physics::Module] Cleanup current backend.
+[Physics::Module] Id: 0xf2b8ea05
+Input System module state changed to: ShutdownInProgress.
+Input Polling Thread exited.
+Input System module state changed to: Shutdown.
+Thread 0x16bd1f000 may have been prematurely finalized
+Thread 0x16be37000 may have been prematurely finalized
+Thread 0x16bdab000 may have been prematurely finalized
+Thread 0x16bec3000 may have been prematurely finalized
+CodeReloadManager destroyed
