@@ -1,0 +1,5 @@
+commit: d9fc1950ef108bddfd966ada8998b70614492bbb
+branch: chore/package-reduction
+dirty: 0
+unity: 6000.6.0f1
+capturedUtc: 2026-09-20T06:24:02Z
